@@ -5,7 +5,7 @@ import cv2
 import os
 from collections import Counter
 from sklearn.cluster import KMeans
-from converter.img_settings import landscape_settings, portrait_settings
+from img_settings import landscape_settings, portrait_settings
 from dotenv import load_dotenv
 
 load_dotenv()
