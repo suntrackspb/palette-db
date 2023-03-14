@@ -73,7 +73,7 @@ def protected():
 
 # Update User Info
 @app.route("/api/user/update", methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def user_update():
     return update_user(request.json)
 
@@ -106,15 +106,15 @@ def palette_color():
     return get_palette_by_tags(request.json)
 
 
+@app.route("/api/palettes/tags", methods=['POST'])
+def tags_list():
+    return get_tags()
+
+
 @app.route("/api/palettes/favorite", methods=['POST'])
 @jwt_required()
 def get_fav_palettes():
     return get_favorite_user_palettes(request.json)
-
-
-@app.route("/api/palettes/tags", methods=['POST'])
-def tags_list():
-    return get_tags()
 
 
 # Get palettes by colors
