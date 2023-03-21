@@ -31,15 +31,14 @@ export class PaletteService {
   static getFavorites = async (login) => {
     const res = await $api.post('/palettes/favorite', {login}, {
       headers: {
-        'X-CSRF-TOKEN': getCookie('csrf_access_token'),
-        'Show-Data': 'True'
+        'X-CSRF-TOKEN': getCookie('csrf_access_token')
       }
     })
     return res.data
   }
 
   static createPalette = async (data) => {
-    const res = await axios.post(`${API_URL}/palettes/create`, data, {
+    const res = await axios.post(`${LOCAL_API_URL}/palettes/create`, data, {
       headers: {
         'X-CSRF-TOKEN': getCookie('csrf_access_token'),
         'x-api-key': X_API_KEY,
@@ -47,6 +46,7 @@ export class PaletteService {
     })
     return res.data
   }
+
 
   static savePalette = async (data) => {
     const res = await $api.post('/palettes/save', data, {
