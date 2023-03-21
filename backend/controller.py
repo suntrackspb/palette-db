@@ -5,6 +5,8 @@ import re
 from datetime import datetime
 
 from bson.objectid import ObjectId
+from flask import jsonify
+
 from database.db import UsersDB, PalettesDB
 from flask_jwt_extended import set_access_cookies, create_access_token, get_jwt_identity
 
@@ -55,7 +57,9 @@ def authorization(data):
                 return ce("Error", "0x0004", "Wrong username or password"), 400
             if db['login'] == data['login'] and db['password'] == data['password']:
                 access_token = create_access_token(identity=data['login'])
-                response = ce("Info", "0x0005", "Login Successful")
+                # response = ce("Info", "0x0005", "Login Successful")
+                # set_access_cookies(response, access_token)
+                response = jsonify({"msg": "login successful"})
                 set_access_cookies(response, access_token)
                 return response, 200
             else:
