@@ -1,5 +1,12 @@
-Frontend by React JS
-======================
+# Frontend for "Palette Archive" project
 
-used modules:
--------------
+### Use stack:
+
+* React
+* MobX
+* MUI
+* React-DOM
+
+### Simple dev run:
+1. > npm i
+2. > npm run dev
