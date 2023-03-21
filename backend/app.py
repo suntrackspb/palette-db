@@ -44,18 +44,32 @@ if app_log:
 ##############
 
 # Registration user
+#
+# Required:
+# login = mail@mail.ru
+# password = md5 hash
+#
 @app.route("/api/user/signup", methods=['POST'])
 def signup():
     return add_new_user(request.json)
 
 
 # Auth user, JTW token cookie
+#
+# Required:
+# login = mail@mail.ru
+# password = md5 hash
+#
 @app.route("/api/user/login", methods=["POST"])
 def login():
     return authorization(request.json)
 
 
 # Unset cookie, user logout
+#
+# Required:
+# CSRF Cookie
+#
 @app.route("/api/user/logout", methods=["POST"])
 @jwt_required()
 def logout():
@@ -65,6 +79,10 @@ def logout():
 
 
 # Get info
+#
+# Required:
+# CSRF Cookie
+#
 @app.route("/api/user/info", methods=['POST'])
 @jwt_required()
 def protected():
@@ -72,12 +90,27 @@ def protected():
 
 
 # Update User Info
+#
+# Required:
+# CSRF Cookie
+# password = md5 hash
+# avatar = url
+# create = datetime
+# favorite = array palettes id
+# block = bool
+#
 @app.route("/api/user/update", methods=['POST'])
 @jwt_required()
 def user_update():
     return update_user(request.json)
 
 
+# Add palette to favorite
+#
+# Required:
+# CSRF Cookie
+# favorite = palette id
+#
 @app.route("/api/user/favorite", methods=['POST'])
 @jwt_required()
 def user_favorite():
