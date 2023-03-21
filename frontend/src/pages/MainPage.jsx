@@ -1,5 +1,5 @@
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
-import PaletteService from "../API/PaletteService.js";
+import PaletteService from "../api/PaletteService.js";
 import useScrollPagination from "../hooks/useScrollPagination.js";
 
 const MainPage = () => {

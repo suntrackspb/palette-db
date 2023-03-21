@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {Autocomplete, Box, Button, TextField, Typography} from "@mui/material";
-import PaletteService from "../../../../API/PaletteService.js";
+import PaletteService from "../../../../api/PaletteService.js";
 
 const SaveForm = ({croppedImage, tags, selectedTags, setSelectedTags, store}) => {
   const navigate = useNavigate()

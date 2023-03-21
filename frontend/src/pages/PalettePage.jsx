@@ -7,7 +7,7 @@ import PaletteInfo from "../modules/PaletteInfo/PaletteInfo";
 import Loader from "../components/Loader/Loader.jsx";
 import ErrorBlock from "../components/ErrorBlock/ErrorBlock.jsx";
 
-import PaletteService from "../API/PaletteService.js";
+import PaletteService from "../api/PaletteService.js";
 
 const PaletteContent = () => {
   const data = useAsyncValue()

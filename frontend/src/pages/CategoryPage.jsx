@@ -1,4 +1,4 @@
-import PaletteService from "../API/PaletteService.js";
+import PaletteService from "../api/PaletteService.js";
 import useScrollPagination from "../hooks/useScrollPagination.js";
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
 import {useParams} from "react-router-dom";

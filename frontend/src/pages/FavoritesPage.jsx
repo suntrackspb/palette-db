@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import PaletteService from "../API/PaletteService.js";
+import PaletteService from "../api/PaletteService.js";
 import PageTitle from "../components/PageTitle/PageTitle.jsx";
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
 import useFetching from "../hooks/useFetching.js";

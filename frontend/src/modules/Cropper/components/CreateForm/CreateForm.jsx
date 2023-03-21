@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, FormLabel, Typography} from "@mui/material";
 import UploadIcon from '@mui/icons-material/Upload';
 import {sizes} from "../../data.js";
-import PaletteService from "../../../../API/PaletteService.js";
+import PaletteService from "../../../../api/PaletteService.js";
 
 const CreateForm = ({imageSettings, setImageSettings, file, setFile, setCroppedImage, crop, setLoading}) => {
   const [fileObject, setFileObject] = useState({});

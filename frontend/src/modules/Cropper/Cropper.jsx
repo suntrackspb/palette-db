@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import 'react-image-crop/dist/ReactCrop.css'
 import {Card} from "@mui/material";
-import PaletteService from "../../API/PaletteService.js";
+import PaletteService from "../../api/PaletteService.js";
 
 import Crop from './components/Crop/Crop.jsx'
 import CreateForm from "./components/CreateForm/CreateForm.jsx";

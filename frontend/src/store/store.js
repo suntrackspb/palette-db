@@ -1,6 +1,5 @@
 import {makeAutoObservable} from "mobx";
 import AuthService from "../api/AuthService.js";
-import {setCookie} from "../utils/cookie.js";
 import {cryptoPass} from "../utils/crypto.js";
 
 export default class Store {
