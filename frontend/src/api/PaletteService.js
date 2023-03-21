@@ -42,7 +42,8 @@ export class PaletteService {
       headers: {
         'X-CSRF-TOKEN': getCookie('csrf_access_token'),
         'x-api-key': X_API_KEY,
-      }
+      },
+      withCredentials: true
     })
     return res.data
   }
