@@ -8,7 +8,11 @@ load_dotenv()
 
 
 def connect():
-    conn = MongoClient(f'mongodb://{os.getenv("DB_HOST")}:{os.getenv("DB_PORT")}/')
+    conn = MongoClient(host=os.getenv("DB_HOST"),
+                       port=int(os.getenv("DB_PORT")),
+                       username=os.getenv("DB_USER"),
+                       password=os.getenv("DB_PASS"),
+                       authSource='admin', )
     db = conn.palettepicker
     return db
 
@@ -82,5 +86,3 @@ class UsersDB:
 
     def update_favorite(self, login, favorite):
         return self.conn.update_one({"login": login}, {"$set": {"favorite": favorite}})
-
-
