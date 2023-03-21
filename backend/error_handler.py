@@ -1,5 +1,7 @@
 import json
 
+from flask import jsonify
+
 
 def ce(status, code, text):
     obj = {
@@ -8,4 +10,4 @@ def ce(status, code, text):
         "text": text,
     }
     print(json.dumps(obj))
-    return json.dumps(obj)
+    return jsonify(obj)
