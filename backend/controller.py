@@ -80,7 +80,9 @@ def update_user_favorite(data):
     favorite = []
     for pid in data['favorite']:
         favorite.append(ObjectId(pid))
-    return JSE.encode(UsersDB().update_favorite(user, favorite))
+
+    UsersDB().update_favorite(user, favorite)
+    return JSE.encode(UsersDB().favorite(user))
 
 
 #
