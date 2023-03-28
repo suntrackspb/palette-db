@@ -37,6 +37,15 @@ export class PaletteService {
     return res.data
   }
 
+  static addToFavorite = async (data) => {
+    const res = await $api.post('/user/favorite', data, {
+      headers: {
+        'X-CSRF-TOKEN': getCookie('csrf_access_token')
+      }
+    })
+    return res.data
+  }
+
   static createPalette = async (data) => {
     const res = await axios.post(`${LOCAL_API_URL}/palettes/create`, data, {
       headers: {

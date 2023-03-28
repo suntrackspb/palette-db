@@ -13,9 +13,15 @@ import {Link} from "react-router-dom";
 import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import useAuth from "../../hooks/useAuth.js";
 import {observer} from "mobx-react-lite";
+import PaletteService from '../../api/PaletteService.js'
 
 const PaletteCard = ({palette}) => {
   const {store} = useAuth()
+
+  const handleAddFavorite = () => {
+    PaletteService.addToFavorite({favorite: [palette._id]})
+      .then(res => console.log(res))
+  }
 
   return (
     <Grid item lg={3} md={4} sm={6} xs={12}>
@@ -26,7 +32,10 @@ const PaletteCard = ({palette}) => {
           </Typography>
 
           {store.isAuth &&
-            <IconButton aria-label="Добавить в избранное">
+            <IconButton
+              aria-label="Добавить в избранное"
+              onClick={handleAddFavorite}
+            >
               <StarBorderRoundedIcon sx={{fontSize: 24}}/>
             </IconButton>}
         </CardActions>
