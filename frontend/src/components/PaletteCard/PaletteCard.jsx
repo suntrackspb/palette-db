@@ -1,9 +1,7 @@
 import {
-  Button,
   Card,
   CardActionArea,
   CardActions,
-  CardContent,
   CardMedia,
   Grid,
   IconButton,
@@ -12,11 +10,9 @@ import {
 import {Link} from "react-router-dom";
 import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
-import useAuth from "../../hooks/useAuth.js";
 import {observer} from "mobx-react-lite";
 
-const PaletteCard = ({palette, favoriteList, handleToggleFavorite}) => {
-  const {store} = useAuth()
+const PaletteCard = ({palette, favoriteList, handleToggleFavorite, store}) => {
 
   return (
     <Grid item lg={3} md={4} sm={6} xs={12}>

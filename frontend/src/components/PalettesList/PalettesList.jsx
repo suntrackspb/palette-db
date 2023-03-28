@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 
 import PaletteCard from "../PaletteCard/PaletteCard.jsx"
 import ErrorBlock from "../ErrorBlock/ErrorBlock.jsx";
@@ -9,7 +9,7 @@ import {observer} from "mobx-react-lite";
 import useFavorite from "../../hooks/useFavorite.js";
 
 const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
-  const {favoriteList, handleToggleFavorite} = useFavorite()
+  const {favoriteList, handleToggleFavorite, store} = useFavorite()
 
   if (handleScroll) {
     useEffect(() => {
@@ -35,6 +35,7 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
             palette={palette}
             favoriteList={favoriteList}
             handleToggleFavorite={handleToggleFavorite}
+            store={store}
           />)}
       </Grid>
 

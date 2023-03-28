@@ -53,7 +53,7 @@ const Header = () => {
                 </Button>
               </Link>
 
-              <Link to={`user/${store.user?._id?.$oid}`}>
+              <Link to={`user/${store.user?._id}`}>
                 <Button>
                   <Typography variant='p' component='span'>
                     Profile

@@ -31,8 +31,6 @@ const LoginForm = () => {
   const [action, setAction] = useState('signIn');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate()
-  const location = useLocation()
-  const fromPage = location.state?.from?.pathname || '/'
 
   const handleClickShowPassword = () => setShowPassword(prev => !prev);
   const handleSubmit = e => {
@@ -42,7 +40,7 @@ const LoginForm = () => {
         .then(() => {
           if (store.isAuth) {
             store.checkAuth()
-            navigate(fromPage, {replace: true})
+            navigate('/', {replace: true})
           }
         })
     } else {

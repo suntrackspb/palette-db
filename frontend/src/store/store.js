@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import AuthService from "../api/AuthService.js";
 import {cryptoPass} from "../utils/crypto.js";
+import UserService from "../api/UserService.js";
 
 export default class Store {
   user = {}
@@ -72,13 +73,23 @@ export default class Store {
 
   checkAuth = async () => {
     try {
-      const res = await AuthService.getUserInfo()
+      const res = await UserService.getUserInfo()
       localStorage.setItem('login', res.data.login)
       console.log(res)
 
       this.setAuth(true)
       this.setUser(res.data)
       this.setFavorite(res.data.favorite)
+    }
+    catch (e) {
+      console.log(e?.response?.data)
+    }
+  }
+
+  updateUser = async (data) => {
+    try {
+      const res = await UserService.setUserInfo(data)
+      console.log(res)
     }
     catch (e) {
       console.log(e?.response?.data)
