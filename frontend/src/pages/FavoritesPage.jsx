@@ -3,7 +3,6 @@ import PaletteService from "../api/PaletteService.js";
 import PageTitle from "../components/PageTitle/PageTitle.jsx";
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
 import useFetching from "../hooks/useFetching.js";
-import {observer} from "mobx-react-lite";
 
 const FavoritesPage = () => {
   const [data, setData] = useState([]);

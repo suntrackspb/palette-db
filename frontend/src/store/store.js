@@ -4,6 +4,7 @@ import {cryptoPass} from "../utils/crypto.js";
 
 export default class Store {
   user = {}
+  favorite = []
   isAuth = false
   error = ''
   success = false
@@ -23,6 +24,9 @@ export default class Store {
   }
   setSuccess = bool => {
     this.success = bool
+  }
+  setFavorite = arr => {
+    this.favorite = arr
   }
 
   login = async (login, password) => {
@@ -74,6 +78,7 @@ export default class Store {
 
       this.setAuth(true)
       this.setUser(res.data)
+      this.setFavorite(res.data.favorite)
     }
     catch (e) {
       console.log(e?.response?.data)

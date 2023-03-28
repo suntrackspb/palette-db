@@ -1,12 +1,15 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import PaletteCard from "../PaletteCard/PaletteCard.jsx"
 import ErrorBlock from "../ErrorBlock/ErrorBlock.jsx";
 import Loader from "../Loader/Loader.jsx";
 
 import {Container, Grid} from "@mui/material"
+import {observer} from "mobx-react-lite";
+import useFavorite from "../../hooks/useFavorite.js";
 
 const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
+  const {favoriteList, handleToggleFavorite} = useFavorite()
 
   if (handleScroll) {
     useEffect(() => {
@@ -18,7 +21,6 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
   }
 
 
-
   return (
     <Container maxWidth={"xl"} component='section'>
 
@@ -28,7 +30,12 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
 
       <Grid container spacing={4} padding='20px'>
         {data.map(palette =>
-          <PaletteCard key={palette._id} palette={palette}/>)}
+          <PaletteCard
+            key={palette._id}
+            palette={palette}
+            favoriteList={favoriteList}
+            handleToggleFavorite={handleToggleFavorite}
+          />)}
       </Grid>
 
       <Loader isLoading={isLoading}/>
@@ -38,4 +45,4 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
 };
 
 
-export default PalettesList;
+export default observer(PalettesList);

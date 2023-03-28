@@ -41,6 +41,7 @@ const LoginForm = () => {
       store.login(login.value.toLowerCase(), password.value)
         .then(() => {
           if (store.isAuth) {
+            store.checkAuth()
             navigate(fromPage, {replace: true})
           }
         })
