@@ -74,18 +74,22 @@ def authorization(data):
     db = UsersDB().auth(data)
     if db is None:
         return ce("Error", "0x0004", "Wrong username or password"), 400
-    if not db["verify"]:
-        return ce("Error", "0x0015", "Not verify e-mail")
+    try:
+        if not db["verify"]:
+            print("==" * 30)
+            return ce("Error", "0x0015", "Not verify e-mail"), 400
 
-    if db['login'] == data['login'] and db['password'] == data['password']:
-        access_token = create_access_token(identity=data['login'])
-        response = ce("Info", "0x0005", "Login Successful")
-        set_access_cookies(response, access_token)
-        # response = jsonify({"msg": "login successful"})
-        # set_access_cookies(response, access_token)
-        return response, 200
-    else:
-        ce("Error", "0x0006", "Wrong username or password"), 400
+        if db['login'] == data['login'] and db['password'] == data['password']:
+            access_token = create_access_token(identity=data['login'])
+            response = ce("Info", "0x0005", "Login Successful")
+            set_access_cookies(response, access_token)
+            # response = jsonify({"msg": "login successful"})
+            # set_access_cookies(response, access_token)
+            return response, 200
+        else:
+            return ce("Error", "0x0006", "Wrong username or password"), 400
+    except KeyError as e:
+        return ce("Error", "0x0018", "No field verify in db"), 400
 
 
 def verification_mail(uid, code):
