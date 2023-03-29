@@ -86,3 +86,9 @@ class UsersDB:
 
     def update_favorite(self, login, favorite):
         return self.conn.update_one({"login": login}, {"$set": {"favorite": favorite}})
+
+    def verify(self, login):
+        return self.conn.find({"login": login}, {"_id": 0, "verify": 1, "service_code": 1})
+
+    def update_verify(self, login):
+        return self.conn.update_one({"login": login}, {"$set": {"verify": True}})

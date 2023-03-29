@@ -6,13 +6,14 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify, redirect
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
+from flask_mail import Mail
 
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
-from controller import add_new_user, authorization, get_user_info, update_user
+from controller import add_new_user, authorization, get_user_info, update_user, verification_mail, send_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
 from error_handler import ce
 
@@ -28,8 +29,16 @@ app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=12)
 
+app.config["MAIL_SERVER"]=os.getenv('MAIL_SERVER')
+app.config["MAIL_PORT"] = os.getenv('MAIL_PORT')
+app.config["MAIL_USERNAME"] = os.getenv('MAIL_USERNAME')
+app.config["MAIL_PASSWORD"] = os.getenv('MAIL_PASSWORD')
+app.config["MAIL_USE_TLS"] = False
+app.config["MAIL_USE_SSL"] = True
+
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 jwt = JWTManager(app)
+mail = Mail(app)
 
 if app_log:
     logging.basicConfig(
@@ -51,7 +60,9 @@ if app_log:
 #
 @app.route("/api/user/signup", methods=['POST'])
 def signup():
-    return add_new_user(request.json)
+    email, code, uid = add_new_user(request.json)
+    send_mail(mail, email, code)
+    return uid, 200
 
 
 # Auth user, JTW token cookie
@@ -183,6 +194,11 @@ def admin_control():
     ip = request.headers.get('Cf-Connecting-Ip')
     if ip in ips:
         return render_template("admin.html")
+
+
+@app.route("/verify/<username>/<code>", methods=['GET'])
+def verify(username, code):
+    return verification_mail(username, code)
 
 
 ##############

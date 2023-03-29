@@ -3,16 +3,18 @@ import base64
 import os
 import re
 from datetime import datetime
+import hashlib
 
 from bson.objectid import ObjectId
-from flask import jsonify
-
-from database.db import UsersDB, PalettesDB
+from flask import jsonify, redirect
+from flask_mail import Mail, Message
 from flask_jwt_extended import set_access_cookies, create_access_token, get_jwt_identity
 
-from error_handler import ce
+from database.db import UsersDB, PalettesDB
 from database.MongoJson import JSE
 from converter.ImageFormater import crop_image, read_image
+from error_handler import ce
+
 
 mail_pattern = r'^[a-z0-9]+[\._-]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 pass_pattern = r'^[a-z0-9]{32}$'
@@ -32,13 +34,18 @@ def add_new_user(data):
     if not re.search(pass_pattern, data['password']):
         return ce("Error", "0x0003", "Check password"), 400
 
+    service_code = hashlib.sha1(f"{data['login']}{datetime.now()}".encode()).hexdigest()
+
     data['uid'] = next_users_count()
     data['avatar'] = None
     data['create'] = datetime.now()
     data['favorite'] = []
     data['block'] = False
+    data['verify'] = False
+    data['service_code'] = service_code
     print(data)
-    return JSE.encode(UsersDB().create(data)), 200
+    db = JSE.encode(UsersDB().create(data))
+    return [data['login'], service_code, db]
 
 
 def check_exist_user(login):
@@ -50,22 +57,35 @@ def next_users_count():
 
 
 def authorization(data):
-    if data['login'] and data['password']:
-        if re.search(mail_pattern, data['login']):
-            db = UsersDB().auth(data)
-            if db is None:
-                return ce("Error", "0x0004", "Wrong username or password"), 400
-            if db['login'] == data['login'] and db['password'] == data['password']:
-                access_token = create_access_token(identity=data['login'])
-                # response = ce("Info", "0x0005", "Login Successful")
-                # set_access_cookies(response, access_token)
-                response = jsonify({"msg": "login successful"})
-                set_access_cookies(response, access_token)
-                return response, 200
-            else:
-                ce("Error", "0x0006", "Wrong username or password"), 401
-        else:
-            return ce("Error", "0x0007", "Incorrect symbols password or username"), 401
+    if not data['login'] and data['password']:
+        return ce("Error", "0x0007", "Incorrect symbols password or username"), 401
+    if not re.search(mail_pattern, data['login']):
+        return ce("Error", "0x0007", "Incorrect symbols password or username"), 401
+
+    db = UsersDB().auth(data)
+    if db is None:
+        return ce("Error", "0x0004", "Wrong username or password"), 400
+    if not db["verify"]:
+        return ce("Error", "0x0015", "Not verify e-mail")
+
+    if db['login'] == data['login'] and db['password'] == data['password']:
+        access_token = create_access_token(identity=data['login'])
+        response = ce("Info", "0x0005", "Login Successful")
+        set_access_cookies(response, access_token)
+        # response = jsonify({"msg": "login successful"})
+        # set_access_cookies(response, access_token)
+        return response, 200
+    else:
+        ce("Error", "0x0006", "Wrong username or password"), 400
+
+
+def verification_mail(login, code):
+    db = UsersDB().verify(login)
+    if code == db['service_code']:
+        UsersDB().update_verify(login)
+        return redirect("/login", code=302)
+    else:
+        return ce("Error", "0x0016", "Wrong code"), 400
 
 
 def get_user_info(data):
@@ -177,6 +197,12 @@ def save_palette_in_db(data):
     }
     return JSE.encode(PalettesDB().create(obj)), 200
 
+
 ##############
 # SERVICE
 ##############
+def send_mail(mail, user_mail, code):
+    msg = Message('Hello', sender=os.getenv("MAIL_USERNAME"), recipients=[user_mail])
+    msg.body = f"Follow this link to activate your account and confirm your email: {os.getenv('BASE_URL')}/verify/{user_mail}/{code}"
+    mail.send(msg)
+    return True
