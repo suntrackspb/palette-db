@@ -39,6 +39,7 @@ app.config["MAIL_USE_SSL"] = True
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 jwt = JWTManager(app)
 mail = Mail(app)
+mail.init_app(app)
 
 if app_log:
     logging.basicConfig(
@@ -60,9 +61,15 @@ if app_log:
 #
 @app.route("/api/user/signup", methods=['POST'])
 def signup():
-    email, code, uid = add_new_user(request.json)
-    send_mail(mail, email, code)
-    return uid, 200
+    array = add_new_user(request.json)
+    print("=" * 15)
+    print(array)
+    print(len(array))
+    print("=" * 15)
+    if len(array) == 3:
+        send_mail(array[0], array[1], array[2])
+        return jsonify({"status": "OK"}), 200
+    return jsonify({"status": "Error"}), 400
 
 
 # Auth user, JTW token cookie
