@@ -16,6 +16,7 @@
 4. > create .env file
 5. > settings to env file
 6. ```
+    BASE_URL="http://127.0.0.1:5001"
     SRV_HOST="0.0.0.0"
     SRV_PORT=5001
     DEBUG=True
@@ -36,7 +37,12 @@
     HOST_IMAGE_URL="https://default_database_images"
     USERS_IMAGE_URL="https://users_upload_images"
     
-    ALLOW_IPS="192.168.0.100,192.168.0.101,ip_allowed_to_admin_panel"
+    ALLOW_IPS="192.168.0.100,192.168.0.101,ip_allowed_to_admin_panel
+   
+    MAIL_USERNAME="mail@gmail.com"
+    MAIL_PASSWORD="mypassword"
+    MAIL_PORT=465
+    MAIL_SMTP="smtp.gmail.com"
 
 7. > if you need uncomment secure options in app.py and send "dev api key" in headers
 8. > python app.py
