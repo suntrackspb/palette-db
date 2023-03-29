@@ -109,7 +109,7 @@ def user_update():
 #
 # Required:
 # CSRF Cookie
-# favorite = palette id
+# favorite = array(palette ids)
 #
 @app.route("/api/user/favorite", methods=['POST'])
 @jwt_required()
@@ -122,42 +122,79 @@ def user_favorite():
 ##############
 
 # Get palettes list
+#
+# Required:
+# count = int
+# skip = int
+#
 @app.route("/api/palettes/list", methods=['POST'])
 def palettes_list():
     return get_palettes_list(request.json)
 
 
 # Get palette by ID
+#
+# Required:
+# id = palette id
+#
 @app.route("/api/palettes/id", methods=['POST'])
 def palette_by_id():
     return get_palette_by_id(request.json)
 
 
 # Get palettes by colors
+#
+# Required:
+# count = int
+# skip = int
+# tags = array(tags)
+#
 @app.route("/api/palettes/colors", methods=['POST'])
 def palette_color():
     return get_palette_by_tags(request.json)
 
 
+# Get all tags
+#
 @app.route("/api/palettes/tags", methods=['POST'])
 def tags_list():
     return get_tags()
 
 
+#
+# Required:
+# CSRF Cookie
+#
 @app.route("/api/palettes/favorite", methods=['POST'])
 @jwt_required()
 def get_fav_palettes():
     return get_favorite_user_palettes(request.json)
 
 
-# Get palettes by colors
+# Create new palette
+#
+# Required:
+# CSRF Cookie
+# file = form.files
+# data = json
+#
+# example json: {'x': 633, 'y': 42, 'width': 400.00000000000006, 'height': 265,
+# 'unit': 'px', 'realWidth': 3840, 'realHeight': 1080, 'scale': 3.2, 'mime': 'png'}
+#
 @app.route("/api/palettes/create", methods=['POST'])
 @jwt_required()
 def create_palette():
     return prepare_palette(request.form, request.files['file'])
 
 
-# Get palettes by colors
+# Save new palette in database
+#
+# Required:
+# CSRF Cookie
+# image_b64 = base64 encoded image
+# colors = array(hex colors)
+# tags = array(tags)
+#
 @app.route("/api/palettes/save", methods=['POST'])
 @jwt_required()
 def save_palette():
