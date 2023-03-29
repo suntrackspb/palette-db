@@ -10,7 +10,6 @@ from flask import Flask, request, render_template, jsonify, redirect
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
-from flask_mail import Mail
 
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail, send_mail
@@ -29,17 +28,8 @@ app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=12)
 
-app.config["MAIL_SERVER"]=os.getenv('MAIL_SERVER')
-app.config["MAIL_PORT"] = os.getenv('MAIL_PORT')
-app.config["MAIL_USERNAME"] = os.getenv('MAIL_USERNAME')
-app.config["MAIL_PASSWORD"] = os.getenv('MAIL_PASSWORD')
-app.config["MAIL_USE_TLS"] = False
-app.config["MAIL_USE_SSL"] = True
-
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 jwt = JWTManager(app)
-mail = Mail(app)
-mail.init_app(app)
 
 if app_log:
     logging.basicConfig(
@@ -59,17 +49,16 @@ if app_log:
 # login = mail@mail.ru
 # password = md5 hash
 #
+@app.route("/verify/<userid>/<code>", methods=['GET'])
+def verify(userid, code):
+    print(userid)
+    print(code)
+    return verification_mail(userid, code)
+
+
 @app.route("/api/user/signup", methods=['POST'])
 def signup():
-    array = add_new_user(request.json)
-    print("=" * 15)
-    print(array)
-    print(len(array))
-    print("=" * 15)
-    if len(array) == 3:
-        send_mail(array[0], array[1], array[2])
-        return jsonify({"status": "OK"}), 200
-    return jsonify({"status": "Error"}), 400
+    return add_new_user(request.json)
 
 
 # Auth user, JTW token cookie
@@ -201,11 +190,6 @@ def admin_control():
     ip = request.headers.get('Cf-Connecting-Ip')
     if ip in ips:
         return render_template("admin.html")
-
-
-@app.route("/verify/<username>/<code>", methods=['GET'])
-def verify(username, code):
-    return verification_mail(username, code)
 
 
 ##############

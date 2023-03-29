@@ -5,9 +5,12 @@ import re
 from datetime import datetime
 import hashlib
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 from bson.objectid import ObjectId
 from flask import jsonify, redirect
-from flask_mail import Mail, Message
 from flask_jwt_extended import set_access_cookies, create_access_token, get_jwt_identity
 
 from database.db import UsersDB, PalettesDB
@@ -20,6 +23,11 @@ mail_pattern = r'^[a-z0-9]+[\._-]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 pass_pattern = r'^[a-z0-9]{32}$'
 url_pattern = r'^(http:\/\/|https:\/\/)[a-z0-9\/\.\-\_]+$'
 palette_pattern = r'^[a-z0-9]{24}$'
+
+mail_srv = os.getenv("MAIL_SMTP")
+mail_user = os.getenv("MAIL_USERNAME")
+mail_pass = os.getenv("MAIL_PASSWORD")
+mail_port = int(os.getenv("MAIL_PORT"))
 
 
 ##############
@@ -43,9 +51,10 @@ def add_new_user(data):
     data['block'] = False
     data['verify'] = False
     data['service_code'] = service_code
-    print(data)
+    # print(data)
     db = JSE.encode(UsersDB().create(data))
-    return [data['login'], service_code, db]
+    send_mail(data['login'], db, service_code)
+    return db
 
 
 def check_exist_user(login):
@@ -79,10 +88,12 @@ def authorization(data):
         ce("Error", "0x0006", "Wrong username or password"), 400
 
 
-def verification_mail(login, code):
-    db = UsersDB().verify(login)
+def verification_mail(uid, code):
+    db = UsersDB().verify(ObjectId(uid))[0]
+    if db is None:
+        return ce("Error", "0x0017", "Wrong user"), 400
     if code == db['service_code']:
-        UsersDB().update_verify(login)
+        UsersDB().update_verify(ObjectId(uid))
         return redirect("/login", code=302)
     else:
         return ce("Error", "0x0016", "Wrong code"), 400
@@ -201,8 +212,20 @@ def save_palette_in_db(data):
 ##############
 # SERVICE
 ##############
-def send_mail(mail, user_mail, code):
-    msg = Message('Hello', sender=os.getenv("MAIL_USERNAME"), recipients=[user_mail])
-    msg.body = f"Follow this link to activate your account and confirm your email: {os.getenv('BASE_URL')}/verify/{user_mail}/{code}"
-    mail.send(msg)
-    return True
+def send_mail(email, db, code):
+    uid = db.replace('"', '')
+    server = smtplib.SMTP(mail_srv, mail_port)
+    server.starttls()
+    server.login(mail_user, mail_pass)
+
+    msg = MIMEMultipart()
+    msg['From'] = mail_user
+    msg['To'] = email
+    msg['Subject'] = 'Mail verification code'
+    message = f'Follow this link to activate your account and confirm your email: ' \
+              f'{os.getenv("BASE_URL")}/verify/{uid}/{code}'
+    msg.attach(MIMEText(message))
+
+    server.sendmail(mail_user, email, msg.as_string())
+
+    server.quit()
