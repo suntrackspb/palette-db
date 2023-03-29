@@ -76,7 +76,6 @@ def authorization(data):
         return ce("Error", "0x0004", "Wrong username or password"), 400
     try:
         if not db["verify"]:
-            print("==" * 30)
             return ce("Error", "0x0015", "Not verify e-mail"), 400
 
         if db['login'] == data['login'] and db['password'] == data['password']:

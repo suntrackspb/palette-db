@@ -49,13 +49,6 @@ if app_log:
 # login = mail@mail.ru
 # password = md5 hash
 #
-@app.route("/verify/<userid>/<code>", methods=['GET'])
-def verify(userid, code):
-    print(userid)
-    print(code)
-    return verification_mail(userid, code)
-
-
 @app.route("/api/user/signup", methods=['POST'])
 def signup():
     return add_new_user(request.json)
@@ -190,6 +183,11 @@ def admin_control():
     ip = request.headers.get('Cf-Connecting-Ip')
     if ip in ips:
         return render_template("admin.html")
+
+
+@app.route("/verify/<userid>/<code>", methods=['GET'])
+def verify(userid, code):
+    return verification_mail(userid, code)
 
 
 ##############
