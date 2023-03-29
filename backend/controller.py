@@ -99,8 +99,9 @@ def update_user(data):
         "favorite": [ObjectId(val) for val in data['favorite']],
         "block": data['block']
     }
-    return user_data, 200
-    # return UsersDB().update(user_data), 200
+    UsersDB().update(user_data)
+    data = UsersDB().auth({"login": user})
+    return JSE.encode(data), 200
 
 
 ##############
