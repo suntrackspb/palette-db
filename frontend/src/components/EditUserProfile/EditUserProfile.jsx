@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
 import {cryptoPass} from "../../utils/crypto.js";
 import {
@@ -41,6 +41,13 @@ const EditUserProfile = () => {
         store.successMessage && resetForm()
       })
   }
+
+  useEffect(() => {
+    return () => {
+      store.setSuccessMessage('')
+      store.setErrorMessage('')
+    }
+  }, []);
 
   const resetForm = () => {
     setOldPassword('')
