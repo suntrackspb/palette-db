@@ -250,7 +250,7 @@ def refresh_expiring_jwt(response):
 # @app.before_request
 # def head_key():
 #     if request.method == 'POST':
-#         now_date = datetime.now().strftime('%Y-%m-%d')
+#         now_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
 #         prod_api = hashlib.sha1(f"D4f0g6g{now_date}CC22".encode()).hexdigest()
 #         head_api = request.headers.get("x-api-key")
 #         if head_api != dev_api and head_api != prod_api:
@@ -263,12 +263,13 @@ def refresh_expiring_jwt(response):
 def after_request(response):
     api = request.headers.get('X-Api-Key')
     ip = request.headers.get('Cf-Connecting-Ip')
-    ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
+    # ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
     data = request.headers.get('Show-Data')
     if data == "True":
         app.logger.warning(request.headers)
         app.logger.warning(request.get_data())
-    app.logger.info(f'AR:{ts} {ip} {request.method} {response.status} {request.full_path} {request.scheme} {api}')
+    app.logger.info(f'AR:IP:{ip}; {request.method} {response.status}; '
+                    f'FullPath:{request.scheme}|{request.full_path}; ApiKey:{api}\n{"===" * 30}')
     return response
 
 
