@@ -6,13 +6,13 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 
-from flask import Flask, request, render_template, jsonify, redirect
+from flask import Flask, request, render_template
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
 
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
-from controller import add_new_user, authorization, get_user_info, update_user, verification_mail, send_mail
+from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
 from error_handler import ce
 
@@ -247,16 +247,16 @@ def refresh_expiring_jwt(response):
         return response
 
 
-# @app.before_request
-# def head_key():
-#     if request.method == 'POST':
-#         now_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
-#         prod_api = hashlib.sha1(f"D4f0g6g{now_date}CC22".encode()).hexdigest()
-#         head_api = request.headers.get("x-api-key")
-#         if head_api != dev_api and head_api != prod_api:
-#             # print(f"H: {head_api}; D: {dev_api}; P:{prod_api}")
-#             app.logger.info(f'LP: {request.method} {request.full_path} H: {head_api}; D: {dev_api}; P:{prod_api}')
-#             return "Forbidden", 403
+@app.before_request
+def head_key():
+    if request.method == 'POST':
+        now_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+        prod_api = hashlib.sha1(f"D4f0g6g{now_date}CC22".encode()).hexdigest()
+        head_api = request.headers.get("x-api-key")
+        if head_api != dev_api and head_api != prod_api:
+            # print(f"H: {head_api}; D: {dev_api}; P:{prod_api}")
+            app.logger.info(f'LP: {request.method} {request.full_path} H: {head_api}; D: {dev_api}; P:{prod_api}')
+            return "Forbidden", 403
 
 
 @app.after_request
