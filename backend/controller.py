@@ -76,7 +76,6 @@ def authorization(data):
         return ce("Error", "0x0007", "Incorrect symbols password or username"), 401
 
     db = UsersDB().auth(data)
-    print(db)
     if db is None:
         return ce("Error", "0x0004", "Wrong username or password"), 400
     try:
@@ -132,7 +131,7 @@ def update_user(data):
     user = get_jwt_identity()
     user_info = check_exist_user(user)
     user_data = {"login": user}
-    if user_info['password'] == data["old_password"]:
+    if user_info['password'] != data["old_password"]:
         return ce("Error", "0x0019", "Wrong old password"), 400
 
     if data["new_password"]:
