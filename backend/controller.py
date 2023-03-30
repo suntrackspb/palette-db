@@ -126,16 +126,19 @@ def update_user_favorite(data):
 def update_user(data):
     user = get_jwt_identity()
     user_info = check_exist_user(user)
+    user_data = {"login": user}
     if user_info['password'] == data["old_password"]:
-        if not re.search(pass_pattern, data['new_password']):
-            return ce("Error", "0x0003", "Invalid hash password"), 400
-        if not re.search(url_pattern, data['avatar']):
-            return ce("Error", "0x0020", "Invalid url format"), 400
-        user_data = {"login": user}
+
         if data["new_password"]:
+            if not re.search(pass_pattern, data['new_password']):
+                return ce("Error", "0x0003", "Invalid hash password"), 400
             user_data["password"] = data['new_password']
+
         if data["avatar"]:
+            if not re.search(url_pattern, data['avatar']):
+                return ce("Error", "0x0020", "Invalid url format"), 400
             user_data["avatar"] = data['avatar']
+
         UsersDB().update(user_data)
         data = UsersDB().auth({"login": user})
         return JSE.encode(data), 200
