@@ -270,6 +270,8 @@ def head_key():
 def after_request(response):
     api = request.headers.get('X-Api-Key')
     ip = request.headers.get('Cf-Connecting-Ip')
+    if ip is None:
+        ip = request.remote_addr
     # ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
     data = request.headers.get('Show-Data')
     if data == "True":
