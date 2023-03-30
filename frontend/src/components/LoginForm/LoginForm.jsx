@@ -59,6 +59,8 @@ const LoginForm = () => {
 
   const changeAction = () => {
     setAction(prev => prev === 'signIn' ? 'signUp' : 'signIn')
+    login.setValue('')
+    password.setValue('')
   }
 
   return (
@@ -110,7 +112,7 @@ const LoginForm = () => {
             </InputAdornment>}
         />
         <FormHelperText id="outlined-password" sx={{color: '#f44336'}}>
-          {action === 'signUp' && password.error}
+          {action === 'signUp' && !!password.value && password.error}
         </FormHelperText>
       </FormControl>
 
