@@ -9,9 +9,9 @@ const UserProfilePage = () => {
   const {store} = useAuth()
 
   return (
-    <Box className='flex-sb' sx={{gap: 2}}>
+    <Box sx={{display: 'flex', gap: 2, mt: 2}}>
       <UserProfile data={store.user}/>
-      <EditUserProfile data={store.user}/>
+      <EditUserProfile store={store}/>
     </Box>
   );
 };

@@ -6,7 +6,7 @@ import ContentBlock from "../ContentBlock/ContentBlock.jsx";
 const UserProfile = ({data}) => {
   const {avatar, login, create} = data
   return (
-    <ContentBlock styleProps={{mt: 2}}>
+    <ContentBlock>
       {login
         ? <Box className='flex-col-c' sx={{gap: 1}}>
             <Box component='img' sx={styles.img} src={avatar}/>
