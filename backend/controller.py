@@ -105,7 +105,6 @@ def verification_mail(uid, code):
 def get_user_info(data):
     user = get_jwt_identity()
     data = UsersDB().auth({"login": user})
-    data.pop('password')
     return JSE.encode(data), 200
 
 
