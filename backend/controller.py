@@ -136,7 +136,7 @@ def update_user(data):
         data = UsersDB().auth({"login": user})
         return JSE.encode(data), 200
     else:
-        return ce("Error", "0x0008", "Wrong old password"), 400
+        return ce("Error", "0x0019", "Wrong old password"), 400
 
 
 ##############
