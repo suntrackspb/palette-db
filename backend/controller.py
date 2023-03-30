@@ -131,7 +131,7 @@ def update_user(data):
     user = get_jwt_identity()
     user_info = check_exist_user(user)
     user_data = {"login": user}
-    if user_info['password'] == data["old_password"]:
+    if user_info['password'] != data["old_password"]:
         return ce("Error", "0x0019", "Wrong old password"), 400
 
     if data["new_password"]:
