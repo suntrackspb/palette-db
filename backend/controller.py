@@ -40,7 +40,7 @@ def add_new_user(data):
     if not re.search(mail_pattern, data['login']):
         return ce("Error", "0x0002", "Check e-mail"), 400
     if not re.search(pass_pattern, data['password']):
-        return ce("Error", "0x0003", "Check password"), 400
+        return ce("Error", "0x0003", "Invalid hash password"), 400
 
     service_code = hashlib.sha1(f"{data['login']}{datetime.now()}".encode()).hexdigest()
 
@@ -127,6 +127,10 @@ def update_user(data):
     user = get_jwt_identity()
     user_info = check_exist_user(user)
     if user_info['password'] == data["old_password"]:
+        if not re.search(pass_pattern, data['new_password']):
+            return ce("Error", "0x0003", "Invalid hash password"), 400
+        if not re.search(url_pattern, data['avatar']):
+            return ce("Error", "0x0020", "Invalid url format"), 400
         user_data = {"login": user}
         if data["new_password"]:
             user_data["password"] = data['password']
