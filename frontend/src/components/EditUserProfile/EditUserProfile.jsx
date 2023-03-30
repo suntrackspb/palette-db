@@ -37,18 +37,19 @@ const EditUserProfile = ({store}) => {
       new_password: password.value ? cryptoPass(password.value) : false,
       avatar: avatar ? avatar : false
     }
-
-    setOldPassword('')
-    setAvatar('')
-    password.setValue('')
-
-    console.log(userData)
     UserService.setUserInfo(userData)
       .then(res => {
-        console.log(res)
         setSuccessMessage('Изменения успешно применены')
         store.setUser(res.data)
       })
+    resetForm()
+  }
+
+  const resetForm = () => {
+    setOldPassword('')
+    setAvatar('')
+    password.setValue('')
+    confirmPassword.setValue('')
   }
 
   return (
@@ -60,15 +61,10 @@ const EditUserProfile = ({store}) => {
         <OutlinedInput
           value={avatar}
           onChange={e => setAvatar(e.target.value)}
-          autoFocus
           id="outlined-email"
           label="Ссылка на аватарку"
           type="url"
-          // error={action === 'signUp' && !!login.value && !login.isValid}
         />
-        {/*<FormHelperText id="outlined-email" sx={{color: '#f44336'}}>*/}
-        {/*  {action === 'signUp' && login.error}*/}
-        {/*</FormHelperText>*/}
       </FormControl>
 
       <FormControl variant="outlined" sx={{width: '100%'}}>
@@ -148,6 +144,7 @@ const EditUserProfile = ({store}) => {
         variant='contained'
         color='secondary'
         sx={{px: 4}}
+        disabled={!(password.value === confirmPassword.value && !!oldPassword)}
       >
         <Typography component='span'>
           Сохранить
