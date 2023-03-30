@@ -94,11 +94,9 @@ def protected():
 #
 # Required:
 # CSRF Cookie
-# password = md5 hash
+# old_password = md5 hash
 # avatar = url
-# create = datetime
-# favorite = array palettes id
-# block = bool
+# new_password = md5 hash
 #
 @app.route("/api/user/update", methods=['POST'])
 @jwt_required()
