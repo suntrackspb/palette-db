@@ -29,6 +29,10 @@ mail_user = os.getenv("MAIL_USERNAME")
 mail_pass = os.getenv("MAIL_PASSWORD")
 mail_port = int(os.getenv("MAIL_PORT"))
 
+# Проверяем наличие всех обязательных полей входных данных
+#     if not all(field in data for field in REQUIRED_FIELDS):
+#         return ce("Error", "0x0004", "Missing required fields"), 400
+
 
 ##############
 # USERS
@@ -127,22 +131,21 @@ def update_user(data):
     user_info = check_exist_user(user)
     user_data = {"login": user}
     if user_info['password'] == data["old_password"]:
-
-        if data["new_password"]:
-            if not re.search(pass_pattern, data['new_password']):
-                return ce("Error", "0x0003", "Invalid hash password"), 400
-            user_data["password"] = data['new_password']
-
-        if data["avatar"]:
-            if not re.search(url_pattern, data['avatar']):
-                return ce("Error", "0x0020", "Invalid url format"), 400
-            user_data["avatar"] = data['avatar']
-
-        UsersDB().update(user_data)
-        data = UsersDB().auth({"login": user})
-        return JSE.encode(data), 200
-    else:
         return ce("Error", "0x0019", "Wrong old password"), 400
+
+    if data["new_password"]:
+        if not re.search(pass_pattern, data['new_password']):
+            return ce("Error", "0x0003", "Invalid hash password"), 400
+        user_data["password"] = data['new_password']
+
+    if data["avatar"]:
+        if not re.search(url_pattern, data['avatar']):
+            return ce("Error", "0x0020", "Invalid url format"), 400
+        user_data["avatar"] = data['avatar']
+
+    UsersDB().update(user_data)
+    data = UsersDB().auth({"login": user})
+    return JSE.encode(data), 200
 
 
 ##############
