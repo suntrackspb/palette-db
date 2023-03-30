@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
-import UserService from "../../api/UserService.js";
 import {cryptoPass} from "../../utils/crypto.js";
 import {
-  Box,
   Button,
   FormControl,
   FormHelperText,
@@ -16,17 +14,18 @@ import {
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import useValidation from "../../hooks/useValidation.js";
 import useConfirmPassword from "../../hooks/useConfirmPassword.js";
+import useAuth from "../../hooks/useAuth.js";
+import {observer} from "mobx-react-lite";
 
-const EditUserProfile = ({store}) => {
-  const password = useValidation('', 'password');
-  // const [confirmPassword, setConfirmPassword] = useState('');
-  const confirmPassword = useConfirmPassword('', password.value)
+const EditUserProfile = () => {
+  const {store} = useAuth()
+  const newPassword = useValidation('', 'password');
+  const confirmPassword = useConfirmPassword('', newPassword.value)
   const [avatar, setAvatar] = useState('');
   const [oldPassword, setOldPassword] = useState('');
 
 
   const [showPassword, setShowPassword] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
 
   const handleClickShowPassword = () => setShowPassword(prev => !prev);
 
@@ -34,21 +33,19 @@ const EditUserProfile = ({store}) => {
     e.preventDefault()
     const userData = {
       old_password: oldPassword ? cryptoPass(oldPassword) : false,
-      new_password: password.value ? cryptoPass(password.value) : false,
+      new_password: newPassword.value ? cryptoPass(newPassword.value) : false,
       avatar: avatar ? avatar : false
     }
-    UserService.setUserInfo(userData)
-      .then(res => {
-        setSuccessMessage('Изменения успешно применены')
-        store.setUser(res.data)
+    store.updateUser(userData)
+      .then(() => {
+        store.successMessage && resetForm()
       })
-    resetForm()
   }
 
   const resetForm = () => {
     setOldPassword('')
     setAvatar('')
-    password.setValue('')
+    newPassword.setValue('')
     confirmPassword.setValue('')
   }
 
@@ -70,12 +67,12 @@ const EditUserProfile = ({store}) => {
       <FormControl variant="outlined" sx={{width: '100%'}}>
         <InputLabel htmlFor="newPassword">Новый пароль</InputLabel>
         <OutlinedInput
-          value={password.value}
-          onChange={password.onChange}
+          value={newPassword.value}
+          onChange={newPassword.onChange}
           id="newPassword"
           type={showPassword ? 'text' : 'password'}
           label="Новый пароль"
-          error={!!password.value && !password.isValid}
+          error={!!newPassword.value && !newPassword.isValid}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -88,7 +85,7 @@ const EditUserProfile = ({store}) => {
             </InputAdornment>}
         />
         <FormHelperText id="outlined-password" sx={{color: '#f44336'}}>
-          {!!password.value && password.error}
+          {!!newPassword.value && newPassword.error}
         </FormHelperText>
       </FormControl>
 
@@ -144,18 +141,21 @@ const EditUserProfile = ({store}) => {
         variant='contained'
         color='secondary'
         sx={{px: 4}}
-        disabled={!(password.value === confirmPassword.value && !!oldPassword)}
+        disabled={!(newPassword.value === confirmPassword.value && !!oldPassword)}
       >
         <Typography component='span'>
           Сохранить
         </Typography>
       </Button>
 
-      {successMessage &&
-        <Typography color='success.main' textAlign='center'>{successMessage}</Typography>}
+      {store.successMessage &&
+        <Typography color='success.main' textAlign='center'>{store.successMessage}</Typography>}
+
+      {store.errorMessage &&
+        <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}
 
     </ContentBlock>
   );
 };
 
-export default EditUserProfile;
+export default observer(EditUserProfile);

@@ -61,17 +61,18 @@ const LoginForm = () => {
     setAction(prev => prev === 'signIn' ? 'signUp' : 'signIn')
     login.setValue('')
     password.setValue('')
+    store.setErrorMessage('')
   }
 
   return (
     <ContentBlock styleProps={styles.block} component='form' onSubmit={handleSubmit}>
       <PageTitle title={action === 'signIn' ? 'Авторизация' : 'Регистрация'} mt='0'/>
 
-      {store.error &&
-        <Typography color='error' textAlign='center'>{store.error}</Typography>}
+      {store.errorMessage &&
+        <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}
 
-      {store.success &&
-        <Typography color='success.main' textAlign='center'>Вы успешно зарегистрировались</Typography>}
+      {store.successMessage &&
+        <Typography color='success.main' textAlign='center'>{store.successMessage}</Typography>}
 
       <FormControl>
         <InputLabel htmlFor="outlined-email">Email</InputLabel>

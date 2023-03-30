@@ -2,12 +2,14 @@ import {makeAutoObservable} from "mobx";
 import AuthService from "../api/AuthService.js";
 import {cryptoPass} from "../utils/crypto.js";
 import UserService from "../api/UserService.js";
+import {vocabulary} from "../vocabulary/vocabulary";
 
 export default class Store {
   user = {}
   favorite = []
   isAuth = false
-  error = ''
+  errorMessage = ''
+  successMessage = ''
   success = false
 
   constructor() {
@@ -20,8 +22,11 @@ export default class Store {
   setUser = user => {
     this.user = user
   }
-  setError = error => {
-    this.error = error
+  setErrorMessage = message => {
+    this.errorMessage = message
+  }
+  setSuccessMessage = message => {
+    this.successMessage = message
   }
   setSuccess = bool => {
     this.success = bool
@@ -38,11 +43,11 @@ export default class Store {
       localStorage.setItem('login', login)
       this.setAuth(true)
       this.setUser({login})
-      this.setError('')
+      this.setErrorMessage('')
     }
     catch (e) {
       console.log(e?.response?.data)
-      this.setError(e?.response?.data?.text)
+      this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
     }
   }
   registration = async (login, password) => {
@@ -51,11 +56,13 @@ export default class Store {
       console.log(res)
 
       this.setSuccess(true)
-      this.setError('')
+      this.setSuccessMessage(vocabulary.registrationSuccess)
+      this.setErrorMessage('')
     }
     catch (e) {
       console.log(e?.response?.data)
-      this.setError(e?.response?.data?.text)
+      this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
+      this.setSuccessMessage('')
     }
   }
   logout = async () => {
@@ -89,10 +96,13 @@ export default class Store {
   updateUser = async (data) => {
     try {
       const res = await UserService.setUserInfo(data)
-      console.log(res)
+      this.setUser(res.data)
+      this.setSuccessMessage(vocabulary.editProfileSuccess)
+      this.setErrorMessage('')
     }
     catch (e) {
-      console.log(e?.response?.data)
+      this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
+      this.setSuccessMessage('')
     }
   }
 
