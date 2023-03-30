@@ -63,8 +63,7 @@ class PalettesDB:
 
 class UsersDB:
     def __init__(self):
-        self.db = connect().users
-        self.conn = self.db
+        self.conn = connect().users
 
     def count(self):
         return self.conn.count_documents({})
@@ -92,3 +91,38 @@ class UsersDB:
 
     def update_verify(self, uid):
         return self.conn.update_one({"_id": uid}, {"$set": {"verify": True}})
+
+
+class AdminPalettes:
+    def __init__(self):
+        self.conn = connect().palettes
+
+    def palettes_list(self):
+        data = to_url(list(self.conn.find({"owner": { "$ne": "host" }}, {
+            "name": 1, "src": 1, "owner": 1
+        }).sort("_id", -1).limit(50).skip(0)))
+        return data
+
+
+class AdminUsers:
+    def __init__(self):
+        self.conn = connect().users
+
+    def user_list(self):
+        return self.conn.find()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

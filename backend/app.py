@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, render_template_string
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
@@ -14,6 +14,7 @@ from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
+from controller import admin_get_users, admin_get_palettes
 from error_handler import ce
 
 load_dotenv()
@@ -218,8 +219,14 @@ def show_log():
 def admin_control():
     ips = os.getenv("ALLOW_IPS").split(',')
     ip = request.headers.get('Cf-Connecting-Ip')
+    if ip is None:
+        ip = request.remote_addr
     if ip in ips:
-        return render_template("admin.html")
+        users = admin_get_users()
+        palettes = admin_get_palettes()
+        return render_template("admin.html", users=users, palettes=palettes)
+    else:
+        return render_template_string("Access denied")
 
 
 @app.route("/verify/<userid>/<code>", methods=['GET'])

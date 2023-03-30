@@ -13,7 +13,7 @@ from bson.objectid import ObjectId
 from flask import jsonify, redirect
 from flask_jwt_extended import set_access_cookies, create_access_token, get_jwt_identity
 
-from database.db import UsersDB, PalettesDB
+from database.db import UsersDB, PalettesDB, AdminUsers, AdminPalettes
 from database.MongoJson import JSE
 from converter.ImageFormater import crop_image, read_image
 from error_handler import ce
@@ -232,3 +232,16 @@ def send_mail(email, db, code):
     server.sendmail(mail_user, email, msg.as_string())
 
     server.quit()
+
+
+##############
+# SERVICE
+##############
+
+def admin_get_users():
+    # return JSE.encode(AdminUsers().user_list())
+    return list(AdminUsers().user_list())
+
+
+def admin_get_palettes():
+    return AdminPalettes().palettes_list()
