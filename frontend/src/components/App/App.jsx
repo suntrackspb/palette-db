@@ -56,6 +56,10 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='user/:id' element={<RequireAuth element={<UserProfilePage/>}/>}/>
     <Route path='palette/favorites' element={<RequireAuth element={<FavoritesPage/>}/>}/>
 
+    <Route path='controls'/>
+    <Route path='logs'/>
+    <Route path='verify'/>
+
     <Route path='login' element={<LoginPage/>}/>
     <Route path='test' element={<TestPage/>}/>
     <Route path='*' element={<NotFound/>}/>

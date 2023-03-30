@@ -9,7 +9,7 @@ const UserProfile = ({data}) => {
     <ContentBlock styleProps={{mt: 2}}>
       {login
         ? <Box className='flex-col-c' sx={{gap: 1}}>
-            <Box component='img' sx={styles.img} src={'https://faaalc.ru/img/avatar.jpg'}/>
+            <Box component='img' sx={styles.img} src={avatar}/>
             <Typography variant='h5'>{login}</Typography>
             <Typography>Дата регистрации: {new Date(create).toLocaleDateString()}</Typography>
           </Box>

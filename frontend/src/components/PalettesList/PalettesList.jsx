@@ -4,11 +4,11 @@ import PaletteCard from "../PaletteCard/PaletteCard.jsx"
 import ErrorBlock from "../ErrorBlock/ErrorBlock.jsx";
 import Loader from "../Loader/Loader.jsx";
 
-import {Container, Grid} from "@mui/material"
+import {Container, Grid, Typography} from "@mui/material"
 import {observer} from "mobx-react-lite";
 import useFavorite from "../../hooks/useFavorite.js";
 
-const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
+const PalettesList = ({data, handleScroll, error, isLoading, isLast, noDataMessage}) => {
   const {favoriteList, handleToggleFavorite, store} = useFavorite()
 
   if (handleScroll) {
@@ -24,20 +24,20 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast}) => {
   return (
     <Container maxWidth={"xl"} component='section'>
 
-      {error &&
-        <ErrorBlock/>
-      }
+      {error && <ErrorBlock/>}
 
-      <Grid container spacing={4} padding='20px'>
-        {data.map(palette =>
-          <PaletteCard
-            key={palette._id}
-            palette={palette}
-            favoriteList={favoriteList}
-            handleToggleFavorite={handleToggleFavorite}
-            store={store}
-          />)}
-      </Grid>
+      {!noDataMessage
+        ? <Grid container spacing={4} padding='20px'>
+          {data.map(palette =>
+            <PaletteCard
+              key={palette._id}
+              palette={palette}
+              favoriteList={favoriteList}
+              handleToggleFavorite={handleToggleFavorite}
+              store={store}
+            />)}
+        </Grid>
+        : <Typography variant='h5' textAlign='center' mt={2}>{noDataMessage}</Typography>}
 
       <Loader isLoading={isLoading}/>
 

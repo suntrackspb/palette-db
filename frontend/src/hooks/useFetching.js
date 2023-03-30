@@ -3,7 +3,8 @@ import {useState} from "react";
 const useFetching = (callback, initialState = false) => {
   const
     [isLoading, setLoading] = useState(initialState),
-    [error, setError] = useState('')
+    [error, setError] = useState(''),
+    [noDataMessage, setNoDataMessage] = useState('');
 
   const fetchData = async () => {
     try {
@@ -18,7 +19,7 @@ const useFetching = (callback, initialState = false) => {
     }
   }
 
-  return [fetchData, isLoading, error, setLoading]
+  return {fetchData, isLoading, error, setLoading, noDataMessage, setNoDataMessage}
 }
 
 export default useFetching

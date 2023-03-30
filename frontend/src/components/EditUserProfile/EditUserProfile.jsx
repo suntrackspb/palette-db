@@ -7,7 +7,6 @@ const EditUserProfile = ({data}) => {
   const {login, avatar, create, favorite, block} = data
   const handleClick = () => {
     const userData = {
-      login,
       password: cryptoPass('qwerty'),
       avatar: 'https://faaalc.ru/img/avatar.jpg',
       create,
@@ -15,8 +14,8 @@ const EditUserProfile = ({data}) => {
       block,
     }
     console.log(userData)
-    // UserService.setUserInfo(userData)
-    //   .then(console.log)
+    UserService.setUserInfo(userData)
+      .then(console.log)
   }
 
   return (

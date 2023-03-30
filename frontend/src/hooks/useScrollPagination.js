@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 const useScrollPagination = (callback, skipAmount, limit) => {
   const
-    [fetchData, isLoading, error, setLoading] = useFetching(() => callback(), true),
+    {fetchData, isLoading, error, setLoading} = useFetching(() => callback(), true),
     [data, setData] = useState([]),
     [skip, setSkip] = useState(skipAmount),
     [isLast, setIsLast] = useState(false);
