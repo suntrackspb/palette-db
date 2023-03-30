@@ -76,6 +76,7 @@ def authorization(data):
         return ce("Error", "0x0007", "Incorrect symbols password or username"), 401
 
     db = UsersDB().auth(data)
+    print(db)
     if db is None:
         return ce("Error", "0x0004", "Wrong username or password"), 400
     try:
@@ -109,6 +110,7 @@ def verification_mail(uid, code):
 def get_user_info(data):
     user = get_jwt_identity()
     data = UsersDB().auth({"login": user})
+    data.pop('password')
     return JSE.encode(data), 200
 
 
@@ -145,6 +147,7 @@ def update_user(data):
 
     UsersDB().update(user_data)
     data = UsersDB().auth({"login": user})
+    data.pop('password')
     return JSE.encode(data), 200
 
 
