@@ -133,7 +133,7 @@ def update_user(data):
             return ce("Error", "0x0020", "Invalid url format"), 400
         user_data = {"login": user}
         if data["new_password"]:
-            user_data["password"] = data['password']
+            user_data["password"] = data['new_password']
         if data["avatar"]:
             user_data["avatar"] = data['avatar']
         UsersDB().update(user_data)
