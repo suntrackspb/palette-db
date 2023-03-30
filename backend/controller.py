@@ -125,17 +125,18 @@ def update_user_favorite(data):
 #
 def update_user(data):
     user = get_jwt_identity()
-    user_data = {
-        "login": user,
-        "password": data['password'],
-        "avatar": data['avatar'],
-        "create": data['create'],
-        "favorite": [ObjectId(val) for val in data['favorite']],
-        "block": data['block']
-    }
-    UsersDB().update(user_data)
-    data = UsersDB().auth({"login": user})
-    return JSE.encode(data), 200
+    user_info = check_exist_user(user)
+    if user_info['password'] == data["old_password"]:
+        user_data = {"login": user}
+        if data["new_password"]:
+            user_data["password"] = data['password']
+        if data["avatar"]:
+            user_data["avatar"] = data['avatar']
+        UsersDB().update(user_data)
+        data = UsersDB().auth({"login": user})
+        return JSE.encode(data), 200
+    else:
+        return ce("Error", "0x0008", "Wrong old password"), 400
 
 
 ##############
