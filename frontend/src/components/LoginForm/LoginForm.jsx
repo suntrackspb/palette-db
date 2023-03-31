@@ -38,7 +38,7 @@ const LoginForm = () => {
         .then(() => {
           if (store.isAuth) {
             store.checkAuth()
-            navigate('/', {replace: true})
+              .then(() => navigate('/', {replace: true}))
           }
         })
     } else {
