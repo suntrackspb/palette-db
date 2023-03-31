@@ -9,7 +9,7 @@ const useConfirmPassword = (initialValue, password) => {
     setValue(value)
     toggleError(value)
   }
-  
+
   const toggleError = value => {
     value && value !== password
       ? setError('Пароли не совпадают')

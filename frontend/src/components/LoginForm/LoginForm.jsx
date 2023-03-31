@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {
   Box,
@@ -9,11 +9,10 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Paper,
-  TextField,
   Typography
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import useAuth from "../../hooks/useAuth.js";
 import {styles} from "./styles.js";
@@ -26,10 +25,9 @@ const LoginForm = () => {
   const {store} = useAuth()
   const login = useValidation('', 'email');
   const password = useValidation('', 'password');
-
-
   const [action, setAction] = useState('signIn');
   const [showPassword, setShowPassword] = useState(false);
+  const [isCaptchaDone, setIsCaptchaDone] = useState(false);
   const navigate = useNavigate()
 
   const handleClickShowPassword = () => setShowPassword(prev => !prev);
@@ -54,7 +52,7 @@ const LoginForm = () => {
   }
 
   const isFormValid = () => {
-    return !password.isValid || !login.isValid
+    return !password.isValid || !login.isValid || !isCaptchaDone
   }
 
   const changeAction = () => {
@@ -62,6 +60,12 @@ const LoginForm = () => {
     login.setValue('')
     password.setValue('')
     store.setErrorMessage('')
+  }
+
+  const handleCaptcha = value => {
+    value
+      ? setIsCaptchaDone(true)
+      : setIsCaptchaDone(false)
   }
 
   return (
@@ -116,6 +120,13 @@ const LoginForm = () => {
           {action === 'signUp' && !!password.value && password.error}
         </FormHelperText>
       </FormControl>
+
+      {action === 'signUp' &&
+        <ReCAPTCHA
+          sitekey="6LftX0olAAAAAF6zqftRolUWrri16VX7-TzPE7E7"
+          onChange={handleCaptcha}
+          style={{margin: '0 auto'}}
+        />}
 
       <Box alignSelf='center' className='flex-col-c'>
         <Button
