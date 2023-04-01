@@ -19,6 +19,11 @@ const FavoritesPage = () => {
         setData(res)
         !res.length && setNoDataMessage('Список пуст')
       })
+  }, []);
+
+  useEffect(() => {
+    setData(data.filter(item => store.favorite.includes(item._id)))
+    !store.favorite.length && setNoDataMessage('Список пуст')
   }, [store.favorite]);
 
   return (
@@ -28,7 +33,7 @@ const FavoritesPage = () => {
         data={data}
         isLoading={isLoading}
         error={error}
-        noDataMessage={noDataMessage}
+        noDataMessage={!data.length && noDataMessage}
       />
     </>
   );
