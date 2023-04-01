@@ -16,6 +16,7 @@ import useValidation from "../../hooks/useValidation.js";
 import useConfirmPassword from "../../hooks/useConfirmPassword.js";
 import useAuth from "../../hooks/useAuth.js";
 import {observer} from "mobx-react-lite";
+import Loader from "../Loader/Loader.jsx";
 
 const EditUserProfile = () => {
   const {store} = useAuth()
@@ -23,6 +24,7 @@ const EditUserProfile = () => {
   const confirmPassword = useConfirmPassword('', newPassword.value)
   const [avatar, setAvatar] = useState('');
   const [oldPassword, setOldPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
 
   const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +33,7 @@ const EditUserProfile = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    setLoading(true)
     const userData = {
       old_password: oldPassword ? cryptoPass(oldPassword) : false,
       new_password: newPassword.value ? cryptoPass(newPassword.value) : false,
@@ -40,6 +43,7 @@ const EditUserProfile = () => {
       .then(() => {
         store.successMessage && resetForm()
       })
+      .finally(() => setLoading(false))
   }
 
   useEffect(() => {
@@ -160,6 +164,8 @@ const EditUserProfile = () => {
 
       {store.errorMessage &&
         <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}
+
+      <Loader isLoading={loading}/>
 
     </ContentBlock>
   );
