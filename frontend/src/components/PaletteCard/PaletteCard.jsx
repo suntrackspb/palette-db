@@ -2,20 +2,17 @@ import {
   Card,
   CardActionArea,
   CardActions,
-  CardMedia, CircularProgress,
+  CardMedia,
   Grid,
-  IconButton,
   Typography
 } from "@mui/material";
 import {Link} from "react-router-dom";
-import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
-import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import {observer} from "mobx-react-lite";
-import useFavorite from "../../hooks/useFavorite.js";
-import {useState} from "react";
+import useAuth from "../../hooks/useAuth.js";
+import ButtonFavorite from "../ButtonFavorite/ButtonFavorite.jsx";
 
 const PaletteCard = ({palette}) => {
-  const {favoriteList, handleToggleFavorite, store, loading} = useFavorite()
+  const {store} = useAuth()
 
   return (
     <Grid item lg={3} md={4} sm={6} xs={12}>
@@ -25,18 +22,7 @@ const PaletteCard = ({palette}) => {
             {palette.name}
           </Typography>
 
-          {store.isAuth &&
-            <IconButton
-              aria-label="Добавить в избранное"
-              onClick={() => handleToggleFavorite(palette._id)}
-              disabled={loading}
-            >
-              {loading
-                ? <CircularProgress size={24} color="inherit" />
-                : favoriteList.includes(palette._id)
-                  ? <StarRoundedIcon sx={{fontSize: 24}}/>
-                  : <StarBorderRoundedIcon sx={{fontSize: 24}}/>}
-            </IconButton>}
+          {store.isAuth && <ButtonFavorite id={palette._id} size={24}/>}
         </CardActions>
 
         <Link to={`/palette/${palette._id}`}>
