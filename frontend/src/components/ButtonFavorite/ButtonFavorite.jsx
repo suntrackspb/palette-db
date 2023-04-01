@@ -1,8 +1,8 @@
-import React from 'react';
 import {CircularProgress, IconButton} from "@mui/material";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import useFavorite from "../../hooks/useFavorite.js";
+import {observer} from "mobx-react-lite";
 
 
 const ButtonFavorite = ({id, size}) => {
@@ -22,4 +22,4 @@ const ButtonFavorite = ({id, size}) => {
   );
 };
 
-export default ButtonFavorite;
+export default observer(ButtonFavorite);
