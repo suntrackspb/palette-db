@@ -2,7 +2,7 @@ import {
   Card,
   CardActionArea,
   CardActions,
-  CardMedia,
+  CardMedia, CircularProgress,
   Grid,
   IconButton,
   Typography
@@ -11,8 +11,11 @@ import {Link} from "react-router-dom";
 import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import {observer} from "mobx-react-lite";
+import useFavorite from "../../hooks/useFavorite.js";
+import {useState} from "react";
 
-const PaletteCard = ({palette, favoriteList, handleToggleFavorite, store}) => {
+const PaletteCard = ({palette}) => {
+  const {favoriteList, handleToggleFavorite, store, loading} = useFavorite()
 
   return (
     <Grid item lg={3} md={4} sm={6} xs={12}>
@@ -26,10 +29,13 @@ const PaletteCard = ({palette, favoriteList, handleToggleFavorite, store}) => {
             <IconButton
               aria-label="Добавить в избранное"
               onClick={() => handleToggleFavorite(palette._id)}
+              disabled={loading}
             >
-              {favoriteList.includes(palette._id)
-                ? <StarRoundedIcon sx={{fontSize: 24}}/>
-                : <StarBorderRoundedIcon sx={{fontSize: 24}}/>}
+              {loading
+                ? <CircularProgress size={24} color="inherit" />
+                : favoriteList.includes(palette._id)
+                  ? <StarRoundedIcon sx={{fontSize: 24}}/>
+                  : <StarBorderRoundedIcon sx={{fontSize: 24}}/>}
             </IconButton>}
         </CardActions>
 

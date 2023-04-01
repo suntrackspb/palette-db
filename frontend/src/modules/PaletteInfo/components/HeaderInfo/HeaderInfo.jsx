@@ -1,5 +1,5 @@
 import PageTitle from "../../../../components/PageTitle/PageTitle.jsx";
-import {IconButton, Typography} from "@mui/material";
+import {CircularProgress, IconButton, Typography} from "@mui/material";
 
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
@@ -8,7 +8,7 @@ import useFavorite from "../../../../hooks/useFavorite.js";
 
 const HeaderInfo = ({data}) => {
   const {date, owner, name, _id} = data
-  const {favoriteList, handleToggleFavorite, store} = useFavorite()
+  const {favoriteList, handleToggleFavorite, store, loading} = useFavorite()
 
   return (
     <>
@@ -23,10 +23,13 @@ const HeaderInfo = ({data}) => {
           right: 20,
         }}
           onClick={() => handleToggleFavorite(_id)}
+          disabled={loading}
         >
-          {favoriteList.includes(_id)
-            ? <StarRoundedIcon sx={{fontSize: 32}}/>
-            : <StarBorderRoundedIcon sx={{fontSize: 32}}/>}
+          {loading
+            ? <CircularProgress size={32} color="inherit" />
+            : favoriteList.includes(_id)
+              ? <StarRoundedIcon sx={{fontSize: 32}}/>
+              : <StarBorderRoundedIcon sx={{fontSize: 32}}/>}
         </IconButton>}
     </>
   );
