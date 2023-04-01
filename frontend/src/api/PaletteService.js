@@ -1,5 +1,6 @@
 import axios from "axios";
-import $api, {API_URL, LOCAL_API_URL, X_API_KEY} from "../http/index.js";
+import $api from "../http/index.js";
+import {API_URL, LOCAL_API_URL, X_API_KEY} from '../consts/index.js'
 import {getCookie} from "../utils/cookie.js";
 
 export class PaletteService {

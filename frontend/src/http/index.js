@@ -1,10 +1,6 @@
 import axios from "axios";
 import {deleteCookie} from "../utils/cookie";
-import {cryptoKey} from "../utils/crypto.js";
-
-export const API_URL = 'https://api.sntrk.ru/api'
-export const LOCAL_API_URL = 'http://dev.local:5001/api'
-export const X_API_KEY = cryptoKey()
+import {LOCAL_API_URL, X_API_KEY} from "../consts/index.js";
 
 const $api = axios.create({
   withCredentials: true,

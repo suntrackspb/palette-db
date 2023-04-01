@@ -15,10 +15,12 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import useAuth from "../../hooks/useAuth.js";
-import {styles} from "./styles.js";
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
 import PageTitle from "../PageTitle/PageTitle.jsx";
 import useValidation from "../../hooks/useValidation.js";
+import Loader from "../Loader/Loader.jsx";
+import {CAPTCHA_SITE_KEY} from "../../consts/index.js";
+import {styles} from "./styles.js";
 
 
 const LoginForm = () => {
@@ -28,12 +30,14 @@ const LoginForm = () => {
   const [action, setAction] = useState('signIn');
   const [showPassword, setShowPassword] = useState(false);
   const [isCaptchaDone, setIsCaptchaDone] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
 
   const handleClickShowPassword = () => setShowPassword(prev => !prev);
   const handleSubmit = e => {
     e.preventDefault()
     if (action === 'signIn') {
+      setIsLoading(true)
       store.login(login.value.toLowerCase(), password.value)
         .then(() => {
           if (store.isAuth) {
@@ -42,12 +46,14 @@ const LoginForm = () => {
           }
         })
     } else {
+      setIsLoading(true)
       store.registration(login.value.toLowerCase(), password.value)
         .then(() => {
           if (store.success) {
             changeAction()
           }
         })
+        .finally(() => setIsLoading(false))
     }
   }
 
@@ -123,7 +129,7 @@ const LoginForm = () => {
 
       {action === 'signUp' &&
         <ReCAPTCHA
-          sitekey="6LftX0olAAAAAF6zqftRolUWrri16VX7-TzPE7E7"
+          sitekey={CAPTCHA_SITE_KEY}
           onChange={handleCaptcha}
           style={{margin: '0 auto'}}
         />}
@@ -145,6 +151,8 @@ const LoginForm = () => {
           {action === 'signIn' ? 'Нет аккаунта?' : 'Есть аккаунт?'}
         </Typography>
       </Box>
+
+      <Loader isLoading={isLoading}/>
 
     </ContentBlock>
   );
