@@ -216,7 +216,7 @@ def show_log():
 @app.route("/api/control", methods=['GET'])
 def admin_control():
     ips = os.getenv("ALLOW_IPS").split(',')
-    ip = request.headers.get('Cf-Connecting-Ip')
+    ip = request.headers.get('X-Real-IP').split(",")[0]
     if ip is None:
         ip = request.remote_addr
     if ip in ips:
@@ -227,7 +227,7 @@ def admin_control():
         return render_template_string("Access denied")
 
 
-@app.route("/verify/<userid>/<code>", methods=['GET'])
+@app.route("/api/verify/<userid>/<code>", methods=['GET'])
 def verify(userid, code):
     return verification_mail(userid, code)
 
@@ -267,7 +267,7 @@ def head_key():
 @app.after_request
 def after_request(response):
     api = request.headers.get('X-Api-Key')
-    ip = request.headers.get('Cf-Connecting-Ip')
+    ip = request.headers.get('X-Real-IP').split(",")[0]
     if ip is None:
         ip = request.remote_addr
     # ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
