@@ -45,6 +45,7 @@ const LoginForm = () => {
               .then(() => navigate('/', {replace: true}))
           }
         })
+        .finally(() => setIsLoading(false))
     } else {
       setIsLoading(true)
       store.registration(login.value.toLowerCase(), password.value)
