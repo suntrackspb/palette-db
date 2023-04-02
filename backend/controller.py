@@ -110,7 +110,7 @@ def verification_mail(uid, code):
         return ce("Error", "0x0017", "Wrong user"), 400
     if code == db['service_code']:
         UsersDB().update_verify(ObjectId(uid))
-        return redirect("/login", code=302)
+        return redirect("/login?verify=true", code=302)
     else:
         return ce("Error", "0x0016", "Wrong code"), 400
 
