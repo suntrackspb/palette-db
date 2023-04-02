@@ -72,7 +72,7 @@ def login():
 # login = mail@mail.ru
 #
 @app.route("/api/user/recovery", methods=["POST"])
-def login():
+def recovery():
     return recovery_password(request.json)
 
 
