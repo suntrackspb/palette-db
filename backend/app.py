@@ -73,7 +73,7 @@ def login():
 #
 @app.route("/api/user/recovery", methods=["POST"])
 def login():
-    return authorization(request.json)
+    return recovery_password(request.json)
 
 
 # Unset cookie, user logout
