@@ -238,7 +238,7 @@ def send_mail(email, db, code):
     msg['To'] = email
     msg['Subject'] = 'Mail verification code'
     message = f'Follow this link to activate your account and confirm your email: ' \
-              f'{os.getenv("BASE_URL")}/verify/{uid}/{code}'
+              f'{os.getenv("BASE_URL")}/api/verify/{uid}/{code}'
     msg.attach(MIMEText(message))
 
     server.sendmail(mail_user, email, msg.as_string())
