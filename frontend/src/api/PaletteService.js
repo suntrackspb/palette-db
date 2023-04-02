@@ -1,6 +1,6 @@
 import axios from "axios";
 import $api from "../http/index.js";
-import {API_URL, LOCAL_API_URL, X_API_KEY} from '../consts/index.js'
+import {API_URL, X_API_KEY} from '../consts/index.js'
 import {getCookie} from "../utils/cookie.js";
 
 export class PaletteService {
@@ -48,7 +48,7 @@ export class PaletteService {
   }
 
   static createPalette = async (data) => {
-    const res = await axios.post(`${LOCAL_API_URL}/palettes/create`, data, {
+    const res = await axios.post(`${API_URL}/palettes/create`, data, {
       headers: {
         'X-CSRF-TOKEN': getCookie('csrf_access_token'),
         'x-api-key': X_API_KEY,

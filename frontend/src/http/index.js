@@ -1,10 +1,10 @@
 import axios from "axios";
 import {deleteCookie} from "../utils/cookie";
-import {LOCAL_API_URL, X_API_KEY} from "../consts/index.js";
+import {API_URL, X_API_KEY} from "../consts/index.js";
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: LOCAL_API_URL,
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
     'x-api-key': X_API_KEY
