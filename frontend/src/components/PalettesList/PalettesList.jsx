@@ -6,10 +6,8 @@ import Loader from "../Loader/Loader.jsx";
 
 import {Container, Grid, Typography} from "@mui/material"
 import {observer} from "mobx-react-lite";
-import useFavorite from "../../hooks/useFavorite.js";
 
 const PalettesList = ({data, handleScroll, error, isLoading, isLast, noDataMessage}) => {
-  const {favoriteList, handleToggleFavorite, store} = useFavorite()
 
   if (handleScroll) {
     useEffect(() => {
@@ -32,9 +30,6 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast, noDataMessa
             <PaletteCard
               key={palette._id}
               palette={palette}
-              favoriteList={favoriteList}
-              handleToggleFavorite={handleToggleFavorite}
-              store={store}
             />)}
         </Grid>
         : <Typography variant='h5' textAlign='center' mt={2}>{noDataMessage}</Typography>}

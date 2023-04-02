@@ -32,7 +32,7 @@ const useValidation = (initialValue, type) => {
     }
   }
 
-  return {value, error, isValid, onChange}
+  return {value, setValue, error, isValid, onChange}
 }
 
 export default useValidation

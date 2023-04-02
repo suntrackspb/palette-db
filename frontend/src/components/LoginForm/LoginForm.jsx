@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {
   Box,
@@ -9,67 +9,80 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Paper,
-  TextField,
   Typography
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import useAuth from "../../hooks/useAuth.js";
-import {styles} from "./styles.js";
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
 import PageTitle from "../PageTitle/PageTitle.jsx";
 import useValidation from "../../hooks/useValidation.js";
+import Loader from "../Loader/Loader.jsx";
+import {CAPTCHA_SITE_KEY} from "../../consts/index.js";
+import {styles} from "./styles.js";
 
 
 const LoginForm = () => {
   const {store} = useAuth()
   const login = useValidation('', 'email');
   const password = useValidation('', 'password');
-
-
   const [action, setAction] = useState('signIn');
   const [showPassword, setShowPassword] = useState(false);
+  const [isCaptchaDone, setIsCaptchaDone] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
 
   const handleClickShowPassword = () => setShowPassword(prev => !prev);
   const handleSubmit = e => {
     e.preventDefault()
     if (action === 'signIn') {
+      setIsLoading(true)
       store.login(login.value.toLowerCase(), password.value)
         .then(() => {
           if (store.isAuth) {
             store.checkAuth()
-            navigate('/', {replace: true})
+              .then(() => navigate('/', {replace: true}))
           }
         })
     } else {
+      setIsLoading(true)
       store.registration(login.value.toLowerCase(), password.value)
         .then(() => {
           if (store.success) {
             changeAction()
           }
         })
+        .finally(() => setIsLoading(false))
     }
   }
 
   const isFormValid = () => {
-    return !password.isValid || !login.isValid
+    return !password.isValid || !login.isValid || !isCaptchaDone
   }
 
   const changeAction = () => {
     setAction(prev => prev === 'signIn' ? 'signUp' : 'signIn')
+    login.setValue('')
+    password.setValue('')
+    store.setErrorMessage('')
+  }
+
+  const handleCaptcha = value => {
+    value
+      ? setIsCaptchaDone(true)
+      : setIsCaptchaDone(false)
   }
 
   return (
     <ContentBlock styleProps={styles.block} component='form' onSubmit={handleSubmit}>
       <PageTitle title={action === 'signIn' ? 'Авторизация' : 'Регистрация'} mt='0'/>
 
-      {store.error &&
-        <Typography color='error' textAlign='center'>{store.error}</Typography>}
+      {store.errorMessage &&
+        <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}
 
-      {store.success &&
-        <Typography color='success.main' textAlign='center'>Вы успешно зарегистрировались</Typography>}
+      {store.successMessage &&
+        <Typography color='success.main' textAlign='center'>{store.successMessage}</Typography>}
 
       <FormControl>
         <InputLabel htmlFor="outlined-email">Email</InputLabel>
@@ -110,9 +123,16 @@ const LoginForm = () => {
             </InputAdornment>}
         />
         <FormHelperText id="outlined-password" sx={{color: '#f44336'}}>
-          {action === 'signUp' && password.error}
+          {action === 'signUp' && !!password.value && password.error}
         </FormHelperText>
       </FormControl>
+
+      {action === 'signUp' &&
+        <ReCAPTCHA
+          sitekey={CAPTCHA_SITE_KEY}
+          onChange={handleCaptcha}
+          style={{margin: '0 auto'}}
+        />}
 
       <Box alignSelf='center' className='flex-col-c'>
         <Button
@@ -131,6 +151,8 @@ const LoginForm = () => {
           {action === 'signIn' ? 'Нет аккаунта?' : 'Есть аккаунт?'}
         </Typography>
       </Box>
+
+      <Loader isLoading={isLoading}/>
 
     </ContentBlock>
   );

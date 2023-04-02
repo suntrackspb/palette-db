@@ -17,8 +17,7 @@ const SaveForm = ({croppedImage, tags, selectedTags, setSelectedTags, store}) =>
 
     PaletteService.savePalette(data)
       .then(res => {
-        console.log(res)
-        navigate(`/palette/${res.$oid}`)
+        navigate(`/palette/${res}`)
       })
       .catch(err => console.log(err))
   }
