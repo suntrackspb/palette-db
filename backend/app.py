@@ -216,7 +216,9 @@ def show_log():
 @app.route("/api/control", methods=['GET'])
 def admin_control():
     ips = os.getenv("ALLOW_IPS").split(',')
-    ip = request.headers.get('X-Real-IP').split(",")[0]
+    ip = request.headers.get('X-Real-IP')
+    if ip is not None:
+        ip = ip.split(",")[0]
     if ip is None:
         ip = request.remote_addr
     if ip in ips:
@@ -267,7 +269,9 @@ def head_key():
 @app.after_request
 def after_request(response):
     api = request.headers.get('X-Api-Key')
-    ip = request.headers.get('X-Real-IP').split(",")[0]
+    ip = request.headers.get('X-Real-IP')
+    if ip is not None:
+        ip = ip.split(",")[0]
     if ip is None:
         ip = request.remote_addr
     # ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
