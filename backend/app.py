@@ -14,7 +14,7 @@ from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
-from controller import admin_get_users, admin_get_palettes
+from controller import admin_get_users, admin_get_palettes, recovery_password
 from error_handler import ce
 
 load_dotenv()
@@ -62,6 +62,16 @@ def signup():
 # password = md5 hash
 #
 @app.route("/api/user/login", methods=["POST"])
+def login():
+    return authorization(request.json)
+
+
+# Recovery password
+#
+# Required:
+# login = mail@mail.ru
+#
+@app.route("/api/user/recovery", methods=["POST"])
 def login():
     return authorization(request.json)
 

@@ -4,6 +4,8 @@ import os
 import re
 from datetime import datetime
 import hashlib
+import random
+import string
 
 import smtplib
 from email.mime.text import MIMEText
@@ -57,7 +59,14 @@ def add_new_user(data):
     data['service_code'] = service_code
     # print(data)
     db = JSE.encode(UsersDB().create(data))
-    send_mail(data['login'], db, service_code)
+    # send_mail(data['login'], db, service_code)
+    uid = db.replace('"', '')
+    email = data['login']
+    subject = 'Mail verification code'
+    message = f'Follow this link to activate your account and confirm your email: ' \
+              f'{os.getenv("BASE_URL")}/api/verify/{uid}/{service_code}'
+
+    mail_sender(email, subject, message)
     return db
 
 
@@ -227,8 +236,26 @@ def save_palette_in_db(data):
 ##############
 # SERVICE
 ##############
-def send_mail(email, db, code):
-    uid = db.replace('"', '')
+
+def generate_password():
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for i in range(8))
+    return password
+
+
+def recovery_password(data):
+    login = data['login']
+    if check_exist_user(login) is not None:
+        new_password = generate_password()
+        subject = "Recovery password"
+        message = f"New password: {new_password}"
+        mail_sender(login, subject, message)
+        return ce("Info", "0x0022", "Password changed"), 200
+    else:
+        return ce("Error", "0x0021", "User not found"), 400
+
+
+def mail_sender(email, subject, message_text):
     server = smtplib.SMTP(mail_srv, mail_port)
     server.starttls()
     server.login(mail_user, mail_pass)
@@ -236,9 +263,8 @@ def send_mail(email, db, code):
     msg = MIMEMultipart()
     msg['From'] = mail_user
     msg['To'] = email
-    msg['Subject'] = 'Mail verification code'
-    message = f'Follow this link to activate your account and confirm your email: ' \
-              f'{os.getenv("BASE_URL")}/api/verify/{uid}/{code}'
+    msg['Subject'] = subject
+    message = message_text
     msg.attach(MIMEText(message))
 
     server.sendmail(mail_user, email, msg.as_string())
