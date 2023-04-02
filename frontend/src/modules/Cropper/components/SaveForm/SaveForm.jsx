@@ -13,7 +13,6 @@ const SaveForm = ({croppedImage, tags, selectedTags, setSelectedTags, store}) =>
       tags: selectedTags,
       login: store.user.login
     }
-    console.log(data)
 
     PaletteService.savePalette(data)
       .then(res => {

@@ -12,11 +12,13 @@ const UserProfile = () => {
     <ContentBlock>
       {login
         ? <Box className='flex-col-c' sx={{gap: 1}}>
-            <Box component='img' sx={styles.img} src={avatar}/>
-            <Typography variant='h5'>{login}</Typography>
-            <Typography>Дата регистрации: {new Date(create).toLocaleDateString()}</Typography>
-            <Typography>{verify && 'Аккаунт подтвержден'}</Typography>
-          </Box>
+          {avatar
+            ? <Box component='img' sx={styles.img} src={avatar}/>
+            : <Box sx={styles.noImg}>{login.at(0).toUpperCase()}</Box>}
+          <Typography variant='h5'>{login}</Typography>
+          <Typography>Дата регистрации: {new Date(create).toLocaleDateString()}</Typography>
+          <Typography>{verify && 'Аккаунт подтвержден'}</Typography>
+        </Box>
         : <SkeletonBlock/>}
     </ContentBlock>
   );

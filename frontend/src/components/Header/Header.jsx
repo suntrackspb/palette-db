@@ -28,11 +28,11 @@ const Header = () => {
   return (
     <AppBar position='static' sx={{padding: 2, bgcolor: 'header.main', backgroundImage: 'none'}}>
       <Container maxWidth='xl' sx={{display: 'flex', gap: '10px', alignItems: 'center'}}>
-        <Link to='/'>
+        <a href='/'>
           <Typography variant='h5' component='span'>
             Palette Picker
           </Typography>
-        </Link>
+        </a>
         <Box sx={{marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '10px'}}>
 
           {store.isAuth &&

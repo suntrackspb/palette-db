@@ -21,6 +21,7 @@ import useValidation from "../../hooks/useValidation.js";
 import Loader from "../Loader/Loader.jsx";
 import {CAPTCHA_SITE_KEY} from "../../consts/index.js";
 import {styles} from "./styles.js";
+import {vocabulary} from "../../vocabulary/vocabulary.js";
 
 
 const LoginForm = () => {
@@ -83,7 +84,7 @@ const LoginForm = () => {
         <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}
 
       {store.successMessage &&
-        <Typography color='success.main' textAlign='center'>{store.successMessage}</Typography>}
+        <Typography color='success.main' sx={{whiteSpace: 'pre-wrap'}} textAlign='center'>{store.successMessage}</Typography>}
 
       <FormControl>
         <InputLabel htmlFor="outlined-email">Email</InputLabel>

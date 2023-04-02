@@ -38,7 +38,6 @@ export default class Store {
   login = async (login, password) => {
     try {
       const res = await AuthService.login(login, cryptoPass(password))
-      console.log(res)
 
       localStorage.setItem('login', login)
       this.setAuth(true)
@@ -53,7 +52,6 @@ export default class Store {
   registration = async (login, password) => {
     try {
       const res = await AuthService.registration(login, cryptoPass(password))
-      console.log(res)
 
       this.setSuccess(true)
       this.setSuccessMessage(vocabulary.registrationSuccess)
@@ -82,7 +80,6 @@ export default class Store {
     try {
       const res = await UserService.getUserInfo()
       localStorage.setItem('login', res.data.login)
-      console.log(res)
 
       this.setAuth(true)
       this.setUser(res.data)
