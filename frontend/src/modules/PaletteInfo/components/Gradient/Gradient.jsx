@@ -10,6 +10,7 @@ const Gradient = ({selectedColor}) => {
 
   return (
     <>
+      {!Object.keys(selectedColor).length && <Typography>Выберите цвет для отображения тонов</Typography>}
       <Box sx={styles.wrapper}>
         {!Object.keys(selectedColor).length
           ? <SkeletonLine arr={lightArr}/>

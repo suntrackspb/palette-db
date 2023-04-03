@@ -1,25 +1,21 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
-import {Box, Fade, IconButton, ListItem, Popover, Popper, Typography} from "@mui/material"
+import {Box, IconButton, ListItem, Popover, Popper, Typography} from "@mui/material"
 import UndoIcon from '@mui/icons-material/Undo'
 import {ChromePicker} from "react-color";
 
 import usePopover from "../../../../hooks/usePopover.js";
-import usePopper from "../../../../hooks/usePopper.js";
 import {hexToRgba, rgbaToHexText, rgbaToText} from "../../../../utils/colorsFunctions.js";
-import {copyToClipboard} from "../../../../utils/copyToClipboard.js";
 
 import {styles} from './styles.js'
+import CopyBlock from "../../../../components/CopyBlock/CopyBlock.jsx";
+import useCopy from "../../../../hooks/useCopy.js";
 
 const ColorItem = ({itemColor, setSelectedColor}) => {
   const [color, setColor] = useState(() => hexToRgba(itemColor))
   const [pickerAnchor, pickerId, isPickerOpen, showPicker, hidePicker] = usePopover('picker')
-  const [copyAnchor, copyId, isCopyOpen, showCopy, hideCopy] = usePopper('copy')
+  const {copyAnchor, copyId, isCopyOpen, copyColor} = useCopy('copy-color')
 
-  const copyColor = e => {
-    copyToClipboard(e)
-    showCopy(e)
-  }
   const handlePickerClick = e => {
     showPicker(e)
     setSelectedColor(color)
@@ -34,11 +30,6 @@ const ColorItem = ({itemColor, setSelectedColor}) => {
       setSelectedColor(hexToRgba(itemColor))
     }
   }
-  useEffect(() => {
-    if (isCopyOpen) {
-      setTimeout(hideCopy, 350)
-    }
-  }, [isCopyOpen]);
 
   return (
     <ListItem sx={styles.listItem}>
@@ -99,17 +90,11 @@ const ColorItem = ({itemColor, setSelectedColor}) => {
         />
       </Popover>
 
-
-
-      <Popper id={copyId} open={isCopyOpen} anchorEl={copyAnchor} transition placement='top'>
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={350}>
-            <Box sx={styles.popperCopy}>
-              <Typography>Copied</Typography>
-            </Box>
-          </Fade>
-        )}
-      </Popper>
+      <CopyBlock
+        copyId={copyId}
+        isCopyOpen={isCopyOpen}
+        copyAnchor={copyAnchor}
+      />
 
 
     </ListItem>
