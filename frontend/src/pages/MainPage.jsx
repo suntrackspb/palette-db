@@ -3,7 +3,7 @@ import PaletteService from "../api/PaletteService.js";
 import useScrollPagination from "../hooks/useScrollPagination.js";
 
 const MainPage = () => {
-  const limit = 52
+  const limit = 20
   const {data, skip, isLoading, error, isLast, handleScroll} = useScrollPagination(
       () => getData(), 0, limit)
 

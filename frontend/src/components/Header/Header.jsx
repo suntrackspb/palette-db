@@ -29,7 +29,7 @@ const Header = () => {
     <AppBar position='static' sx={{padding: 2, bgcolor: 'header.main', backgroundImage: 'none'}}>
       <Container maxWidth='xl' sx={{display: 'flex', gap: '10px', alignItems: 'center'}}>
         <a href='/'>
-          <Typography variant='h5' component='span'>
+          <Typography variant='h5' component='h1'>
             Palette Picker
           </Typography>
         </a>

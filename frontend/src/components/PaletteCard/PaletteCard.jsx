@@ -29,7 +29,10 @@ const PaletteCard = ({palette}) => {
           <CardActionArea>
             <CardMedia
               component='img'
-              height='100%'
+              width='300px'
+              height='300px'
+              sx={{height: '100%'}}
+              alt={palette.name}
               image={palette.src}
             />
           </CardActionArea>

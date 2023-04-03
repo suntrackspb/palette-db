@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {
   Box,
@@ -33,6 +33,7 @@ const LoginForm = () => {
   const [isCaptchaDone, setIsCaptchaDone] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleClickShowPassword = () => setShowPassword(prev => !prev);
   const handleSubmit = e => {
@@ -78,7 +79,10 @@ const LoginForm = () => {
 
   return (
     <ContentBlock styleProps={styles.block} component='form' onSubmit={handleSubmit}>
-      <PageTitle title={action === 'signIn' ? 'Авторизация' : 'Регистрация'} mt='0'/>
+      <PageTitle title={action === 'signIn' ? 'Авторизация' : 'Регистрация'} m='0'/>
+
+      {location.search.includes('verify=true') &&
+        <Typography color='success.main' textAlign='center'>{vocabulary.emailVerificationSuccess}</Typography>}
 
       {store.errorMessage &&
         <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}

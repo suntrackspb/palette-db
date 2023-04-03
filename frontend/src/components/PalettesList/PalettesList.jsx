@@ -20,12 +20,12 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast, noDataMessa
 
 
   return (
-    <Container maxWidth={"xl"} component='section'>
+    <>
 
       {error && <ErrorBlock/>}
 
       {!noDataMessage
-        ? <Grid container spacing={4} padding='20px'>
+        ? <Grid container spacing={4} mt='-8px'>
           {data.map(palette =>
             <PaletteCard
               key={palette._id}
@@ -36,7 +36,7 @@ const PalettesList = ({data, handleScroll, error, isLoading, isLast, noDataMessa
 
       <Loader isLoading={isLoading}/>
 
-    </Container>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ const PageTitle = ({title, ...props}) => {
   return (
     <Typography
       variant='h4'
-      component='h1'
+      component='h2'
       textAlign='center'
       my={2}
       {...props}

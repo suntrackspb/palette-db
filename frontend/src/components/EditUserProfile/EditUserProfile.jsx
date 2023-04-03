@@ -61,7 +61,7 @@ const EditUserProfile = () => {
   }
 
   return (
-    <ContentBlock className='flex-col' component='form' onSubmit={handleSubmit}>
+    <ContentBlock className='flex-col' component='form' autoComplete='off' onSubmit={handleSubmit}>
       <Typography>Редактировать профиль</Typography>
 
       <FormControl variant='outlined' sx={{width: '100%'}}>
@@ -72,12 +72,16 @@ const EditUserProfile = () => {
           id="outlined-email"
           label="Ссылка на аватарку"
           type="url"
+          autoComplete='off'
+          readOnly
+          onFocus={e => e.target.removeAttribute('readonly')}
         />
       </FormControl>
 
       <FormControl variant="outlined" sx={{width: '100%'}}>
         <InputLabel htmlFor="newPassword">Новый пароль</InputLabel>
         <OutlinedInput
+          autoComplete='off'
           value={newPassword.value}
           onChange={newPassword.onChange}
           id="newPassword"
@@ -103,6 +107,7 @@ const EditUserProfile = () => {
       <FormControl variant="outlined" sx={{width: '100%'}}>
         <InputLabel htmlFor="confirmPassword">Подтвердите пароль</InputLabel>
         <OutlinedInput
+          autoComplete='off'
           value={confirmPassword.value}
           onChange={confirmPassword.onChange}
           id="confirmPassword"
@@ -129,6 +134,7 @@ const EditUserProfile = () => {
       <FormControl variant="outlined" sx={{width: '100%'}}>
         <InputLabel htmlFor="currentPassword">Введите пароль</InputLabel>
         <OutlinedInput
+          autoComplete='off'
           value={oldPassword}
           onChange={e => setOldPassword(e.target.value)}
           id="currentPassword"
