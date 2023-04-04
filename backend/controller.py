@@ -224,7 +224,7 @@ def save_palette_in_db(data):
     obj = {
         "pid": num,
         "name": f"Palette {num}",
-        "src": f"palette-{num}.jpg",
+        "src": f"palette-{num}.webp",
         "colors": data['colors'],
         "tags": data['tags'],
         "owner": user,
