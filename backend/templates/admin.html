@@ -21,14 +21,15 @@
 <body>
 <div class="wrapper">
     <div class="block">
-        <h2>Список пользователей</h2>
+        <h2>Users:</h2>
         <ul class="list">
+        <li class="list_item"></li>
             {% for user in users %}
             <li class="list_item">
                 <div class="list_block">
-                    <p><span class="text-accent">Логин:</span> {{ user['login'] }}</p>
-                    <p><span class="text-accent">Дата регистрации:</span> {{ user['create'] }}</p>
-                    <p><span class="text-accent">Забанен:</span> {{ user['block'] }}</p>
+                    <p><span class="text-accent">Mail:</span> {{ user['login'] }}</p>
+                    <p><span class="text-accent">Date:</span> {{ user['create'] }}</p>
+                    <p><span class="text-accent">Ban:</span> {{ user['block'] }}</p>
                 </div>
                 <div class="list_block buttons">
                     <button class="btn" onclick="push_button('user_del', '{{ user['_id'] }}')">Удалить</button>
@@ -39,17 +40,18 @@
         </ul>
     </div>
     <div class="block">
-        <h2>Список палитр</h2>
+        <h2>Palettes:</h2>
         <ul class="list">
+            <li class="list_item"></li>
             {% for palette in palettes %}
             <li class="list_item">
                 <div class="list_block">
                     <img src="{{ palette['src'] }}" width="65px" height="65px" alt="">
                 </div>
                 <div class="list_block">
-                    <p><span class="text-accent">uid:</span> {{ palette['_id'] }}</p>
-                    <p><span class="text-accent">Название:</span> {{ palette['name'] }}</p>
-                    <p><span class="text-accent">Добавил:</span> {{ palette['owner'] }}</p>
+                    <p><span class="text-accent">Uid:</span> {{ palette['_id'] }}</p>
+                    <p><span class="text-accent">Name:</span> {{ palette['name'] }}</p>
+                    <p><span class="text-accent">Owner:</span> {{ palette['owner'] }}</p>
                 </div>
                 <div class="list_block buttons">
                     <button class="btn" onclick="push_button('palette_del', '{{ palette['_id'] }}')">Удалить</button>
