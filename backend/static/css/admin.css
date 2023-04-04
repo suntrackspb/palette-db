@@ -76,3 +76,9 @@
 .btn:active {
     background-color: #932c2c;
 }
+
+.popup {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

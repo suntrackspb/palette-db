@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}">
+    <script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script defer="defer" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+        <div class="popup alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Success!</strong> {{ message }}
+        </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 <body>
 <div class="wrapper">
     <div class="block">
@@ -18,8 +33,8 @@
                     <p><span class="text-accent">Забанен:</span> {{ user['block'] }}</p>
                 </div>
                 <div class="list_block buttons">
-                    <button class="btn">Удалить</button>
-                    <button class="btn">Забанить</button>
+                    <button class="btn" onclick="push_button('user_del', '{{ user['_id'] }}')">Удалить</button>
+                    <button class="btn" onclick="push_button('user_ban', '{{ user['_id'] }}')">Забанить</button>
                 </div>
             </li>
             {% endfor %}
@@ -38,15 +53,29 @@
                     <p><span class="text-accent">Добавил:</span> {{ palette['owner'] }}</p>
                 </div>
                 <div class="list_block buttons">
-                    <button class="btn">Удалить</button>
+                    <button class="btn" onclick="push_button('palette_del', '{{ palette['_id'] }}')">Удалить</button>
                 </div>
             </li>
             {% endfor %}
         </ul>
     </div>
 </div>
+<script>
 
 
+    function push_button(action, uid)
+    {
+        window.location.assign(`/api/control?act=${action}&uid=${uid}`)
+        setTimeout(function() {
+          console.log(window.location);
+        }, 1000);
+    }
 
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0)
+    }, 4000);
+
+
+</script>
 </body>
 </html>
