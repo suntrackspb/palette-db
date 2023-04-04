@@ -23,6 +23,7 @@ const useScrollPagination = (callback, skipAmount, limit) => {
 
   useEffect(() => {
     if (isLoading) {
+      document.body.style.overflow = "hidden";
       fetchData()
         .then(res => {
           setData([...data, ...res])
@@ -33,6 +34,7 @@ const useScrollPagination = (callback, skipAmount, limit) => {
         .finally(() => {
           setLoading(false)
         })
+      document.body.style.overflow = "auto";
     }
   }, [isLoading])
 
