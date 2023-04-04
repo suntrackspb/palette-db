@@ -46,7 +46,9 @@
             {% for palette in palettes %}
             <li class="list_item">
                 <div class="list_block">
-                    <img src="{{ palette['src'] }}" width="65px" height="65px" alt="">
+                    <a href="/palette/{{ palette['_id'] }}" >
+                        <img src="{{ palette['src'] }}" width="65px" height="65px" alt="">
+                    </a>
                 </div>
                 <div class="list_block">
                     <p><span class="text-accent">Uid:</span> {{ palette['_id'] }}</p>
