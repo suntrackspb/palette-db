@@ -60,6 +60,9 @@ class PalettesDB:
     def tags(self):
         return self.conn.distinct("tags")
 
+    def delete(self, uid):
+        pass
+
 
 class UsersDB:
     def __init__(self):
@@ -92,13 +95,19 @@ class UsersDB:
     def update_verify(self, uid):
         return self.conn.update_one({"_id": uid}, {"$set": {"verify": True}})
 
+    def delete(self, uid):
+        pass
+
+    def block(self, uid):
+        pass
+
 
 class AdminPalettes:
     def __init__(self):
         self.conn = connect().palettes
 
     def palettes_list(self):
-        data = to_url(list(self.conn.find({"owner": { "$ne": "host" }}, {
+        data = to_url(list(self.conn.find({"owner": {"$ne": "host"}}, {
             "name": 1, "src": 1, "owner": 1
         }).sort("_id", -1).limit(50).skip(0)))
         return data
