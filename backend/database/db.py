@@ -99,7 +99,6 @@ class UsersDB:
         self.conn.delete({"_id": ObjectId(uid)})
 
     def block(self, uid):
-        print(uid)
         self.conn.update_many({'_id': ObjectId(uid)}, [{'$set': {'block': {'$not': '$block'}}}])
 
 
