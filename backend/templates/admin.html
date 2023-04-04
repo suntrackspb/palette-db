@@ -32,8 +32,12 @@
                     <p><span class="text-accent">Ban:</span> {{ user['block'] }}</p>
                 </div>
                 <div class="list_block buttons">
-                    <button class="btn" onclick="push_button('user_del', '{{ user['_id'] }}')">Удалить</button>
-                    <button class="btn" onclick="push_button('user_ban', '{{ user['_id'] }}')">Забанить</button>
+                    <button class="btn btn-danger" onclick="push_button('user_del', '{{ user['_id'] }}')">Delete</button>
+                    {% if  user['block'] %}
+                        <button type="button" class="btn btn-success" onclick="push_button('user_ban', '{{ user['_id'] }}')">Unban</button>
+                    {% else %}
+                        <button type="button" class="btn btn-danger" onclick="push_button('user_ban', '{{ user['_id'] }}')">Ban</button>
+                    {% endif %}
                 </div>
             </li>
             {% endfor %}
@@ -56,7 +60,7 @@
                     <p><span class="text-accent">Owner:</span> {{ palette['owner'] }}</p>
                 </div>
                 <div class="list_block buttons">
-                    <button class="btn" onclick="push_button('palette_del', '{{ palette['_id'] }}')">Удалить</button>
+                    <button type="button"  class="btn btn-danger" onclick="push_button('palette_del', '{{ palette['_id'] }}')">Delete</button>
                 </div>
             </li>
             {% endfor %}
