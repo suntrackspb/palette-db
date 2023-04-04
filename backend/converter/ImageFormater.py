@@ -35,7 +35,7 @@ landscape_settings = {
 
 
 def read_image():
-    with open(f"{os.getenv('TEMP_PATH')}/temp.jpg", "rb") as f:
+    with open(f"{os.getenv('TEMP_PATH')}/temp.webp", "rb") as f:
         pic = f.read()
     return base64.encodebytes(pic).decode('utf-8')
 
@@ -86,8 +86,8 @@ def analyze(mod_img, original, settings):
     ordered_colors = [center_colors[i] for i in counts.keys()]
     hex_colors = [rgb_to_hex(ordered_colors[i]) for i in counts.keys()]
     vis = draw_color(ordered_colors, original, settings)
-    filename = f"{os.getenv('TEMP_PATH')}/temp.jpg"
-    cv2.imwrite(filename, vis)
+    filename = f"{os.getenv('TEMP_PATH')}/temp.webp"
+    cv2.imwrite(filename, vis, [int(cv2.IMWRITE_WEBP_QUALITY), 80])
     return hex_colors
 
 

@@ -217,7 +217,7 @@ def prepare_palette(data, file):
 def save_palette_in_db(data):
     image_bytes = base64.b64decode(data['image_b64'])
     num = next_palettes_count()
-    with open(f"{os.getenv('USERS_IMAGE_PATH')}/palette-{num}.jpg", "wb") as f:
+    with open(f"{os.getenv('USERS_IMAGE_PATH')}/palette-{num}.webp", "wb") as f:
         f.write(image_bytes)
 
     user = get_jwt_identity()
