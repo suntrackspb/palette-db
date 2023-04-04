@@ -14,7 +14,8 @@ from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
-from controller import admin_get_users, admin_get_palettes, recovery_password
+from controller import admin_get_users, admin_get_palettes, admin_delete_user, admin_switch_ban_user
+from controller import admin_delete_palette, recovery_password
 from error_handler import ce
 
 load_dotenv()
@@ -239,10 +240,13 @@ def admin_control():
         if act is not None and uid is not None:
             match act:
                 case 'user_del':
+                    admin_delete_user(uid)
                     flash(f'User id: {uid} has been delete.')
                 case 'user_ban':
+                    admin_switch_ban_user(uid)
                     flash(f'User id: {uid} has been banned.')
                 case 'palette_del':
+                    admin_delete_palette(uid)
                     flash(f'Palette id: {uid} has been delete.')
                 case _:
                     return render_template_string("Access denied")

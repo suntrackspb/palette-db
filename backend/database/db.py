@@ -61,7 +61,7 @@ class PalettesDB:
         return self.conn.distinct("tags")
 
     def delete(self, uid):
-        pass
+        self.conn.delete({"_id": ObjectId(uid)})
 
 
 class UsersDB:
@@ -96,10 +96,11 @@ class UsersDB:
         return self.conn.update_one({"_id": uid}, {"$set": {"verify": True}})
 
     def delete(self, uid):
-        pass
+        self.conn.delete({"_id": ObjectId(uid)})
 
     def block(self, uid):
-        pass
+        print(uid)
+        self.conn.update_many({'_id': ObjectId(uid)}, [{'$set': {'block': {'$not': '$block'}}}])
 
 
 class AdminPalettes:

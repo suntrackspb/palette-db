@@ -283,3 +283,15 @@ def admin_get_users():
 
 def admin_get_palettes():
     return AdminPalettes().palettes_list()
+
+
+def admin_delete_user(uid):
+    return UsersDB().delete(uid)
+
+
+def admin_switch_ban_user(uid):
+    return UsersDB().block(uid)
+
+
+def admin_delete_palette(uid):
+    return PalettesDB().delete(uid)
