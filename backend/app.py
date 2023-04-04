@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 
-from flask import Flask, request, render_template, render_template_string, flash
+from flask import Flask, request, render_template, render_template_string, flash, redirect
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
@@ -25,6 +25,7 @@ logfile = os.getenv("LOG_FILE")
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
+app.config['SESSION_TYPE'] = 'filesystem'
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
@@ -238,16 +239,14 @@ def admin_control():
         if act is not None and uid is not None:
             match act:
                 case 'user_del':
-                    print('user delete', act, uid)
                     flash(f'User id: {uid} has been delete.')
                 case 'user_ban':
-                    print('user ban', act, uid)
                     flash(f'User id: {uid} has been banned.')
                 case 'palette_del':
-                    print('palette delete', act, uid)
                     flash(f'Palette id: {uid} has been delete.')
                 case _:
                     return render_template_string("Access denied")
+            return redirect("/api/control", code=302)
 
         users = admin_get_users()
         palettes = admin_get_palettes()
