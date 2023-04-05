@@ -79,6 +79,9 @@ def next_users_count():
 
 
 def authorization(data):
+    #
+    # TODO add check ban user
+    #
     if not data['login'] and data['password']:
         return ce("Error", "0x0007", "Incorrect symbols password or username"), 401
     if not re.search(mail_pattern, data['login']):
