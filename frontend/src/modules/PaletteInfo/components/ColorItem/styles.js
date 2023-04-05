@@ -1,6 +1,5 @@
 export const styles = {
   code: {
-    fontWeight: 600,
     mx: '20px',
     cursor: 'pointer',
     fontSize: '15px',
