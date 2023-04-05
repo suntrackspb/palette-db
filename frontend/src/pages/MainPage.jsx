@@ -31,7 +31,7 @@ const MainPage = () => {
 
       <Title text='Возможности' component='h2' variant='h4' mt={4}/>
 
-      <Grid container spacing={2} justifyContent='center' alignItems='center'>
+      <Grid container spacing={2} justifyContent='center' alignItems='stretch'>
         <Block>
           <Title text='Поиск по тегам' component='h3' variant='h6'/>
           <Paragraph variant='body2'>
@@ -102,7 +102,8 @@ const Block = ({children}) => {
       className='flex-col-c'
       styleProps={{
         mt: 2,
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        minHeight: '100%'
       }}
     >
       {children}
