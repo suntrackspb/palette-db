@@ -42,13 +42,13 @@ const SaveForm = ({croppedImage, tags, selectedTags, setSelectedTags, store}) =>
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Выберите теги"
+              label="Выберите минимум 5 тегов"
               placeholder="Теги"
             />
           )}
         />
         <Button
-          disabled={!selectedTags.length}
+          disabled={selectedTags.length < 5}
           type='submit'
           variant='contained'
           color='secondary'>
