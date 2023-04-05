@@ -7,11 +7,12 @@ import TestPage from "../../pages/TestPage";
 import PalettePage, {paletteLoader} from "../../pages/PalettePage.jsx";
 import CategoryPage from "../../pages/CategoryPage.jsx";
 import AddPalette from "../../pages/AddPalette.jsx";
+import PalettesPage from "../../pages/PalettesPage.jsx";
+import LoginPage from "../../pages/LoginPage.jsx";
+import UserProfilePage from "../../pages/UserProfilePage.jsx";
 
 import {AuthProvider} from "../../hoc/AuthProvider";
 import RequireAuth from "../../hoc/RequireAuth.jsx";
-import LoginPage from "../../pages/LoginPage.jsx";
-import UserProfilePage from "../../pages/UserProfilePage.jsx";
 import FavoritesPage from "../../pages/FavoritesPage.jsx";
 
 const darkTheme = createTheme({
@@ -50,6 +51,7 @@ const lightTheme = createTheme({
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Layout/>}>
     <Route index element={<MainPage/>}/>
+    <Route path='palettes' element={<PalettesPage/>}/>
     <Route path='category/:category' element={<CategoryPage/>}/>
     <Route path='palette/:id' element={<PalettePage/>} loader={paletteLoader}/>
     <Route path='palette/add' element={<RequireAuth element={<AddPalette/>}/>}/>
