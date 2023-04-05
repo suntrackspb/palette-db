@@ -13,7 +13,7 @@ export const styles = {
   },
   rightBlock: {
     marginLeft: 'auto',
-    display: 'flex',
+    display: {xs: 'none', md: 'flex'},
     alignItems: 'center',
     gap: '10px'
   }
