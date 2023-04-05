@@ -19,7 +19,7 @@ const Header = () => {
     },
     {
       path: 'palette/add',
-      text: 'Создать палитру',
+      text: 'Создать',
       isPrivate: true
     },
     {

@@ -25,7 +25,7 @@ const MainPage = () => {
           color='secondary'
           text='Перейти к палитрам'
           linkTo='palettes'
-          padding='6px 16px'
+          padding='12px 24px'
         />
       </Box>
 
@@ -103,6 +103,7 @@ const Block = ({children}) => {
       styleProps={{
         mt: 2,
         alignItems: 'flex-start',
+        justifyContent: 'flex-start',
         minHeight: '100%'
       }}
     >
