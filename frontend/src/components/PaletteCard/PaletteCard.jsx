@@ -13,27 +13,28 @@ import ButtonFavorite from "../ButtonFavorite/ButtonFavorite.jsx";
 
 const PaletteCard = ({palette}) => {
   const {store} = useAuth()
+  const {_id, name, src} = palette
 
   return (
     <Grid item lg={3} md={4} sm={6} xs={12}>
       <Card sx={{bgcolor: 'common.first', backgroundImage: 'none'}}>
         <CardActions className='flex-sb' sx={{p: 2}}>
           <Typography variant='h6' sx={{textTransform: 'capitalize', ml: 1}}>
-            {palette.name}
+            {name}
           </Typography>
 
-          {store.isAuth && <ButtonFavorite id={palette._id} size={24}/>}
+          {store.isAuth && <ButtonFavorite id={_id} size={24}/>}
         </CardActions>
 
-        <Link to={`/palette/${palette._id}`}>
+        <Link to={`/palette/${_id}`}>
           <CardActionArea>
             <CardMedia
               component='img'
               width='300px'
               height='300px'
               sx={{height: '100%'}}
-              alt={palette.name}
-              image={palette.src}
+              alt={name}
+              image={src}
             />
           </CardActionArea>
         </Link>
