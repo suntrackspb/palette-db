@@ -221,9 +221,11 @@ def save_palette():
 def feedback():
     js = request.get_json()
     msg = f"Message from site:\nSender:{js['name']} - {js['email']}\nMessage:\n{js['message']}"
-    r = telegram_sender(msg)
-    print(r)
-    return jsonify({"status": "OK"})
+    r = telegram_sender(msg).encoding()
+    if r.content['ok']:
+        return jsonify({'status': 'ok'})
+    else:
+        return ce('Error', '0x0024', r.content['description']), int(r.content['error_code'])
 
 
 @app.route("/api/logs", methods=['GET'])

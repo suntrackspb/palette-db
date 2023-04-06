@@ -14,7 +14,7 @@ import {vocabulary} from "../../vocabulary/vocabulary.js";
 
 const FeedbackForm = () => {
   const {handleCaptcha, isCaptchaDone} = useCaptcha()
-  const {fetchData, isLoading} = useFetching(async () => {
+  const {fetchData, isLoading, error} = useFetching(async () => {
     return await UserService.sendFeedbackForm({name, email, message})
   })
   const [name, setName] = useState('');
@@ -23,13 +23,27 @@ const FeedbackForm = () => {
   const [success, setSuccess] = useState(false);
 
   const isFormValid = () => {
-    return !name || !email || !message || !isCaptchaDone
+    // return !name || !email || !message || !isCaptchaDone
+    return !name || !email || !message
   }
 
+  // const handleSubmit = e => {
+  //   e.preventDefault()
+  //   fetchData()
+  //     .then((res) => {
+  //       console.log(res)
+  //       console.log(error)
+  //       setSuccess(true)
+  //     })
+  //     .catch(e => console.log(e))
+  // }
   const handleSubmit = e => {
     e.preventDefault()
-    fetchData()
-      .then(() => setSuccess(true))
+    UserService.sendFeedbackForm({name, email, message})
+      .then(res => {
+        console.log(res)
+        setSuccess(true)
+      })
       .catch(e => console.log(e))
   }
 
@@ -64,9 +78,9 @@ const FeedbackForm = () => {
           label='Сообщение'
           required
         />
-        <Captcha
-          handleCaptcha={handleCaptcha}
-        />
+        {/*<Captcha*/}
+        {/*  handleCaptcha={handleCaptcha}*/}
+        {/*/>*/}
 
         <ButtonSubmit
           text='Отправить'
@@ -77,7 +91,7 @@ const FeedbackForm = () => {
         {success && <Alert severity="success">{vocabulary.feedbackSuccess}</Alert>}
         
       </ContentBlock>
-      <Loader isLoading={isLoading}/>
+      {/*<Loader isLoading={isLoading}/>*/}
     </>
   );
 };
