@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from dotenv import load_dotenv
 
-from flask import Flask, request, render_template, render_template_string, flash, redirect
+from flask import Flask, request, render_template, render_template_string, flash, redirect, jsonify
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
@@ -216,6 +216,12 @@ def save_palette():
 ##############
 # PAGES
 ##############
+
+@app.route("/api/contact", methods=['POST'])
+def feedback():
+    print(request.get_json())
+    return jsonify({"status": "OK"})
+
 
 @app.route("/api/logs", methods=['GET'])
 def show_log():
