@@ -1,14 +1,17 @@
 import {CAPTCHA_SITE_KEY} from "../../consts/index.js";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const Captcha = ({handleCaptcha}) => {
+const Captcha = ({handleCaptcha, isCaptchaVisible}) => {
   return (
-    <ReCAPTCHA
-      sitekey={CAPTCHA_SITE_KEY}
-      onChange={handleCaptcha}
-      theme='dark'
-      style={{margin: '0 auto'}}
-    />
+    <>
+      {isCaptchaVisible &&
+        <ReCAPTCHA
+          sitekey={CAPTCHA_SITE_KEY}
+          onChange={handleCaptcha}
+          theme='dark'
+          style={{margin: '0 auto'}}
+        />}
+    </>
   );
 };
 

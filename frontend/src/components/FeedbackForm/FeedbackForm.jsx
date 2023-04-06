@@ -90,8 +90,10 @@ const FeedbackForm = () => {
           required
         />
 
-        {isCaptchaVisible &&
-          <Captcha handleCaptcha={handleCaptcha}/>}
+        <Captcha
+          handleCaptcha={handleCaptcha}
+          isCaptchaVisible={isCaptchaVisible}
+        />
 
         <ButtonSubmit
           text='Отправить'

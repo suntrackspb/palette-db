@@ -114,8 +114,11 @@ const LoginForm = () => {
         errorMessage={action === 'signUp' && !!password.value && password.error}
       />
 
-      {action === 'signUp' && isCaptchaVisible &&
-        <Captcha handleCaptcha={handleCaptcha}/>}
+      {action === 'signUp' &&
+        <Captcha
+          handleCaptcha={handleCaptcha}
+          isCaptchaVisible={isCaptchaVisible}
+        />}
 
       <Box alignSelf='center' className='flex-col-c'>
         <ButtonSubmit

@@ -5,7 +5,9 @@ const useCaptcha = (depsArr) => {
   const [isCaptchaVisible, setIsCaptchaVisible] = useState(false);
 
   useEffect(() => {
-    depsArr.every(dep => dep !== '') && setIsCaptchaVisible(true)
+    depsArr.every(dep => dep !== '')
+      ? setIsCaptchaVisible(true)
+      : setIsCaptchaVisible(false)
   }, depsArr);
 
   const handleCaptcha = value => {
