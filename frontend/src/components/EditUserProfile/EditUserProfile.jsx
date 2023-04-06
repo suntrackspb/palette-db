@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
 import {cryptoPass} from "../../utils/crypto.js";
 import {
+  Alert,
   Button,
   FormControl,
   FormHelperText,
@@ -17,6 +18,7 @@ import useConfirmPassword from "../../hooks/useConfirmPassword.js";
 import useAuth from "../../hooks/useAuth.js";
 import {observer} from "mobx-react-lite";
 import Loader from "../Loader/Loader.jsx";
+import ButtonSubmit from "../UI/Buttons/ButtonSubmit.jsx";
 
 const EditUserProfile = () => {
   const {store} = useAuth()
@@ -153,23 +155,16 @@ const EditUserProfile = () => {
         />
       </FormControl>
 
-      <Button
-        type='submit'
-        variant='contained'
-        color='secondary'
-        sx={{px: 4}}
+      <ButtonSubmit
         disabled={!(newPassword.value === confirmPassword.value && !!oldPassword)}
-      >
-        <Typography component='span'>
-          Сохранить
-        </Typography>
-      </Button>
+        text='Сохранить'
+      />
 
       {store.successMessage &&
-        <Typography color='success.main' textAlign='center'>{store.successMessage}</Typography>}
+        <Alert variant='outlined' severity="success">{store.successMessage}</Alert>}
 
       {store.errorMessage &&
-        <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}
+        <Alert severity="error" variant='outlined'>{store.errorMessage}</Alert>}
 
       <Loader isLoading={loading}/>
 

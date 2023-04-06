@@ -12,25 +12,25 @@ import {
   Typography
 } from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import ReCAPTCHA from "react-google-recaptcha";
 
 import useAuth from "../../hooks/useAuth.js";
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
 import PageTitle from "../PageTitle/PageTitle.jsx";
 import useValidation from "../../hooks/useValidation.js";
+import useCaptcha from "../../hooks/useCaptcha.js";
 import Loader from "../Loader/Loader.jsx";
-import {CAPTCHA_SITE_KEY} from "../../consts/index.js";
-import {styles} from "./styles.js";
+import Captcha from "../Captcha/Captcha.jsx";
 import {vocabulary} from "../../vocabulary/vocabulary.js";
+import {styles} from "./styles.js";
 
 
 const LoginForm = () => {
   const {store} = useAuth()
   const login = useValidation('', 'email');
   const password = useValidation('', 'password');
+  const {handleCaptcha, isCaptchaDone} = useCaptcha()
   const [action, setAction] = useState('signIn');
   const [showPassword, setShowPassword] = useState(false);
-  const [isCaptchaDone, setIsCaptchaDone] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
   const location = useLocation()
@@ -69,12 +69,6 @@ const LoginForm = () => {
     login.setValue('')
     password.setValue('')
     store.setErrorMessage('')
-  }
-
-  const handleCaptcha = value => {
-    value
-      ? setIsCaptchaDone(true)
-      : setIsCaptchaDone(false)
   }
 
   return (
@@ -133,12 +127,7 @@ const LoginForm = () => {
         </FormHelperText>
       </FormControl>
 
-      {action === 'signUp' &&
-        <ReCAPTCHA
-          sitekey={CAPTCHA_SITE_KEY}
-          onChange={handleCaptcha}
-          style={{margin: '0 auto'}}
-        />}
+      {action === 'signUp' && <Captcha handleCaptcha={handleCaptcha}/>}
 
       <Box alignSelf='center' className='flex-col-c'>
         <Button
