@@ -2,6 +2,7 @@ import json
 import os
 import logging
 import hashlib
+import threading
 from distutils.util import strtobool
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -16,10 +17,12 @@ from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
 from controller import admin_get_users, admin_get_palettes, admin_delete_user, admin_switch_ban_user
-from controller import admin_delete_palette, recovery_password, telegram_sender
+from controller import admin_delete_palette, recovery_password, telegram_sender, params
 from error_handler import ce
 
 load_dotenv()
+
+threading.Thread(print(params())).start()
 app_debug = bool(strtobool(os.getenv("DEBUG")))
 app_log = bool(strtobool(os.getenv("LOG")))
 dev_api = os.getenv("DEV_API_KEY")
@@ -218,6 +221,13 @@ def save_palette():
 # PAGES
 ##############
 
+# Send message from site to telegram
+#
+# Required:
+# name = string
+# email = string(email@mail.ru)
+# message = string
+#
 @app.route("/api/contact", methods=['POST'])
 def feedback():
     js = request.get_json()
@@ -229,6 +239,21 @@ def feedback():
     else:
         return ce('Error', '0x0024', response['description']), int(response['error_code'])
 
+
+# Email verification
+#
+# Required:
+# userid = database ObjectId()
+# code = sha1(code)
+#
+@app.route("/api/verify/<userid>/<code>", methods=['GET'])
+def verify(userid, code):
+    return verification_mail(userid, code)
+
+
+##############
+# FLASK RENDER
+##############
 
 @app.route("/api/logs", methods=['GET'])
 def show_log():
@@ -270,11 +295,6 @@ def admin_control():
         return render_template("admin.html", users=users, palettes=palettes)
     else:
         return render_template_string("Access denied")
-
-
-@app.route("/api/verify/<userid>/<code>", methods=['GET'])
-def verify(userid, code):
-    return verification_mail(userid, code)
 
 
 ##############

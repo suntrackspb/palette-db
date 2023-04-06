@@ -63,9 +63,10 @@ def add_new_user(data):
     # send_mail(data['login'], db, service_code)
     uid = db.replace('"', '')
     email = data['login']
-    subject = 'Mail verification code'
-    message = f'Follow this link to activate your account and confirm your email: ' \
-              f'{os.getenv("BASE_URL")}/api/verify/{uid}/{service_code}'
+    subject = f"Mail verification code from {os.getenv('BASE_URL')}"
+    message = f"Этот почтовый адрес был использован для регистрации на сайте {os.getenv('BASE_URL')}. \n" \
+              f"Для активации аккаунта перейдите по ссылке: {os.getenv('BASE_URL')}/api/verify/{uid}/{service_code} \n" \
+              f"Если это были не вы просто проигнорируте письмо. \n\n\n\n С уважением, администрация!"
 
     mail_sender(email, subject, message)
     return db
@@ -252,7 +253,11 @@ def recovery_password(data):
     if check_exist_user(login) is not None:
         new_password = generate_password()
         subject = "Recovery password"
-        message = f"New password: {new_password}"
+        message = f"Для аккаунта на сайте {os.getenv('BASE_URL')} было запрошего восстановление пароля. \n" \
+                  f"Ваш новый пароль: {new_password} \n" \
+                  f"\n Если вы этого не делали проигнорируйте письмо, \n" \
+                  f"если вам часто приходят такие письма напишите пожалуйста администрации \n" \
+                  f"через форму обратной связи: {os.getenv('BASE_URL')}/feedback или на почту admin@sntrk.ru"
         mail_sender(login, subject, message)
         return ce("Info", "0x0022", "Password changed"), 200
     else:
@@ -309,3 +314,8 @@ def admin_switch_ban_user(uid):
 
 def admin_delete_palette(uid):
     return PalettesDB().delete(uid)
+
+
+def params():
+    return ":'######::'##::::'##:'##::: ##:'########:'########:::::'###:::::'######::'##:::'##: \n'##... ##: ##:::: ##: ###:: ##:... ##..:: ##.... ##:::'## ##:::'##... ##: ##::'##:: \n ##:::..:: ##:::: ##: ####: ##:::: ##:::: ##:::: ##::'##:. ##:: ##:::..:: ##:'##::: \n. ######:: ##:::: ##: ## ## ##:::: ##:::: ########::'##:::. ##: ##::::::: #####:::: \n:..... ##: ##:::: ##: ##. ####:::: ##:::: ##.. ##::: #########: ##::::::: ##. ##::: \n'##::: ##: ##:::: ##: ##:. ###:::: ##:::: ##::. ##:: ##.... ##: ##::: ##: ##:. ##:: \n. ######::. #######:: ##::. ##:::: ##:::: ##:::. ##: ##:::: ##:. ######:: ##::. ##: \n:......::::.......:::..::::..:::::..:::::..:::::..::..:::::..:::......:::..::::..:: "
+
