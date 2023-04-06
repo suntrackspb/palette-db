@@ -20,22 +20,24 @@ import useValidation from "../../hooks/useValidation.js";
 import useCaptcha from "../../hooks/useCaptcha.js";
 import Loader from "../Loader/Loader.jsx";
 import Captcha from "../Captcha/Captcha.jsx";
+import Input from "../UI/Inputs/Input.jsx";
 import {vocabulary} from "../../vocabulary/vocabulary.js";
 import {styles} from "./styles.js";
+import InputPassword from "../UI/Inputs/InputPassword.jsx";
+import ButtonSubmit from "../UI/Buttons/ButtonSubmit.jsx";
+import AlertSuccess from "../UI/Alerts/AlertSuccess.jsx";
 
 
 const LoginForm = () => {
   const {store} = useAuth()
+  const [isLoading, setIsLoading] = useState(false);
+  const [action, setAction] = useState('signIn');
   const login = useValidation('', 'email');
   const password = useValidation('', 'password');
   const {handleCaptcha, isCaptchaDone} = useCaptcha()
-  const [action, setAction] = useState('signIn');
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleClickShowPassword = () => setShowPassword(prev => !prev);
   const handleSubmit = e => {
     e.preventDefault()
     if (action === 'signIn') {
@@ -76,71 +78,43 @@ const LoginForm = () => {
       <PageTitle title={action === 'signIn' ? 'Авторизация' : 'Регистрация'} m='0'/>
 
       {location.search.includes('verify=true') &&
-        <Typography color='success.main' textAlign='center'>{vocabulary.emailVerificationSuccess}</Typography>}
+        <AlertSuccess text={vocabulary.emailVerificationSuccess}/>}
 
       {store.errorMessage &&
-        <Typography color='error' textAlign='center'>{store.errorMessage}</Typography>}
+        <AlertSuccess text={store.errorMessage}/>}
 
       {store.successMessage &&
-        <Typography color='success.main' sx={{whiteSpace: 'pre-wrap'}} textAlign='center'>{store.successMessage}</Typography>}
+        <AlertSuccess text={store.successMessage}/>}
 
-      <FormControl>
-        <InputLabel htmlFor="outlined-email">Email</InputLabel>
-        <OutlinedInput
-          value={login.value}
-          onChange={login.onChange}
-          autoFocus
-          id="outlined-email"
-          label="Email"
-          type="email"
-          error={action === 'signUp' && !!login.value && !login.isValid}
-          required
-        />
-        <FormHelperText id="outlined-email" sx={{color: '#f44336'}}>
-          {action === 'signUp' && login.error}
-        </FormHelperText>
-      </FormControl>
+      <Input
+        value={login.value}
+        onChange={login.onChange}
+        label='Email'
+        id='email'
+        type='email'
+        autoFocus
+        required
+        error={action === 'signUp' && !!login.value && !login.isValid}
+        errorMessage={action === 'signUp' && !!login.value && login.error}
+      />
 
-      <FormControl variant="outlined">
-        <InputLabel htmlFor="outlined-password">Password</InputLabel>
-        <OutlinedInput
-          value={password.value}
-          onChange={password.onChange}
-          id="outlined-password"
-          type={showPassword ? 'text' : 'password'}
-          label="Password"
-          error={action === 'signUp' && !!password.value && !password.isValid}
-          required
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff/> : <Visibility/>}
-              </IconButton>
-            </InputAdornment>}
-        />
-        <FormHelperText id="outlined-password" sx={{color: '#f44336'}}>
-          {action === 'signUp' && !!password.value && password.error}
-        </FormHelperText>
-      </FormControl>
+      <InputPassword
+        value={password.value}
+        onChange={password.onChange}
+        label='Пароль'
+        id='password'
+        required
+        error={action === 'signUp' && !!password.value && !password.isValid}
+        errorMessage={action === 'signUp' && !!password.value && password.error}
+      />
 
       {action === 'signUp' && <Captcha handleCaptcha={handleCaptcha}/>}
 
       <Box alignSelf='center' className='flex-col-c'>
-        <Button
-          type='submit'
-          variant='contained'
-          color='secondary'
-          sx={{px: 4}}
+        <ButtonSubmit
+          text={action === 'signIn' ? 'Войти' : 'Зарегистрироваться'}
           disabled={action === 'signUp' ? isFormValid() : false}
-        >
-          <Typography component='span'>
-            {action === 'signIn' ? 'Войти' : 'Зарегистрироваться'}
-          </Typography>
-        </Button>
+        />
 
         <Typography sx={{mt: 2, cursor: 'pointer'}} onClick={changeAction}>
           {action === 'signIn' ? 'Нет аккаунта?' : 'Есть аккаунт?'}
