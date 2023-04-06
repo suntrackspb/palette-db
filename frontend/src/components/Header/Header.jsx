@@ -31,7 +31,12 @@ const Header = () => {
       path: `user/${store.user?._id}`,
       text: 'Профиль',
       isPrivate: true
-    }
+    },
+    {
+      path: 'feedback',
+      text: 'Контакты',
+      isPrivate: false
+    },
   ]
 
   const [anchorElNav, setAnchorElNav] = useState(null);

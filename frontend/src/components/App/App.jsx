@@ -14,6 +14,7 @@ import UserProfilePage from "../../pages/UserProfilePage.jsx";
 import {AuthProvider} from "../../hoc/AuthProvider";
 import RequireAuth from "../../hoc/RequireAuth.jsx";
 import FavoritesPage from "../../pages/FavoritesPage.jsx";
+import FeedbackForm from "../../pages/FeedbackForm.jsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -57,6 +58,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='palette/add' element={<RequireAuth element={<AddPalette/>}/>}/>
     <Route path='user/:id' element={<RequireAuth element={<UserProfilePage/>}/>}/>
     <Route path='palette/favorites' element={<RequireAuth element={<FavoritesPage/>}/>}/>
+    <Route path='feedback' element={<FeedbackForm/>}/>
 
     <Route path='login' element={<LoginPage/>}/>
     <Route path='test' element={<TestPage/>}/>
