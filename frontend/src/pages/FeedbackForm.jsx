@@ -28,7 +28,10 @@ function FeedbackForm() {
     try {
       const response = await fetch('http://127.0.0.1:5001/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-api-key': 'DevSecretApiKey' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'DevSecretApiKey'
+        },
         body: JSON.stringify({ name, email, message, captchaValue }),
       });
 
@@ -53,13 +56,12 @@ function FeedbackForm() {
   };
 
   return (
-      <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        <Box sx={{ maxWidth: 400 }}>
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+      <Box sx={{ maxWidth: 400 }}>
         <form onSubmit={handleSubmit}>
           <TextField
             required
@@ -89,20 +91,28 @@ function FeedbackForm() {
           />
           {error && <Alert severity="error">{error}</Alert>}
           {success && <Alert severity="success">Ваше сообщение успешно отправлено!</Alert>}
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: 2
+          }}>
             <ReCAPTCHA
               sitekey={CAPTCHA_SITE_KEY}
               onChange={handleCaptchaChange}
+              theme="dark"
             />
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: 2 }}>
             <Button type="submit" variant="contained">
               Отправить
             </Button>
           </Box>
         </form>
       </Box>
-      </Box>
+    </Box>
   );
 }
 
