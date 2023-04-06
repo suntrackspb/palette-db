@@ -1,9 +1,8 @@
-import {Box, Card, CardActions, CardMedia, Grid, ListItem, Typography} from "@mui/material";
+import {Link} from "react-router-dom";
+import {Box, Card, CardMedia, Grid, ListItem, Typography} from "@mui/material";
 import ContentBlock from "../components/ContentBlock/ContentBlock.jsx";
 import ColorItem from "../modules/PaletteInfo/components/ColorItem/ColorItem.jsx";
 import LinkButton from "../components/LinkButton/LinkButton.jsx";
-import {Link} from "react-router-dom";
-import React from "react";
 
 const MainPage = () => {
   const tags = ['нежные пастельные тона', 'контрастные цвета', 'изумрудный', 'фиолетовый', 'черный и желтый', 'бледно-голубой']
