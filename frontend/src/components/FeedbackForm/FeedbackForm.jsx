@@ -48,7 +48,7 @@ const FeedbackForm = () => {
           id='name'
           label='Имя'
           type='text'
-          required={true}
+          required
         />
         <Input
           value={email}
@@ -56,13 +56,13 @@ const FeedbackForm = () => {
           id='email'
           label='Email'
           type='email'
-          required={true}
+          required
         />
         <TextArea
           value={message}
           onChange={e => setMessage(e.target.value)}
           label='Сообщение'
-          required={true}
+          required
         />
         <Captcha
           handleCaptcha={handleCaptcha}
@@ -71,6 +71,7 @@ const FeedbackForm = () => {
         <ButtonSubmit
           text='Отправить'
           disabled={isFormValid()}
+          px='106px'
         />
 
         {success && <Alert severity="success">{vocabulary.feedbackSuccess}</Alert>}
