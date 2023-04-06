@@ -1,17 +1,7 @@
 import {useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import {
-  Box,
-  Button,
-  FormControl, FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Typography
-} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {Box, Typography} from "@mui/material";
 
 import useAuth from "../../hooks/useAuth.js";
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
@@ -21,11 +11,12 @@ import useCaptcha from "../../hooks/useCaptcha.js";
 import Loader from "../Loader/Loader.jsx";
 import Captcha from "../Captcha/Captcha.jsx";
 import Input from "../UI/Inputs/Input.jsx";
-import {vocabulary} from "../../vocabulary/vocabulary.js";
-import {styles} from "./styles.js";
 import InputPassword from "../UI/Inputs/InputPassword.jsx";
 import ButtonSubmit from "../UI/Buttons/ButtonSubmit.jsx";
-import AlertSuccess from "../UI/Alerts/AlertSuccess.jsx";
+import AlertBlock from "../UI/Alerts/AlertBlock.jsx";
+
+import {vocabulary} from "../../vocabulary/vocabulary.js";
+import {styles} from "./styles.js";
 
 
 const LoginForm = () => {
@@ -34,7 +25,12 @@ const LoginForm = () => {
   const [action, setAction] = useState('signIn');
   const login = useValidation('', 'email');
   const password = useValidation('', 'password');
-  const {handleCaptcha, isCaptchaDone} = useCaptcha()
+  const {
+    handleCaptcha,
+    isCaptchaDone,
+    setIsCaptchaVisible,
+    isCaptchaVisible
+  } = useCaptcha([login.value, password.value])
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -49,7 +45,10 @@ const LoginForm = () => {
               .then(() => navigate('/', {replace: true}))
           }
         })
-        .finally(() => setIsLoading(false))
+        .finally(() => {
+          setIsLoading(false)
+          setIsCaptchaVisible(false)
+        })
     } else {
       setIsLoading(true)
       store.registration(login.value.toLowerCase(), password.value)
@@ -58,7 +57,10 @@ const LoginForm = () => {
             changeAction()
           }
         })
-        .finally(() => setIsLoading(false))
+        .finally(() => {
+          setIsLoading(false)
+          setIsCaptchaVisible(false)
+        })
     }
   }
 
@@ -78,13 +80,13 @@ const LoginForm = () => {
       <PageTitle title={action === 'signIn' ? 'Авторизация' : 'Регистрация'} m='0'/>
 
       {location.search.includes('verify=true') &&
-        <AlertSuccess text={vocabulary.emailVerificationSuccess}/>}
+        <AlertBlock type='success' text={vocabulary.emailVerificationSuccess}/>}
 
       {store.errorMessage &&
-        <AlertSuccess text={store.errorMessage}/>}
+        <AlertBlock type='error' text={store.errorMessage}/>}
 
       {store.successMessage &&
-        <AlertSuccess text={store.successMessage}/>}
+        <AlertBlock type='success' text={store.successMessage}/>}
 
       <Input
         value={login.value}
@@ -108,7 +110,8 @@ const LoginForm = () => {
         errorMessage={action === 'signUp' && !!password.value && password.error}
       />
 
-      {action === 'signUp' && <Captcha handleCaptcha={handleCaptcha}/>}
+      {action === 'signUp' && isCaptchaVisible &&
+        <Captcha handleCaptcha={handleCaptcha}/>}
 
       <Box alignSelf='center' className='flex-col-c'>
         <ButtonSubmit
