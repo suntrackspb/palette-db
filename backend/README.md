@@ -29,8 +29,12 @@
     DB_PASS="password"
     
     DEV_API_KEY="DevSecretApiKey"
+    SECRET_KEY="SecretKey"
     JWT_SECRET_KEY="SuperSecretKey"
     
+    TELEGRAM_BOT_TOKEN = "TelegramBotToken"
+    TELEGRAM_CHATS_ID = "11111111,chat_id"
+   
     TEMP_PATH="/path/for/temp/images/create"
     USERS_IMAGE_PATH="/path/for/users/upload/images"
     

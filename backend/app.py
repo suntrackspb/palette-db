@@ -15,7 +15,7 @@ from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
 from controller import admin_get_users, admin_get_palettes, admin_delete_user, admin_switch_ban_user
-from controller import admin_delete_palette, recovery_password
+from controller import admin_delete_palette, recovery_password, telegram_sender
 from error_handler import ce
 
 load_dotenv()
@@ -219,7 +219,10 @@ def save_palette():
 
 @app.route("/api/contact", methods=['POST'])
 def feedback():
-    print(request.get_json())
+    js = request.get_json()
+    msg = f"Message from site:\nSender:{js['name']} - {js['email']}\nMessage:\n{js['message']}"
+    r = telegram_sender(msg)
+    print(r)
     return jsonify({"status": "OK"})
 
 
