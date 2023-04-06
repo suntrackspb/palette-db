@@ -3,7 +3,6 @@ export const styles = {
     flexDirection: 'column',
     width: ['100%', '100%', '50%'],
     mx: 'auto',
-    mt: 2,
-    alignItems: 'stretch',
+    mt: 2
   }
 }

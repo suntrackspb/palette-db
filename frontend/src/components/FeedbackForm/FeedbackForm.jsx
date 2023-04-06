@@ -65,6 +65,7 @@ const FeedbackForm = () => {
         <PageTitle title='Форма обратной связи' m='0'/>
 
         <Input
+          fullWidth
           value={name}
           onChange={e => setName(e.target.value)}
           id='name'
@@ -73,6 +74,7 @@ const FeedbackForm = () => {
           required
         />
         <Input
+          fullWidth
           value={email}
           onChange={e => setEmail(e.target.value)}
           id='email'
@@ -81,6 +83,7 @@ const FeedbackForm = () => {
           required
         />
         <TextArea
+          fullWidth
           value={message}
           onChange={e => setMessage(e.target.value)}
           label='Сообщение'

@@ -91,6 +91,7 @@ const LoginForm = () => {
         <AlertBlock type='success' text={store.successMessage}/>}
 
       <Input
+        fullWidth
         value={login.value}
         onChange={login.onChange}
         label='Email'
@@ -103,6 +104,7 @@ const LoginForm = () => {
       />
 
       <InputPassword
+        fullWidth
         value={password.value}
         onChange={password.onChange}
         label='Пароль'

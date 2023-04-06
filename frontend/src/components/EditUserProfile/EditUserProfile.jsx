@@ -1,22 +1,18 @@
 import {useEffect, useState} from 'react';
 import {cryptoPass} from "../../utils/crypto.js";
-import {
-  Alert,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Typography
-} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {Typography} from "@mui/material";
 import useValidation from "../../hooks/useValidation.js";
 import useConfirmPassword from "../../hooks/useConfirmPassword.js";
 import useAuth from "../../hooks/useAuth.js";
 import {observer} from "mobx-react-lite";
-import {ButtonSubmit, ContentBlock, Loader} from "../UI";
-
+import {
+  ButtonSubmit,
+  ContentBlock,
+  Input,
+  InputPassword,
+  Loader,
+  AlertBlock
+} from "../UI";
 
 const EditUserProfile = () => {
   const {store} = useAuth()
@@ -64,94 +60,53 @@ const EditUserProfile = () => {
     <ContentBlock className='flex-col' component='form' autoComplete='off' onSubmit={handleSubmit}>
       <Typography>Редактировать профиль</Typography>
 
-      <FormControl variant='outlined' sx={{width: '100%'}}>
-        <InputLabel htmlFor="outlined-email">Ссылка на аватарку</InputLabel>
-        <OutlinedInput
-          value={avatar}
-          onChange={e => setAvatar(e.target.value)}
-          id="outlined-email"
-          label="Ссылка на аватарку"
-          type="url"
-          autoComplete='off'
-          readOnly
-          onFocus={e => e.target.removeAttribute('readonly')}
-        />
-      </FormControl>
+      <Input
+        fullWidth
+        value={avatar}
+        onChange={e => setAvatar(e.target.value)}
+        id='email'
+        label="Ссылка на аватарку"
+        type="url"
+        autoComplete='off'
+        readOnly
+        onFocus={e => e.target.removeAttribute('readonly')}
+      />
 
-      <FormControl variant="outlined" sx={{width: '100%'}}>
-        <InputLabel htmlFor="newPassword">Новый пароль</InputLabel>
-        <OutlinedInput
-          autoComplete='off'
-          value={newPassword.value}
-          onChange={newPassword.onChange}
-          id="newPassword"
-          type={showPassword ? 'text' : 'password'}
-          label="Новый пароль"
-          error={!!newPassword.value && !newPassword.isValid}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff/> : <Visibility/>}
-              </IconButton>
-            </InputAdornment>}
-        />
-        <FormHelperText id="outlined-password" sx={{color: '#f44336'}}>
-          {!!newPassword.value && newPassword.error}
-        </FormHelperText>
-      </FormControl>
+      <InputPassword
+        fullWidth
+        autoComplete='off'
+        value={newPassword.value}
+        onChange={newPassword.onChange}
+        id="newPassword"
+        type={showPassword ? 'text' : 'password'}
+        label="Новый пароль"
+        error={!!newPassword.value && !newPassword.isValid}
+        errorMessage={!!newPassword.value && newPassword.error}
+      />
 
-      <FormControl variant="outlined" sx={{width: '100%'}}>
-        <InputLabel htmlFor="confirmPassword">Подтвердите пароль</InputLabel>
-        <OutlinedInput
-          autoComplete='off'
-          value={confirmPassword.value}
-          onChange={confirmPassword.onChange}
-          id="confirmPassword"
-          type={showPassword ? 'text' : 'password'}
-          label="Подтвердите пароль"
-          error={!!confirmPassword.error}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff/> : <Visibility/>}
-              </IconButton>
-            </InputAdornment>}
-        />
-        <FormHelperText id="outlined-password" sx={{color: '#f44336'}}>
-          {confirmPassword.error}
-        </FormHelperText>
-      </FormControl>
+      <InputPassword
+        fullWidth
+        autoComplete='off'
+        value={confirmPassword.value}
+        onChange={confirmPassword.onChange}
+        id="confirmPassword"
+        type={showPassword ? 'text' : 'password'}
+        label="Подтвердите пароль"
+        error={!!confirmPassword.error}
+        errorMessage={confirmPassword.error}
+      />
 
       <Typography>Для сохранения изменений введите текущий пароль</Typography>
-      <FormControl variant="outlined" sx={{width: '100%'}}>
-        <InputLabel htmlFor="currentPassword">Введите пароль</InputLabel>
-        <OutlinedInput
-          autoComplete='off'
-          value={oldPassword}
-          onChange={e => setOldPassword(e.target.value)}
-          id="currentPassword"
-          type={showPassword ? 'text' : 'password'}
-          label="Введите пароль"
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff/> : <Visibility/>}
-              </IconButton>
-            </InputAdornment>}
-        />
-      </FormControl>
+
+      <InputPassword
+        fullWidth
+        autoComplete='off'
+        value={oldPassword}
+        onChange={e => setOldPassword(e.target.value)}
+        id="currentPassword"
+        type={showPassword ? 'text' : 'password'}
+        label="Введите пароль"
+      />
 
       <ButtonSubmit
         disabled={!(newPassword.value === confirmPassword.value && !!oldPassword)}
@@ -159,10 +114,10 @@ const EditUserProfile = () => {
       />
 
       {store.successMessage &&
-        <Alert variant='outlined' severity="success">{store.successMessage}</Alert>}
+        <AlertBlock type='success' text={store.successMessage}/>}
 
       {store.errorMessage &&
-        <Alert severity="error" variant='outlined'>{store.errorMessage}</Alert>}
+        <AlertBlock type='error' text={store.errorMessage}/>}
 
       <Loader isLoading={loading}/>
 
