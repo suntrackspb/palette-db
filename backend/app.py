@@ -1,3 +1,4 @@
+import json
 import os
 import logging
 import hashlib
@@ -221,11 +222,12 @@ def save_palette():
 def feedback():
     js = request.get_json()
     msg = f"Message from site:\nSender:{js['name']} - {js['email']}\nMessage:\n{js['message']}"
-    r = telegram_sender(msg).encoding()
-    if r.content['ok']:
+    r = telegram_sender(msg)
+    response = json.loads(r.content.decode('utf-8'))
+    if response['ok']:
         return jsonify({'status': 'ok'})
     else:
-        return ce('Error', '0x0024', r.content['description']), int(r.content['error_code'])
+        return ce('Error', '0x0024', response['description']), int(response['error_code'])
 
 
 @app.route("/api/logs", methods=['GET'])
