@@ -18,6 +18,9 @@ class UserService {
       }
     })
   }
+  static sendFeedbackForm = async (data) => {
+    return $api.post('/contact', data)
+  }
 }
 
 export default UserService

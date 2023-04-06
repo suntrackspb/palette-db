@@ -10,11 +10,10 @@ import AddPalette from "../../pages/AddPalette.jsx";
 import PalettesPage from "../../pages/PalettesPage.jsx";
 import LoginPage from "../../pages/LoginPage.jsx";
 import UserProfilePage from "../../pages/UserProfilePage.jsx";
-
-import {AuthProvider} from "../../hoc/AuthProvider";
-import RequireAuth from "../../hoc/RequireAuth.jsx";
+import FeedbackPage from "../../pages/FeedbackPage.jsx";
 import FavoritesPage from "../../pages/FavoritesPage.jsx";
-import FeedbackForm from "../../pages/FeedbackForm.jsx";
+import RequireAuth from "../../hoc/RequireAuth.jsx";
+import {AuthProvider} from "../../hoc/AuthProvider";
 
 const darkTheme = createTheme({
   palette: {
@@ -53,12 +52,12 @@ const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<Layout/>}>
     <Route index element={<MainPage/>}/>
     <Route path='palettes' element={<PalettesPage/>}/>
+    <Route path='feedback' element={<FeedbackPage/>}/>
     <Route path='category/:category' element={<CategoryPage/>}/>
     <Route path='palette/:id' element={<PalettePage/>} loader={paletteLoader}/>
     <Route path='palette/add' element={<RequireAuth element={<AddPalette/>}/>}/>
     <Route path='user/:id' element={<RequireAuth element={<UserProfilePage/>}/>}/>
     <Route path='palette/favorites' element={<RequireAuth element={<FavoritesPage/>}/>}/>
-    <Route path='feedback' element={<FeedbackForm/>}/>
 
     <Route path='login' element={<LoginPage/>}/>
     <Route path='test' element={<TestPage/>}/>

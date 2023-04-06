@@ -7,5 +7,6 @@ export const vocabulary = {
   '0x0019': 'Неверный текущий пароль',
   editProfileSuccess: 'Изменения успешно применены',
   registrationSuccess: 'Вы успешно зарегистрировались\nДля входа подтвердите свой аккаунт на почте',
-  emailVerificationSuccess: 'Почта успешно подтверждена'
+  emailVerificationSuccess: 'Почта успешно подтверждена',
+  feedbackSuccess: 'Форма успешно отправлена'
 }
