@@ -1,13 +1,12 @@
-import React from 'react';
 import {Button, Typography} from "@mui/material";
 
-const ButtonSubmit = ({disabled, text}) => {
+const ButtonSubmit = ({disabled, text, px}) => {
   return (
     <Button
       type='submit'
       variant='contained'
       color='secondary'
-      sx={{px: 4}}
+      sx={{px: px ?? 4}}
       disabled={disabled}
     >
       <Typography component='span'>
