@@ -238,6 +238,9 @@ def save_palette_in_db(data):
     return JSE.encode(PalettesDB().create(obj)), 200
 
 
+def get_random_palettes():
+    pass
+
 ##############
 # SERVICE
 ##############
