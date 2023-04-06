@@ -1,8 +1,8 @@
-import PaletteService from "../api/PaletteService.js";
+import {useParams} from "react-router-dom";
 import useScrollPagination from "../hooks/useScrollPagination.js";
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
-import {useParams} from "react-router-dom";
-import PageTitle from "../components/PageTitle/PageTitle.jsx";
+import {PageTitle} from "../components/UI";
+import PaletteService from "../api/PaletteService.js";
 
 
 const CategoryPage = () => {

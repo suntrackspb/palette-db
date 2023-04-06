@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import ContentBlock from "../ContentBlock/ContentBlock.jsx";
+import {useEffect, useState} from 'react';
 import {cryptoPass} from "../../utils/crypto.js";
 import {
   Alert,
-  Button,
   FormControl,
   FormHelperText,
   IconButton,
@@ -17,8 +15,8 @@ import useValidation from "../../hooks/useValidation.js";
 import useConfirmPassword from "../../hooks/useConfirmPassword.js";
 import useAuth from "../../hooks/useAuth.js";
 import {observer} from "mobx-react-lite";
-import Loader from "../Loader/Loader.jsx";
-import ButtonSubmit from "../UI/Buttons/ButtonSubmit.jsx";
+import {ButtonSubmit, ContentBlock, Loader} from "../UI";
+
 
 const EditUserProfile = () => {
   const {store} = useAuth()

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Skeleton, Typography} from "@mui/material";
 import {styles} from "./styles.js";
-import ContentBlock from "../ContentBlock/ContentBlock.jsx";
+import ContentBlock from "../UI/Blocks/ContentBlock.jsx";
 import useAuth from "../../hooks/useAuth.js";
 import {observer} from "mobx-react-lite";
 

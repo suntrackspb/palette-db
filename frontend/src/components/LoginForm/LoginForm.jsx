@@ -4,16 +4,18 @@ import {observer} from "mobx-react-lite";
 import {Box, Typography} from "@mui/material";
 
 import useAuth from "../../hooks/useAuth.js";
-import ContentBlock from "../ContentBlock/ContentBlock.jsx";
-import PageTitle from "../PageTitle/PageTitle.jsx";
 import useValidation from "../../hooks/useValidation.js";
 import useCaptcha from "../../hooks/useCaptcha.js";
-import Loader from "../Loader/Loader.jsx";
 import Captcha from "../Captcha/Captcha.jsx";
-import Input from "../UI/Inputs/Input.jsx";
-import InputPassword from "../UI/Inputs/InputPassword.jsx";
-import ButtonSubmit from "../UI/Buttons/ButtonSubmit.jsx";
-import AlertBlock from "../UI/Alerts/AlertBlock.jsx";
+import {
+  AlertBlock,
+  ButtonSubmit,
+  InputPassword,
+  Input,
+  ContentBlock,
+  Loader,
+  PageTitle
+} from "../UI";
 
 import {vocabulary} from "../../vocabulary/vocabulary.js";
 import {styles} from "./styles.js";

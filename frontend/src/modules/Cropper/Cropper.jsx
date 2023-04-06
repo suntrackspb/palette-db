@@ -1,13 +1,11 @@
 import {useEffect, useState} from 'react';
 import 'react-image-crop/dist/ReactCrop.css'
-import {Card} from "@mui/material";
 import PaletteService from "../../api/PaletteService.js";
 
 import Crop from './components/Crop/Crop.jsx'
 import CreateForm from "./components/CreateForm/CreateForm.jsx";
 import SaveForm from "./components/SaveForm/SaveForm.jsx";
-import Loader from "../../components/Loader/Loader.jsx";
-import ContentBlock from "../../components/ContentBlock/ContentBlock.jsx";
+import {ContentBlock, Loader} from "../../components/UI";
 
 
 const Cropper = ({store}) => {

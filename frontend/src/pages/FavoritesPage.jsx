@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import PaletteService from "../api/PaletteService.js";
-import PageTitle from "../components/PageTitle/PageTitle.jsx";
+import {useEffect, useState} from 'react';
+import {observer} from "mobx-react-lite";
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
+import {PageTitle} from "../components/UI";
 import useFetching from "../hooks/useFetching.js";
 import useAuth from "../hooks/useAuth.js";
-import {observer} from "mobx-react-lite";
+import PaletteService from "../api/PaletteService.js";
 
 const FavoritesPage = () => {
   const {store} = useAuth()

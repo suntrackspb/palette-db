@@ -1,5 +1,16 @@
 import {Paper} from "@mui/material";
-import {styles} from "./styles";
+const styles = {
+  block: {
+    p: [2,2,3,3,4],
+    flex: 1,
+    bgcolor: 'common.first',
+    backgroundImage: 'none',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 2,
+  },
+}
 
 const ContentBlock = ({children, styleProps, ...props}) => {
   return (

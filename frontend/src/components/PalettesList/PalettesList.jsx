@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react'
+import {useEffect} from 'react'
+import {Grid, Typography} from "@mui/material"
+import {observer} from "mobx-react-lite";
 
 import PaletteCard from "../PaletteCard/PaletteCard.jsx"
-import ErrorBlock from "../ErrorBlock/ErrorBlock.jsx";
-import Loader from "../Loader/Loader.jsx";
+import {ErrorBlock, Loader} from "../UI";
 
-import {Container, Grid, Typography} from "@mui/material"
-import {observer} from "mobx-react-lite";
 
 const PalettesList = ({data, handleScroll, error, isLoading, isLast, noDataMessage}) => {
 

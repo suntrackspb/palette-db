@@ -1,13 +1,15 @@
 import {useState} from 'react';
-import ContentBlock from "../ContentBlock/ContentBlock.jsx";
-import PageTitle from "../PageTitle/PageTitle.jsx";
-import Input from "../UI/Inputs/Input.jsx";
-import TextArea from "../UI/Inputs/TextArea.jsx";
-import ButtonSubmit from "../UI/Buttons/ButtonSubmit.jsx";
 import Captcha from "../Captcha/Captcha.jsx";
 import useCaptcha from "../../hooks/useCaptcha.js";
-import Loader from "../Loader/Loader.jsx";
-import AlertBlock from "../UI/Alerts/AlertBlock.jsx";
+import {
+  AlertBlock,
+  Input,
+  TextArea,
+  ButtonSubmit,
+  ContentBlock,
+  Loader,
+  PageTitle
+} from "../UI";
 import UserService from "../../api/UserService.js";
 import {vocabulary} from "../../vocabulary/vocabulary.js";
 
@@ -29,11 +31,20 @@ const FeedbackForm = () => {
     return !name || !email || !message || !isCaptchaDone
   }
 
+  const resetForm = () => {
+    setEmail('')
+    setMessage('')
+    setName('')
+  }
+
   const handleSubmit = e => {
     e.preventDefault()
     setIsLoading(true)
     UserService.sendFeedbackForm({name, email, message})
-      .then(() => setSuccess(true))
+      .then(() => {
+        setSuccess(true)
+        resetForm()
+      })
       .catch(e => {
         setError(vocabulary[e.response.data.code])
       })

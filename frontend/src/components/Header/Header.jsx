@@ -1,12 +1,13 @@
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
+import {Link} from "react-router-dom";
 import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import useAuth from "../../hooks/useAuth.js";
 import {getCookie} from "../../utils/cookie.js";
-import LinkButton from "../LinkButton/LinkButton.jsx";
+import {ButtonLink} from "../UI";
+
 import {styles} from "./styles.js";
-import {Link} from "react-router-dom";
 
 
 const Header = () => {
@@ -72,7 +73,7 @@ const Header = () => {
         <Box component='ul' sx={styles.rightBlock}>
 
           {links.map(({path, text, isPrivate}, i) =>
-            !isPrivate && <LinkButton
+            !isPrivate && <ButtonLink
               key={i}
               component='li'
               linkTo={path}
@@ -81,7 +82,7 @@ const Header = () => {
             />)}
 
           {store.isAuth && links.map(({path, text, isPrivate}, i) =>
-            isPrivate && <LinkButton
+            isPrivate && <ButtonLink
               key={i}
               component='li'
               linkTo={path}
@@ -90,7 +91,7 @@ const Header = () => {
             />)}
 
           {!store.isAuth
-            ? <LinkButton
+            ? <ButtonLink
               component='li'
               linkTo='login'
               text='Войти'

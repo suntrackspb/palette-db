@@ -1,8 +1,7 @@
 import {Link} from "react-router-dom";
 import {Box, Card, CardMedia, Grid, ListItem, Typography} from "@mui/material";
-import ContentBlock from "../components/ContentBlock/ContentBlock.jsx";
 import ColorItem from "../modules/PaletteInfo/components/ColorItem/ColorItem.jsx";
-import LinkButton from "../components/LinkButton/LinkButton.jsx";
+import {ButtonLink, ContentBlock} from "../components/UI";
 
 const MainPage = () => {
   const tags = ['нежные пастельные тона', 'контрастные цвета', 'изумрудный', 'фиолетовый', 'черный и желтый', 'бледно-голубой']
@@ -18,7 +17,7 @@ const MainPage = () => {
           У нас вы найдете огромный выбор готовых палитр. Каждая цветовая палитра состоит из нескольких цветов, которые
           идеально подходят друг к другу.
         </Paragraph>
-        <LinkButton
+        <ButtonLink
           component='span'
           variant='contained'
           color='secondary'

@@ -1,6 +1,6 @@
 import {observer} from "mobx-react-lite";
 import {Box, Typography} from "@mui/material";
-import PageTitle from "../../../../components/PageTitle/PageTitle.jsx";
+import {PageTitle} from "../../../../components/UI";
 import ButtonFavorite from "../../../../components/ButtonFavorite/ButtonFavorite.jsx";
 import useAuth from "../../../../hooks/useAuth.js";
 

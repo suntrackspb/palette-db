@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Fade, Popper, Typography} from "@mui/material";
-import {styles} from "../../modules/PaletteInfo/components/ColorItem/styles.js";
+import {styles} from "../../../modules/PaletteInfo/components/ColorItem/styles.js";
 
 const CopyBlock = ({copyId, isCopyOpen, copyAnchor}) => {
   return (

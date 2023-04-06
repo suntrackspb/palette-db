@@ -4,7 +4,7 @@ import {Box} from "@mui/material";
 import ColorsList from "./components/ColorsList/ColorsList.jsx";
 import Gradient from "./components/Gradient/Gradient.jsx";
 
-import ContentBlock from "../../components/ContentBlock/ContentBlock.jsx";
+import {ContentBlock} from "../../components/UI/index";
 import TagsList from "./components/TagsList/TagsList.jsx";
 import HeaderInfo from "./components/HeaderInfo/HeaderInfo.jsx";
 

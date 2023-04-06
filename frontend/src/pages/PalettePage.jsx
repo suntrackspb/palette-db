@@ -4,8 +4,7 @@ import {Container} from "@mui/material";
 
 
 import PaletteInfo from "../modules/PaletteInfo/PaletteInfo";
-import Loader from "../components/Loader/Loader.jsx";
-import ErrorBlock from "../components/ErrorBlock/ErrorBlock.jsx";
+import {ErrorBlock, Loader} from "../components/UI";
 
 import PaletteService from "../api/PaletteService.js";
 

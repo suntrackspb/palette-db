@@ -8,7 +8,7 @@ import usePopover from "../../../../hooks/usePopover.js";
 import {hexToRgba, rgbaToHexText, rgbaToText} from "../../../../utils/colorsFunctions.js";
 
 import {styles} from './styles.js'
-import CopyBlock from "../../../../components/CopyBlock/CopyBlock.jsx";
+import {CopyBlock} from "../../../../components/UI";
 import useCopy from "../../../../hooks/useCopy.js";
 
 const ColorItem = ({itemColor, setSelectedColor}) => {
