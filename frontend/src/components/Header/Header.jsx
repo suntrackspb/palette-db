@@ -13,6 +13,11 @@ const Header = () => {
   const {store} = useAuth()
   const links = [
     {
+      path: '/',
+      text: 'Главная',
+      isPrivate: false
+    },
+    {
       path: 'palettes',
       text: 'Палитры',
       isPrivate: false
