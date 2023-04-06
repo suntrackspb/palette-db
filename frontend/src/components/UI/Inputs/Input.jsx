@@ -9,10 +9,14 @@ const Input = ({
   required,
   autoFocus,
   error,
-  errorMessage
+  errorMessage,
+  readOnly,
+  onFocus,
+  autoComplete,
+  fullWidth
 }) => {
   return (
-    <FormControl sx={{width: '100%'}} required={required}>
+    <FormControl fullWidth={fullWidth} required={required}>
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <OutlinedInput
         value={value}
@@ -22,10 +26,13 @@ const Input = ({
         label={label}
         type={type}
         error={error}
+        readOnly={readOnly}
+        onFocus={onFocus}
+        autoComplete={autoComplete}
       />
-      <FormHelperText id={id} sx={{color: '#f44336'}}>
+      {error && <FormHelperText id={id} sx={{color: '#f44336'}}>
         {errorMessage}
-      </FormHelperText>
+      </FormHelperText>}
     </FormControl>
   );
 };

@@ -10,12 +10,13 @@ const InputPassword = ({
   required,
   autoFocus,
   error,
-  errorMessage
+  errorMessage,
+  fullWidth
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(prev => !prev);
   return (
-    <FormControl variant="outlined" required={required}>
+    <FormControl fullWidth={fullWidth} required={required}>
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <OutlinedInput
         value={value}

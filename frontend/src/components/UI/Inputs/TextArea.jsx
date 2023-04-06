@@ -1,6 +1,6 @@
 import {TextField} from "@mui/material";
 
-const TextArea = ({value, onChange, label, required}) => {
+const TextArea = ({value, onChange, label, required, fullWidth}) => {
   return (
     <TextField
       value={value}
@@ -10,7 +10,7 @@ const TextArea = ({value, onChange, label, required}) => {
       rows={4}
       variant='outlined'
       required={required}
-      sx={{width: '100%'}}
+      fullWidth={fullWidth}
     />
   );
 };
