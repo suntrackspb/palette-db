@@ -1,12 +1,12 @@
 import {Button, Typography} from "@mui/material";
 
-const ButtonSubmit = ({disabled, text, px}) => {
+const ButtonSubmit = ({disabled, text, width}) => {
   return (
     <Button
       type='submit'
       variant='contained'
       color='secondary'
-      sx={{px: px ?? 4}}
+      sx={{width}}
       disabled={disabled}
     >
       <Typography component='span'>
