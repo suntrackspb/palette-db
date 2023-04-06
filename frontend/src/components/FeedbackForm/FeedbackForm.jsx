@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {Alert} from "@mui/material";
+import {useState} from 'react';
 import ContentBlock from "../ContentBlock/ContentBlock.jsx";
 import PageTitle from "../PageTitle/PageTitle.jsx";
 import Input from "../UI/Inputs/Input.jsx";
@@ -7,44 +6,41 @@ import TextArea from "../UI/Inputs/TextArea.jsx";
 import ButtonSubmit from "../UI/Buttons/ButtonSubmit.jsx";
 import Captcha from "../Captcha/Captcha.jsx";
 import useCaptcha from "../../hooks/useCaptcha.js";
-import UserService from "../../api/UserService.js";
-import useFetching from "../../hooks/useFetching.js";
 import Loader from "../Loader/Loader.jsx";
+import AlertBlock from "../UI/Alerts/AlertBlock.jsx";
+import UserService from "../../api/UserService.js";
 import {vocabulary} from "../../vocabulary/vocabulary.js";
 
 const FeedbackForm = () => {
-  const {handleCaptcha, isCaptchaDone} = useCaptcha()
-  const {fetchData, isLoading, error} = useFetching(async () => {
-    return await UserService.sendFeedbackForm({name, email, message})
-  })
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const {
+    handleCaptcha,
+    isCaptchaDone,
+    isCaptchaVisible,
+    setIsCaptchaVisible
+  } = useCaptcha([name, email, message])
   const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const isFormValid = () => {
-    // return !name || !email || !message || !isCaptchaDone
-    return !name || !email || !message
+    return !name || !email || !message || !isCaptchaDone
   }
 
-  // const handleSubmit = e => {
-  //   e.preventDefault()
-  //   fetchData()
-  //     .then((res) => {
-  //       console.log(res)
-  //       console.log(error)
-  //       setSuccess(true)
-  //     })
-  //     .catch(e => console.log(e))
-  // }
   const handleSubmit = e => {
     e.preventDefault()
+    setIsLoading(true)
     UserService.sendFeedbackForm({name, email, message})
-      .then(res => {
-        console.log(res)
-        setSuccess(true)
+      .then(() => setSuccess(true))
+      .catch(e => {
+        setError(vocabulary[e.response.data.code])
       })
-      .catch(e => console.log(e))
+      .finally(() => {
+        setIsLoading(false)
+        setIsCaptchaVisible(false)
+      })
   }
 
   return (
@@ -56,6 +52,7 @@ const FeedbackForm = () => {
         onSubmit={handleSubmit}
       >
         <PageTitle title='Форма обратной связи' m='0'/>
+
         <Input
           value={name}
           onChange={e => setName(e.target.value)}
@@ -78,20 +75,24 @@ const FeedbackForm = () => {
           label='Сообщение'
           required
         />
-        {/*<Captcha*/}
-        {/*  handleCaptcha={handleCaptcha}*/}
-        {/*/>*/}
+
+        {isCaptchaVisible &&
+          <Captcha handleCaptcha={handleCaptcha}/>}
 
         <ButtonSubmit
           text='Отправить'
           disabled={isFormValid()}
-          px='106px'
+          width='50%'
         />
 
-        {success && <Alert severity="success">{vocabulary.feedbackSuccess}</Alert>}
+        {success &&
+          <AlertBlock type='success' text={vocabulary.feedbackSuccess} width='50%'/>}
+
+        {error &&
+          <AlertBlock type='error' text={error} width='50%'/>}
         
       </ContentBlock>
-      {/*<Loader isLoading={isLoading}/>*/}
+      <Loader isLoading={isLoading}/>
     </>
   );
 };
