@@ -278,7 +278,7 @@ def mail_sender(email, subject, message_text):
 
 def telegram_sender(text):
     token = os.getenv('TELEGRAM_BOT_TOKEN')
-    chat_ids = os.getenv('TELEGRAM_CHATS_ID').split('')
+    chat_ids = os.getenv('TELEGRAM_CHATS_ID').split(',')
     url = f'https://api.telegram.org/bot{token}/sendMessage'
     for chat_id in chat_ids:
         params = {'chat_id': chat_id, 'text': text}
