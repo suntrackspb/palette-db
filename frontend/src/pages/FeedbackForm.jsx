@@ -61,7 +61,7 @@ function FeedbackForm() {
       justifyContent: 'center',
       alignItems: 'center',
     }}>
-      <Box sx={{ maxWidth: 400 }}>
+      <Box sx={{ maxWidth: 304 }}>
         <form onSubmit={handleSubmit}>
           <TextField
             required
@@ -104,9 +104,9 @@ function FeedbackForm() {
           </Box>
           <Box sx={{
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'center',
             marginTop: 2 }}>
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" color='secondary'>
               Отправить
             </Button>
           </Box>
