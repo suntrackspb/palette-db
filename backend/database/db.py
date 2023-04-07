@@ -60,6 +60,8 @@ class PalettesDB:
     def tags(self):
         return self.conn.distinct("tags")
 
+
+
     def delete(self, uid):
         self.conn.delete({"_id": ObjectId(uid)})
 
@@ -78,7 +80,7 @@ class UsersDB:
         return self.conn.find_one(login)
 
     def auth(self, user):
-        return self.conn.find_one(user, {"block": 0, "service_code": 0})
+        return self.conn.find_one(user, {"service_code": 0})
 
     def update(self, obj):
         return self.conn.update_one({"login": obj['login']}, {"$set": obj})

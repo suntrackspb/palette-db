@@ -90,7 +90,7 @@ def authorization(data):
     if db is None:
         return ce("Error", "0x0004", "Wrong username or password"), 400
     try:
-        if db['ban']:
+        if db['block']:
             return ce("Error", "0x00025", "User has banned"), 403
         if not db["verify"]:
             return ce("Error", "0x0015", "Not verify e-mail"), 400
@@ -208,6 +208,11 @@ def next_palettes_count():
 
 def get_tags():
     return json.loads(JSE.encode(PalettesDB().tags())), 200
+
+
+def search_from_tags(data):
+    tag = data['tag']
+
 
 
 def prepare_palette(data, file):

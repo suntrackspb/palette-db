@@ -187,6 +187,11 @@ def get_fav_palettes():
     return get_favorite_user_palettes(request.json)
 
 
+@app.route("/api/palettes/search", methods=['POST'])
+def live_search():
+    pass
+
+
 @app.route("/api/palettes/random", methods=['POST'])
 def random_palettes():
     return jsonify({"status", "OK"})
