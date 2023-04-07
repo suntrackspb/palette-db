@@ -1,9 +1,8 @@
-import useScrollPagination from "../hooks/useScrollPagination.js";
-import PaletteService from "../api/PaletteService.js";
+import {useEffect} from "react";
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
 import ButtonScrollTop from "../components/ButtonScrollTop/ButtonScrollTop.jsx";
-import {useScrollToTop} from "../hooks/index.js";
-import {useEffect} from "react";
+import {useScrollPagination, useScrollToTop} from "../hooks";
+import PaletteService from "../api/PaletteService.js";
 
 const PalettesPage = () => {
   const limit = 32

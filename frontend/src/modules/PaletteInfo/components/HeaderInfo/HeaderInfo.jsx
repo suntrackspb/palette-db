@@ -2,7 +2,7 @@ import {observer} from "mobx-react-lite";
 import {Box, Typography} from "@mui/material";
 import {PageTitle} from "../../../../components/UI";
 import ButtonFavorite from "../../../../components/ButtonFavorite/ButtonFavorite.jsx";
-import useAuth from "../../../../hooks/useAuth.js";
+import {useAuth} from "../../../../hooks";
 
 const HeaderInfo = ({data}) => {
   const {date, owner, name, _id} = data

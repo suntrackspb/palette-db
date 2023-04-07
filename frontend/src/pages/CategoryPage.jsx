@@ -1,11 +1,10 @@
+import {useEffect} from "react";
 import {useParams} from "react-router-dom";
-import useScrollPagination from "../hooks/useScrollPagination.js";
 import PalettesList from "../components/PalettesList/PalettesList.jsx";
 import {PageTitle} from "../components/UI";
-import PaletteService from "../api/PaletteService.js";
 import ButtonScrollTop from "../components/ButtonScrollTop/ButtonScrollTop.jsx";
-import {useScrollToTop} from "../hooks";
-import {useEffect} from "react";
+import {useScrollToTop, useScrollPagination} from "../hooks";
+import PaletteService from "../api/PaletteService.js";
 
 
 const CategoryPage = () => {

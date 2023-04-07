@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import useAuth from "./useAuth.js";
+import {useAuth} from "./index";
 import PaletteService from "../api/PaletteService.js";
 
 const useFavorite = () => {

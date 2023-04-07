@@ -1,9 +1,7 @@
 import {useEffect, useState} from 'react';
 import {cryptoPass} from "../../utils/crypto.js";
 import {Typography} from "@mui/material";
-import useValidation from "../../hooks/useValidation.js";
-import useConfirmPassword from "../../hooks/useConfirmPassword.js";
-import useAuth from "../../hooks/useAuth.js";
+import {useAuth, useConfirmPassword, useValidation} from "../../hooks";
 import {observer} from "mobx-react-lite";
 import {
   ButtonSubmit,

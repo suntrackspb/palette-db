@@ -3,7 +3,7 @@ import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
 import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import useAuth from "../../hooks/useAuth.js";
+import {useAuth} from "../../hooks";
 import {getCookie} from "../../utils/cookie.js";
 import {ButtonLink} from "../UI";
 

@@ -1,6 +1,6 @@
 import Cropper from "../modules/Cropper/Cropper.jsx";
 import {Box} from "@mui/material";
-import useAuth from "../hooks/useAuth.js";
+import {useAuth} from "../hooks";
 import {PageTitle} from "../components/UI";
 
 const AddPalette = () => {

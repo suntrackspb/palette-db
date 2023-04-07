@@ -3,9 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import {Box, Typography} from "@mui/material";
 
-import useAuth from "../../hooks/useAuth.js";
-import useValidation from "../../hooks/useValidation.js";
-import useCaptcha from "../../hooks/useCaptcha.js";
+import {useAuth, useValidation, useCaptcha} from "../../hooks";
 import Captcha from "../Captcha/Captcha.jsx";
 import {
   AlertBlock,

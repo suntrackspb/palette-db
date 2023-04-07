@@ -1,4 +1,4 @@
-import useFetching from "./useFetching.js";
+import {useFetching} from "./index";
 import {useEffect, useState} from "react";
 
 const useScrollPagination = (callback, skipAmount, limit) => {

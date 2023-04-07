@@ -1,7 +1,7 @@
 import {Box, Paper, Typography} from "@mui/material";
 import {rgbaToHexText, rgbaToText} from "../../../../utils/colorsFunctions.js";
 import {styles} from './styles.js'
-import useCopy from "../../../../hooks/useCopy.js";
+import {useCopy} from "../../../../hooks";
 import {CopyBlock} from "../../../../components/UI";
 const GradientLine = ({colorsArr}) => {
   const {copyAnchor, copyId, isCopyOpen, copyColor} = useCopy('copy-tone')
