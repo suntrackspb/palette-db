@@ -90,7 +90,7 @@ def authorization(data):
     if db is None:
         return ce("Error", "0x0004", "Wrong username or password"), 400
     try:
-        if not db['ban']:
+        if db['ban']:
             return ce("Error", "0x00025", "User has banned"), 403
         if not db["verify"]:
             return ce("Error", "0x0015", "Not verify e-mail"), 400
@@ -99,8 +99,6 @@ def authorization(data):
             access_token = create_access_token(identity=data['login'])
             response = ce("Info", "0x0005", "Login Successful")
             set_access_cookies(response, access_token)
-            # response = jsonify({"msg": "login successful"})
-            # set_access_cookies(response, access_token)
             return response, 200
         else:
             return ce("Error", "0x0006", "Wrong username or password"), 400

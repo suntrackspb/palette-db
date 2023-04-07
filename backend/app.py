@@ -192,7 +192,6 @@ def random_palettes():
     return jsonify({"status", "OK"})
 
 
-
 # Create new palette
 #
 # Required:
