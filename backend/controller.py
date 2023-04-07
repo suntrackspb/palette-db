@@ -81,9 +81,6 @@ def next_users_count():
 
 
 def authorization(data):
-    #
-    # TODO add check ban user
-    #
     if not data['login'] and data['password']:
         return ce("Error", "0x0007", "Incorrect symbols password or username"), 401
     if not re.search(mail_pattern, data['login']):
@@ -93,6 +90,8 @@ def authorization(data):
     if db is None:
         return ce("Error", "0x0004", "Wrong username or password"), 400
     try:
+        if not db['ban']:
+            return ce("Error", "0x00025", "User has banned"), 403
         if not db["verify"]:
             return ce("Error", "0x0015", "Not verify e-mail"), 400
 
