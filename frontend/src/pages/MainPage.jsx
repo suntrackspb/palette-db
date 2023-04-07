@@ -7,7 +7,7 @@ const MainPage = () => {
   const tags = ['нежные пастельные тона', 'контрастные цвета', 'изумрудный', 'фиолетовый', 'черный и желтый', 'бледно-голубой']
   return (
     <>
-      <Background/>
+      {/*<Background/>*/}
       <Box className='flex-col-c'>
         <Title text='Palette Picker' component='h1' variant='h3' mt={4}/>
         <Paragraph width='60%' textAlign='center' my={2}>

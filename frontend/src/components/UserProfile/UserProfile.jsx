@@ -9,7 +9,7 @@ const UserProfile = () => {
   const {store} = useAuth()
   const {avatar, login, create, verify} = store.user
   return (
-    <ContentBlock>
+    <ContentBlock styleProps={{width: '30%'}}>
       {login
         ? <Box className='flex-col-c' sx={{gap: 1}}>
           {avatar

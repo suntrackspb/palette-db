@@ -55,7 +55,7 @@ const EditUserProfile = () => {
   }
 
   return (
-    <ContentBlock className='flex-col' component='form' autoComplete='off' onSubmit={handleSubmit}>
+    <ContentBlock styleProps={{width: '40%'}} className='flex-col' component='form' autoComplete='off' onSubmit={handleSubmit}>
       <Typography>Редактировать профиль</Typography>
 
       <Input

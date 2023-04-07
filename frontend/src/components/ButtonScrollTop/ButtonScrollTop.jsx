@@ -12,8 +12,9 @@ const ButtonScrollTop = ({visible}) => {
           position: 'fixed',
           bottom: '20px',
           right: '20px',
+          border: '1px solid #dbdbdb',
           '&:hover': {
-            bgcolor: 'rgba(255,255,255,.2)'
+            bgcolor: 'rgba(255,255,255,.5)'
           }
         }}
         onClick={() => document.documentElement.scrollTop = 0}

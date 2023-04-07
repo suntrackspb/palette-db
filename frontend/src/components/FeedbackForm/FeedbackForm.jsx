@@ -58,7 +58,11 @@ const FeedbackForm = () => {
     <>
       <ContentBlock
         className='flex-col-c'
-        styleProps={{mt: 2, mx: 'auto', width: '50%'}}
+        styleProps={{
+          mt: 2,
+          mx: 'auto',
+          width: {xl: '50%', lg: '50%', md: '60%', sm: '90%', xs: '100%'}
+      }}
         component='form'
         onSubmit={handleSubmit}
       >
@@ -98,14 +102,14 @@ const FeedbackForm = () => {
         <ButtonSubmit
           text='Отправить'
           disabled={isFormValid()}
-          width='50%'
+          width='302px'
         />
 
         {success &&
-          <AlertBlock type='success' text={vocabulary.feedbackSuccess} width='50%'/>}
+          <AlertBlock type='success' text={vocabulary.feedbackSuccess} width='302px'/>}
 
         {error &&
-          <AlertBlock type='error' text={error} width='50%'/>}
+          <AlertBlock type='error' text={error} width='302px'/>}
         
       </ContentBlock>
       <Loader isLoading={isLoading}/>

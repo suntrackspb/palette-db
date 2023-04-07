@@ -21,11 +21,11 @@ const PaletteEdit = ({data}) => {
       </ContentBlock>
 
       <Box display='flex' gap={2} flexDirection={{xs: 'column', sm: 'column', md: 'row'}}>
-        <ContentBlock>
+        <ContentBlock styleProps={{flex: 1}}>
           <img style={{maxWidth: '400px'}} src={data.src} alt="palette"/>
         </ContentBlock>
 
-        <ContentBlock>
+        <ContentBlock styleProps={{flex: 1}}>
           <ColorsList colors={data.colors} setSelectedColor={setSelectedColor}/>
         </ContentBlock>
       </Box>

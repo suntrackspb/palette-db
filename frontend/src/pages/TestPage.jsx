@@ -1,16 +1,14 @@
 import {Box} from "@mui/material";
-import ButtonScrollTop from "../components/ButtonScrollTop/ButtonScrollTop.jsx";
 import {useEffect, useState} from "react";
+import PaletteService from "../api/PaletteService.js";
 
 const testPage = () => {
 
 
+
   return (
     <>
-      <Box sx={{
-        width: '100px',
-        height: '2000px',
-      }}/>
+
 
     </>
   );

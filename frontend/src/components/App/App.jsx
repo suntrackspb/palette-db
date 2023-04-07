@@ -28,7 +28,8 @@ const darkTheme = createTheme({
       main: '#121212'
     },
     common: {
-      first: '#212224',
+      // first: '#212224',
+      first: '#2122248a',
       second: '#292A2C'
     },
     background: {
