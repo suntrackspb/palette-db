@@ -1,7 +1,7 @@
 import {CircularProgress, IconButton} from "@mui/material";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
-import useFavorite from "../../hooks/useFavorite.js";
+import {useFavorite} from "../../hooks";
 import {observer} from "mobx-react-lite";
 
 

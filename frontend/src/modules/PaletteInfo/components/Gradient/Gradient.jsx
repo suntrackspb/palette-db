@@ -1,5 +1,5 @@
 import {Box, Skeleton, Typography} from "@mui/material";
-import {useDarkness, useLightness} from "../../../../hooks/useColors.js";
+import {useDarkness, useLightness} from "../../../../hooks";
 import GradientLine from "../GradientLine/GradientLine.jsx";
 import {styles} from "../GradientLine/styles.js";
 

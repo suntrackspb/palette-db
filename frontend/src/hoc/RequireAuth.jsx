@@ -1,7 +1,7 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {getCookie} from "../utils/cookie.js";
 import {useEffect} from "react";
-import useAuth from "../hooks/useAuth.js";
+import {useAuth} from "../hooks";
 import {observer} from "mobx-react-lite";
 
 const RequireAuth = ({element}) => {

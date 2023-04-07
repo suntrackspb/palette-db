@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import Captcha from "../Captcha/Captcha.jsx";
-import useCaptcha from "../../hooks/useCaptcha.js";
+import {useCaptcha} from "../../hooks";
 import {
   AlertBlock,
   Input,

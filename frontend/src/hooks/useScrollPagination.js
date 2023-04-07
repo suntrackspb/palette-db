@@ -1,4 +1,4 @@
-import useFetching from "./useFetching.js";
+import {useFetching} from "./index";
 import {useEffect, useState} from "react";
 
 const useScrollPagination = (callback, skipAmount, limit) => {
@@ -8,7 +8,7 @@ const useScrollPagination = (callback, skipAmount, limit) => {
     [skip, setSkip] = useState(skipAmount),
     [isLast, setIsLast] = useState(false);
 
-  const handleScroll = (e) => {
+  const handleScrollPagination = (e) => {
     const
       target = e.target,
       scrollHeight = target.documentElement.scrollHeight,
@@ -36,7 +36,7 @@ const useScrollPagination = (callback, skipAmount, limit) => {
     }
   }, [isLoading])
 
-  return {data, skip, isLoading, error, isLast, handleScroll}
+  return {data, skip, isLoading, error, isLast, handleScrollPagination}
 }
 
 export default useScrollPagination

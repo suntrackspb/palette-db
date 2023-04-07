@@ -4,12 +4,11 @@ import {Box, IconButton, ListItem, Popover, Popper, Typography} from "@mui/mater
 import UndoIcon from '@mui/icons-material/Undo'
 import {ChromePicker} from "react-color";
 
-import usePopover from "../../../../hooks/usePopover.js";
 import {hexToRgba, rgbaToHexText, rgbaToText} from "../../../../utils/colorsFunctions.js";
 
 import {styles} from './styles.js'
 import {CopyBlock} from "../../../../components/UI";
-import useCopy from "../../../../hooks/useCopy.js";
+import {useCopy, usePopover} from "../../../../hooks";
 
 const ColorItem = ({itemColor, setSelectedColor}) => {
   const [color, setColor] = useState(() => hexToRgba(itemColor))

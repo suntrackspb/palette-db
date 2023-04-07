@@ -1,8 +1,8 @@
 import React from 'react';
 import {Box, Skeleton, Typography} from "@mui/material";
 import {styles} from "./styles.js";
-import ContentBlock from "../UI/Blocks/ContentBlock.jsx";
-import useAuth from "../../hooks/useAuth.js";
+import {ContentBlock} from "../UI";
+import {useAuth} from "../../hooks";
 import {observer} from "mobx-react-lite";
 
 const UserProfile = () => {

@@ -1,4 +1,4 @@
-import usePopper from "./usePopper.js";
+import {usePopper} from "./index";
 import {copyToClipboard} from "../utils/copyToClipboard.js";
 import {useEffect} from "react";
 

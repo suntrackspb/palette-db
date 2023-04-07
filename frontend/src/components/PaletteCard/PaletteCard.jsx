@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import {Link} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import useAuth from "../../hooks/useAuth.js";
+import {useAuth} from "../../hooks";
 import ButtonFavorite from "../ButtonFavorite/ButtonFavorite.jsx";
 
 const PaletteCard = ({palette}) => {
