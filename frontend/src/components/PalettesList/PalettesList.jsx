@@ -6,14 +6,14 @@ import PaletteCard from "../PaletteCard/PaletteCard.jsx"
 import {ErrorBlock, Loader} from "../UI";
 
 
-const PalettesList = ({data, handleScroll, error, isLoading, isLast, noDataMessage}) => {
+const PalettesList = ({data, handleScrollPagination, error, isLoading, isLast, noDataMessage}) => {
 
-  if (handleScroll) {
+  if (handleScrollPagination) {
     useEffect(() => {
       !isLast
-        ? document.addEventListener('scroll', handleScroll)
-        : document.removeEventListener('scroll', handleScroll)
-      return () => document.removeEventListener('scroll', handleScroll)
+        ? document.addEventListener('scroll', handleScrollPagination)
+        : document.removeEventListener('scroll', handleScrollPagination)
+      return () => document.removeEventListener('scroll', handleScrollPagination)
     }, [isLast])
   }
 

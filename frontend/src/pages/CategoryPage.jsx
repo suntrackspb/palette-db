@@ -4,6 +4,8 @@ import PalettesList from "../components/PalettesList/PalettesList.jsx";
 import {PageTitle} from "../components/UI";
 import PaletteService from "../api/PaletteService.js";
 import ButtonScrollTop from "../components/ButtonScrollTop/ButtonScrollTop.jsx";
+import {useScrollToTop} from "../hooks";
+import {useEffect} from "react";
 
 
 const CategoryPage = () => {
@@ -17,10 +19,16 @@ const CategoryPage = () => {
     isLast,
     handleScrollPagination
   } = useScrollPagination(() => getData(), 0, limit)
+  const {handleScrollFromTop, isButtonVisible} = useScrollToTop()
 
   const getData = async () => {
     return await PaletteService.getPaletteByCategory(category, skip, limit)
   }
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleScrollFromTop)
+    return () => document.removeEventListener('scroll', handleScrollFromTop)
+  }, []);
 
   return (
     <>
@@ -32,7 +40,7 @@ const CategoryPage = () => {
         error={error}
         isLast={isLast}
       />
-      <ButtonScrollTop />
+      <ButtonScrollTop visible={isButtonVisible} />
     </>
   );
 };
