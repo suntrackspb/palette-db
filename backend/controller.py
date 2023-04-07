@@ -214,7 +214,6 @@ def search_from_tags(data):
     tag = data['tag']
 
 
-
 def prepare_palette(data, file):
     data = json.loads(data['data'])
     result = crop_image(data, file)

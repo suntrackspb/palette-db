@@ -95,6 +95,7 @@ class UsersDB:
         return list(self.conn.find({"_id": uid}, {"_id": 0, "verify": 1, "service_code": 1}))
 
     def update_verify(self, uid):
+        self.conn.update_one({"_id": uid}, {"$set": {"service_code": False}})
         return self.conn.update_one({"_id": uid}, {"$set": {"verify": True}})
 
     def delete(self, uid):
