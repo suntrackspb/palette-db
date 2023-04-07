@@ -7,7 +7,7 @@ import EditUserProfile from "../components/EditUserProfile/EditUserProfile.jsx";
 const UserProfilePage = () => {
 
   return (
-    <Box sx={{display: 'flex', gap: 2, mt: 2}}>
+    <Box sx={{display: 'flex', gap: 2, mt: 2, justifyContent: 'center'}}>
       <UserProfile />
       <EditUserProfile />
     </Box>
