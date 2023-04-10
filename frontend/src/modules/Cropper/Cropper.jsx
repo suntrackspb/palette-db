@@ -1,6 +1,5 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import 'react-image-crop/dist/ReactCrop.css'
-import PaletteService from "../../api/PaletteService.js";
 
 import Crop from './components/Crop/Crop.jsx'
 import CreateForm from "./components/CreateForm/CreateForm.jsx";
@@ -14,16 +13,9 @@ const Cropper = ({store}) => {
   const [imageSettings, setImageSettings] = useState({ratio: 1, scale: 0, width: 0, height: 0})
   const [croppedImage, setCroppedImage] = useState({colors: [], imageBase64: '', imageSrc: ''})
 
-  const [tags, setTags] = useState([]);
+  const tags = JSON.parse(localStorage.getItem('tags'))
   const [selectedTags, setSelectedTags] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
-
-  useEffect(() => {
-    PaletteService.getTags()
-      .then(setTags)
-  }, []);
 
 
   return (
