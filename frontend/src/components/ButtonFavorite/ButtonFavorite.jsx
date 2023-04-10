@@ -16,7 +16,7 @@ const ButtonFavorite = ({id, size}) => {
       {loading
         ? <CircularProgress size={size} color="inherit" />
         : favoriteList.includes(id)
-          ? <StarRoundedIcon sx={{fontSize: size}}/>
+          ? <StarRoundedIcon sx={{fontSize: size, color: '#e5ae13'}}/>
           : <StarBorderRoundedIcon sx={{fontSize: size}}/>}
     </IconButton>
   );

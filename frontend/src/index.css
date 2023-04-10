@@ -77,3 +77,6 @@ input:-webkit-autofill:active{
   align-items: center;
   justify-content: center;
 }
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}

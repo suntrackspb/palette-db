@@ -4,11 +4,8 @@ import PaletteService from "../api/PaletteService.js";
 
 const testPage = () => {
 
-
-
   return (
     <>
-
 
     </>
   );
