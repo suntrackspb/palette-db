@@ -12,7 +12,6 @@ export const styles = {
     alignItems: 'center'
   },
   rightBlock: {
-    marginLeft: 'auto',
     display: {xs: 'none', md: 'flex'},
     alignItems: 'center',
     gap: '10px'

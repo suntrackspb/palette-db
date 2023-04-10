@@ -8,9 +8,13 @@ import {getCookie} from "../../utils/cookie.js";
 import {ButtonLink} from "../UI";
 
 import {styles} from "./styles.js";
+import logo from '../../logo.svg'
+import PaletteService from "../../api/PaletteService.js";
+import HeaderSearch from "../HeaderSearch/HeaderSearch.jsx";
 
 
 const Header = () => {
+  const [tags, setTags] = useState([]);
   const {store} = useAuth()
   const links = [
     {
@@ -58,6 +62,15 @@ const Header = () => {
     if (getCookie('csrf_access_token')) {
       store.checkAuth()
     }
+    if (!localStorage.getItem('tags')) {
+      PaletteService.getTags()
+        .then(res => {
+          localStorage.setItem('tags', JSON.stringify(res))
+          setTags(res)
+        })
+    } else {
+      setTags(JSON.parse(localStorage.getItem('tags')))
+    }
   }, []);
 
   return (
@@ -65,10 +78,10 @@ const Header = () => {
       <Container maxWidth='xl' sx={styles.container}>
 
         <a href='/'>
-          <Typography variant='h5' component='h1'>
-            Palette Picker
-          </Typography>
+          <img style={{width: '240px'}} src={logo} alt="logo"/>
         </a>
+
+        <HeaderSearch sx={{ml: 'auto'}} tags={tags}/>
 
         <Box component='ul' sx={styles.rightBlock}>
 
