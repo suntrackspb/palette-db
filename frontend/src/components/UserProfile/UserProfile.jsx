@@ -4,6 +4,7 @@ import {styles} from "./styles.js";
 import {ContentBlock} from "../UI";
 import {useAuth} from "../../hooks";
 import {observer} from "mobx-react-lite";
+import PersonIcon from '@mui/icons-material/Person';
 
 const UserProfile = () => {
   const {store} = useAuth()
@@ -14,7 +15,9 @@ const UserProfile = () => {
         ? <Box className='flex-col-c' sx={{gap: 1}}>
           {avatar
             ? <Box component='img' sx={styles.img} src={avatar}/>
-            : <Box sx={styles.noImg}>{login.at(0).toUpperCase()}</Box>}
+            : <Box sx={{...styles.noImg, bgcolor: store.userColor}}>
+              <PersonIcon sx={{fontSize: '90px', color: '#fff'}}/>
+            </Box>}
           <Typography variant='h5'>{login}</Typography>
           <Typography>Дата регистрации: {new Date(create).toLocaleDateString()}</Typography>
           <Typography>{verify && 'Аккаунт подтвержден'}</Typography>

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import {Box, Typography} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 
 import {useAuth, useValidation, useCaptcha} from "../../hooks";
 import Captcha from "../Captcha/Captcha.jsx";
@@ -12,8 +12,10 @@ import {
   Input,
   ContentBlock,
   Loader,
-  PageTitle
+  PageTitle,
+  SnackBar
 } from "../UI";
+import {generatePassword, copyToClipboard} from "../../utils"
 
 import {vocabulary} from "../../vocabulary/vocabulary.js";
 import {styles} from "./styles.js";
@@ -22,6 +24,7 @@ import {styles} from "./styles.js";
 const LoginForm = () => {
   const {store} = useAuth()
   const [isLoading, setIsLoading] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [action, setAction] = useState('signIn');
   const login = useValidation('', 'email');
   const password = useValidation('', 'password');
@@ -75,6 +78,13 @@ const LoginForm = () => {
     store.setErrorMessage('')
   }
 
+  const handleGeneratePass = () => {
+    const pass = generatePassword()
+    setIsAlertOpen(true)
+    password.setValue(pass)
+    copyToClipboard(pass)
+  }
+
   return (
     <ContentBlock styleProps={styles.block} component='form' onSubmit={handleSubmit}>
       <PageTitle title={action === 'signIn' ? 'Авторизация' : 'Регистрация'} m='0'/>
@@ -113,6 +123,19 @@ const LoginForm = () => {
       />
 
       {action === 'signUp' &&
+        <Button
+        onClick={handleGeneratePass}
+        sx={{
+          alignSelf: 'flex-start',
+          p: '4px',
+          fontWeight: 300,
+          fontSize: '12px'
+        }}
+      >
+        Сгенерировать пароль
+      </Button>}
+
+      {action === 'signUp' &&
         <Captcha
           handleCaptcha={handleCaptcha}
           isCaptchaVisible={isCaptchaVisible}
@@ -130,6 +153,11 @@ const LoginForm = () => {
       </Box>
 
       <Loader isLoading={isLoading}/>
+      <SnackBar
+        open={isAlertOpen}
+        setOpen={setIsAlertOpen}
+        text='Пароль скопирован в буфер обмена'
+      />
 
     </ContentBlock>
   );

@@ -6,7 +6,7 @@ const UseCopy = (elementId) => {
   const [copyAnchor, copyId, isCopyOpen, showCopy, hideCopy] = usePopper(elementId)
 
   const copyColor = e => {
-    copyToClipboard(e)
+    copyToClipboard(e.target.textContent)
     showCopy(e)
   }
 

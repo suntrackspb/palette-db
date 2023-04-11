@@ -1,16 +1,20 @@
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
 import {Link} from "react-router-dom";
-import {AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Typography} from "@mui/material";
+import {AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useAuth} from "../../hooks";
 import {getCookie} from "../../utils/cookie.js";
 import {ButtonLink} from "../UI";
 
 import {styles} from "./styles.js";
-import logo from '../../logo.svg'
 import PaletteService from "../../api/PaletteService.js";
-import HeaderSearch from "../HeaderSearch/HeaderSearch.jsx";
+import HeaderSearch from "./HeaderSearch.jsx";
+import FullLogo from "../Logos/FullLogo.jsx";
+import UserMenu from "./UserMenu.jsx";
+import BurgerMenu from "./BurgerMenu.jsx";
+import {colorsArr} from "../../consts/index.js";
+import Logo from "../Logos/Logo.jsx";
 
 
 const Header = () => {
@@ -28,6 +32,11 @@ const Header = () => {
       isPrivate: false
     },
     {
+      path: 'feedback',
+      text: 'Контакты',
+      isPrivate: false
+    },
+    {
       path: 'palette/add',
       text: 'Создать',
       isPrivate: true
@@ -41,26 +50,14 @@ const Header = () => {
       path: `user/${store.user?._id}`,
       text: 'Профиль',
       isPrivate: true
-    },
-    {
-      path: 'feedback',
-      text: 'Контакты',
-      isPrivate: false
-    },
+    }
   ]
-
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
 
 
   useEffect(() => {
     if (getCookie('csrf_access_token')) {
       store.checkAuth()
+      store.setUserColor(colorsArr[Math.floor(Math.random() * colorsArr.length)])
     }
     if (!localStorage.getItem('tags')) {
       PaletteService.getTags()
@@ -78,13 +75,13 @@ const Header = () => {
       <Container maxWidth='xl' sx={styles.container}>
 
         <a href='/'>
-          <img style={{width: '240px'}} src={logo} alt="logo"/>
+          <FullLogo sx={{width: '240px', display: {xs: 'none', sm: 'block'}}}/>
+          <Logo sx={{width: '45px', display: {xs: 'block', sm: 'none'}}}/>
         </a>
 
         <HeaderSearch sx={{ml: 'auto'}} tags={tags}/>
 
         <Box component='ul' sx={styles.rightBlock}>
-
           {links.map(({path, text, isPrivate}, i) =>
             !isPrivate && <ButtonLink
               key={i}
@@ -93,84 +90,25 @@ const Header = () => {
               text={text}
               padding='6px 8px'
             />)}
-
-          {store.isAuth && links.map(({path, text, isPrivate}, i) =>
-            isPrivate && <ButtonLink
-              key={i}
-              component='li'
-              linkTo={path}
-              text={text}
-              padding='6px 8px'
-            />)}
-
-          {!store.isAuth
-            ? <ButtonLink
+          {store.isAuth &&
+            <UserMenu
+              menuOptions={links.filter(link => link.isPrivate)}
+              avatar={store.user.avatar}
+            />}
+          {!store.isAuth &&
+            <ButtonLink
               component='li'
               linkTo='login'
               text='Войти'
               padding='6px 8px'
-            />
-            : <Button onClick={store.logout}>
-              <Typography variant='span'>
-                Выйти
-              </Typography>
-            </Button>}
-
+            />}
         </Box>
 
-        <Box sx={{display: {xs: 'flex', md: 'none'}, ml: 'auto'}}>
-          <IconButton
-            size="large"
-            onClick={handleOpenNavMenu}
-            color="primary"
-          >
-            <MenuIcon/>
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorElNav}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            open={Boolean(anchorElNav)}
-            onClose={handleCloseNavMenu}
-            sx={{
-              display: {xs: 'flex', md: 'none'},
-            }}
-          >
-            {links.map(({path, text, isPrivate}, i) =>
-              !isPrivate && <MenuLink key={i} linkTo={path} text={text}/>)}
+        <BurgerMenu menuOptions={links}/>
 
-            {store.isAuth && links.map(({path, text, isPrivate}, i) =>
-              isPrivate && <MenuLink key={i} linkTo={path} text={text}/>)}
-
-            {!store.isAuth
-              ? <MenuLink linkTo='login' text='Войти' onClick={handleCloseNavMenu}/>
-              : <MenuItem onClick={() => {
-                store.logout()
-                handleCloseNavMenu()
-              }}>
-                <Typography textAlign="center">Выйти</Typography>
-              </MenuItem>}
-          </Menu>
-        </Box>
       </Container>
     </AppBar>
   );
 };
-
-const MenuLink = ({onClick, linkTo, text}) => {
-  return <MenuItem onClick={onClick}>
-    <Link to={linkTo}>
-      <Typography textAlign="center">{text}</Typography>
-    </Link>
-  </MenuItem>
-}
 
 export default observer(Header);

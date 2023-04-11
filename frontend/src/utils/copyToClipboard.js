@@ -1,3 +1,3 @@
-export const copyToClipboard = (e) => {
-  navigator.clipboard.writeText(e.target.textContent)
+export const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text)
 }

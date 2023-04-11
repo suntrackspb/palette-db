@@ -61,7 +61,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='palette/favorites' element={<RequireAuth element={<FavoritesPage/>}/>}/>
 
     <Route path='login' element={<LoginPage/>}/>
-    <Route path='test' element={<TestPage/>}/>
+    <Route path='test/:category' element={<TestPage/>}/>
     <Route path='*' element={<NotFound/>}/>
   </Route>
 ))

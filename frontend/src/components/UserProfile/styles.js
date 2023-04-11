@@ -15,8 +15,6 @@ export const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colorsArr[Math.floor(Math.random() * colorsArr.length)],
-    color: '#000',
-    fontSize: '36px'
+    color: '#000'
   }
 }

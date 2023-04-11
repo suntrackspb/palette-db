@@ -2,14 +2,15 @@ import {Link} from "react-router-dom";
 import {Box, Card, CardMedia, Grid, ListItem, Typography} from "@mui/material";
 import ColorItem from "../modules/PaletteInfo/components/ColorItem/ColorItem.jsx";
 import {ButtonLink, ContentBlock} from "../components/UI";
+import FullLogo from "../components/Logos/FullLogo.jsx";
+
 
 const MainPage = () => {
   const tags = ['нежные пастельные тона', 'контрастные цвета', 'изумрудный', 'фиолетовый', 'черный и желтый', 'бледно-голубой']
   return (
     <>
-      {/*<Background/>*/}
       <Box className='flex-col-c'>
-        <Title text='Palette Picker' component='h1' variant='h3' mt={4}/>
+        <FullLogo sx={{maxWidth: '800px', mt: 5, mb: 1}}/>
         <Paragraph width='60%' textAlign='center' my={2}>
           Портал с базой готовых цветовых палитр для дизайна. Мы предоставляем бесплатный доступ к большому количеству
           цветовых схем, для создания красивого и гармоничного дизайна для любого проекта. <br/>
@@ -129,27 +130,6 @@ const Paragraph = ({children, width, textAlign, my, variant}) => {
   >
     {children}
   </Typography>
-}
-
-const Background = () => {
-  return <style>{
-    `body { 
-      background: linear-gradient(45deg, rgb(252 106 70 / 83%) 0%, rgb(116 63 251 / 78%) 50%, rgb(70 252 232 / 77%) 100%); 
-      position: relative;
-    }
-    body::after {
-      content: '';
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background-color: rgba(0,0,0,.5);
-      backdrop-filter: blur(200px);
-      z-index: -1;
-    }`
-  }</style>
 }
 
 export default MainPage;

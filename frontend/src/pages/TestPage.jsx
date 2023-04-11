@@ -1,14 +1,5 @@
-import {Box} from "@mui/material";
-import {useEffect, useState} from "react";
-import PaletteService from "../api/PaletteService.js";
-
 const testPage = () => {
-
-  return (
-    <>
-
-    </>
-  );
+  return <h1>hi</h1>
 };
 
 export default testPage;

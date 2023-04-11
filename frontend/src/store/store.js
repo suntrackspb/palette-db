@@ -6,6 +6,7 @@ import {vocabulary} from "../vocabulary/vocabulary";
 
 export default class Store {
   user = {}
+  userColor = ''
   favorite = []
   isAuth = false
   errorMessage = ''
@@ -33,6 +34,9 @@ export default class Store {
   }
   setFavorite = arr => {
     this.favorite = arr
+  }
+  setUserColor = color => {
+    this.userColor = color
   }
 
   login = async (login, password) => {

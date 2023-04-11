@@ -5,6 +5,7 @@ import AlertBlock from "./Blocks/AlertBlock.jsx";
 import ContentBlock from "./Blocks/ContentBlock.jsx";
 import CopyBlock from "./Blocks/CopyBlock.jsx";
 import ErrorBlock from "./Blocks/ErrorBlock.jsx";
+import SnackBar from "./Blocks/SnackBar.jsx";
 
 import Input from "./Inputs/Input.jsx"
 import InputPassword from "./Inputs/InputPassword.jsx"
@@ -27,7 +28,8 @@ export {
   AlertBlock,
   ContentBlock,
   CopyBlock,
-  ErrorBlock
+  ErrorBlock,
+  SnackBar
 }
 export {
   Loader

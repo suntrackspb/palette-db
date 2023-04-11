@@ -80,3 +80,11 @@ input:-webkit-autofill:active{
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }
+.menu-link {
+  padding: 6px 8px;
+  cursor: pointer;
+  display: block;
+}
+.menu-link:hover {
+  background-color: rgba(0,0,0,.2);
+}

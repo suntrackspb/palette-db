@@ -130,20 +130,18 @@ const List = ({tags, isVisible, setIsVisible}) => {
     <>
       {isVisible &&
         <Box className='hide-scroll' sx={styles.list}>
-          {
-            !tags.length
-              ? <Typography sx={styles.item}>Ничего не найдено...</Typography>
-              : tags.map((tag, i) =>
-                <Link
-                  key={i}
-                  to={`category/${tag}`}
-                  onClick={() => setIsVisible(false)}
-                >
-                  <Typography sx={styles.item}>{tag}</Typography>
-                </Link>
-              )
-          }
-
+          {!tags.length
+            ? <Typography sx={styles.item}>Ничего не найдено...</Typography>
+            : tags.map((tag, i) =>
+              <Link
+                key={i}
+                to={`category/${tag}`}
+                onClick={() => setIsVisible(false)}
+                className='menu-link'
+              >
+                <Typography component='span'>{tag}</Typography>
+              </Link>
+            )}
         </Box>}
     </>
   )

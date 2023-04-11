@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const useValidation = (initialValue, type) => {
   const [value, setValue] = useState(initialValue);
@@ -6,8 +6,10 @@ const useValidation = (initialValue, type) => {
   const [isValid, setIsValid] = useState(false);
 
   const onChange = e => {
-    const value = e.target.value
-    setValue(value)
+    setValue(e.target.value)
+  }
+
+  useEffect(() => {
     switch (type) {
       case 'password':
         const passReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
@@ -30,7 +32,7 @@ const useValidation = (initialValue, type) => {
         }
         break
     }
-  }
+  }, [value]);
 
   return {value, setValue, error, isValid, onChange}
 }
