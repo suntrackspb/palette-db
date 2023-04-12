@@ -1,6 +1,6 @@
-import logo from '../../full-logo.svg'
+import logo from '../../images/logos/name_slogan.svg'
 import {Box} from "@mui/material";
-const FullLogo = ({...props}) => {
+const LogoTextSlogan = ({...props}) => {
   return (
     <Box
       {...props}
@@ -11,4 +11,4 @@ const FullLogo = ({...props}) => {
   );
 };
 
-export default FullLogo;
+export default LogoTextSlogan;

@@ -16,6 +16,9 @@ body {
   padding: 0 !important;
   position: relative;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 
 body::after {
   content: '';

@@ -1,6 +1,6 @@
-import logo from '../../images/logos/icon.svg'
+import logo from '../../images/logos/name.svg'
 import {Box} from "@mui/material";
-const Logo = ({...props}) => {
+const LogoText = ({...props}) => {
   return (
     <Box
       {...props}
@@ -11,4 +11,4 @@ const Logo = ({...props}) => {
   );
 };
 
-export default Logo;
+export default LogoText;

@@ -2,33 +2,107 @@ import {Link} from "react-router-dom";
 import {Box, Card, CardMedia, Grid, ListItem, Typography} from "@mui/material";
 import ColorItem from "../modules/PaletteInfo/components/ColorItem/ColorItem.jsx";
 import {ButtonLink, ContentBlock} from "../components/UI";
-import FullLogo from "../components/Logos/FullLogo.jsx";
+import {useEffect, useState} from "react";
+import PaletteService from "../api/PaletteService.js";
+import PaletteCard from "../components/PaletteCard/PaletteCard";
+import LogoTextSlogan from "../components/Logos/LogoTextSlogan.jsx";
+import Logo from "../components/Logos/Logo.jsx";
+import LogoFull from "../components/Logos/LogoFull.jsx";
 
 
 const MainPage = () => {
   const tags = ['нежные пастельные тона', 'контрастные цвета', 'изумрудный', 'фиолетовый', 'черный и желтый', 'бледно-голубой']
+  const [palettes, setPalettes] = useState([]);
+  useEffect(() => {
+    PaletteService.getPalettes(0, 4)
+      .then(setPalettes)
+      .catch(console.log)
+  }, []);
   return (
     <>
-      <Box className='flex-col-c'>
-        <FullLogo sx={{maxWidth: '800px', mt: 5, mb: 1}}/>
-        <Paragraph width='60%' textAlign='center' my={2}>
-          Портал с базой готовых цветовых палитр для дизайна. Мы предоставляем бесплатный доступ к большому количеству
-          цветовых схем, для создания красивого и гармоничного дизайна для любого проекта. <br/>
+      <Box sx={{
+        display: 'flex',
+        height: {xs: '100%', lg: 'calc(100vh - 100px)'},
+        gap: 2,
+        justifyContent: 'center',
+        flexDirection: {xs: 'column', md: 'row'}
+      }}>
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: {xs: '1fr', md: '70px auto', lg: '100px auto'},
+          gridTemplateRows: 'repeat(2, max-content)',
+          width: {xs: '90%', md: '50%'},
+          alignSelf: 'center',
+          columnGap: 1
+        }}>
+          <Logo sx={{
+            display: {xs: 'none', md: 'block'},
+            gridColumn: '1/2',
+            maxWidth: '400px',
+            alignSelf: 'center',
+            mt: '25px'}}/>
 
-          У нас вы найдете огромный выбор готовых палитр. Каждая цветовая палитра состоит из нескольких цветов, которые
-          идеально подходят друг к другу.
-        </Paragraph>
-        <ButtonLink
-          component='span'
-          variant='contained'
-          color='secondary'
-          text='Перейти к палитрам'
-          linkTo='palettes'
-          padding='12px 24px'
-        />
+          <LogoTextSlogan sx={{
+            display: {xs: 'none', md: 'block'},
+            gridColumn: '2/3',
+            maxWidth: {xs: '300px', md: '400px', lg: '500px'},
+            mt: 5,
+            mb: 1}}/>
+
+          <LogoFull sx={{
+            display: {xs: 'block', md: 'none'},
+            maxWidth: '450px',
+            justifySelf: 'center',
+            mt: 5
+          }}/>
+
+          <Box sx={{
+            gridColumn: {xs: '1/3', md: '2/3'},
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <Paragraph sx={{
+              width: {xs: '80%', lg: '60%'},
+              m: {xs: '16px auto', md: '16px 0'},
+              textAlign: {xs: 'center', md: 'left'}
+            }}>
+              Портал с базой готовых цветовых палитр для дизайна. Мы предоставляем бесплатный доступ к большому количеству
+              цветовых схем, для создания красивого и гармоничного дизайна для любого проекта. <br/>
+
+              У нас вы найдете огромный выбор готовых палитр. Каждая цветовая палитра состоит из нескольких цветов,
+              которые
+              идеально подходят друг к другу.
+            </Paragraph>
+            <ButtonLink
+              component='span'
+              variant='contained'
+              color='secondary'
+              text='Перейти к палитрам'
+              linkTo='palettes'
+              sx={{
+                padding: {xs: '10px 22px', md: '18px 32px'},
+                width: 'max-content',
+                m: {xs: '0 auto', md: '0'}
+            }}
+            />
+          </Box>
+
+        </Box>
+
+
+        <Box sx={{display: {xs: 'none', md: 'flex'}, gap: 4, width: '40%'}}>
+          <Box className='flex-col' sx={{gap: 2, mt: '20px'}}>
+            {palettes.filter((_, i) => i < palettes.length / 2).map(palette =>
+              <PaletteCard key={palette._id} palette={palette}/>)}
+          </Box>
+          <Box className='flex-col' sx={{gap: 2, mt: '100px'}}>
+            {palettes.filter((_, i) => i >= palettes.length / 2).map(palette =>
+              <PaletteCard key={palette._id} palette={palette}/>)}
+          </Box>
+        </Box>
       </Box>
 
-      <Title text='Возможности' component='h2' variant='h4' mt={4}/>
+      <Title textAlign='center' text='Возможности' component='h2' variant='h4' mt={8}/>
 
       <Grid container spacing={2} justifyContent='center' alignItems='stretch'>
         <Block>
@@ -65,8 +139,10 @@ const MainPage = () => {
             или выбирать свои собственные цвета.
           </Paragraph>
           <Box className='flex-col' sx={{width: 'auto', m: '0 auto', gap: 2}}>
-            <ColorItem itemColor='#2fa2db' setSelectedColor={() => {}}/>
-            <ColorItem itemColor='#4FE825' setSelectedColor={() => {}}/>
+            <ColorItem itemColor='#2fa2db' setSelectedColor={() => {
+            }}/>
+            <ColorItem itemColor='#4FE825' setSelectedColor={() => {
+            }}/>
           </Box>
         </Block>
 
@@ -96,7 +172,7 @@ const MainPage = () => {
 };
 
 const Block = ({children}) => {
-  return <Grid item lg={4} md={6} sm={8} xs={12}>
+  return <Grid item lg={4} md={8} sm={10} xs={12}>
     <ContentBlock
       className='flex-col-c'
       styleProps={{
@@ -110,23 +186,24 @@ const Block = ({children}) => {
     </ContentBlock>
   </Grid>
 }
-const Title = ({text, component, variant, mt}) => {
+const Title = ({text, component, variant, mt, textAlign}) => {
   return <Typography
     component={component}
     variant={variant}
-    textAlign='center'
     mt={mt}
+    textAlign={textAlign}
   >
     {text}
   </Typography>
 }
-const Paragraph = ({children, width, textAlign, my, variant}) => {
+const Paragraph = ({children, width, textAlign, my, variant, sx}) => {
   return <Typography
     component='p'
     variant={variant}
     width={width}
     textAlign={textAlign}
     my={my}
+    sx={sx}
   >
     {children}
   </Typography>

@@ -10,11 +10,11 @@ import {ButtonLink} from "../UI";
 import {styles} from "./styles.js";
 import PaletteService from "../../api/PaletteService.js";
 import HeaderSearch from "./HeaderSearch.jsx";
-import FullLogo from "../Logos/FullLogo.jsx";
+import Logo from "../Logos/Logo.jsx";
 import UserMenu from "./UserMenu.jsx";
 import BurgerMenu from "./BurgerMenu.jsx";
 import {colorsArr} from "../../consts/index.js";
-import Logo from "../Logos/Logo.jsx";
+import LogoText from "../Logos/LogoText.jsx";
 
 
 const Header = () => {
@@ -75,7 +75,7 @@ const Header = () => {
       <Container maxWidth='xl' sx={styles.container}>
 
         <a href='/'>
-          <FullLogo sx={{width: '240px', display: {xs: 'none', sm: 'block'}}}/>
+          <LogoText sx={{width: '240px', display: {xs: 'none', sm: 'block'}}}/>
           <Logo sx={{width: '45px', display: {xs: 'block', sm: 'none'}}}/>
         </a>
 
