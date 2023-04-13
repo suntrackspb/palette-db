@@ -1,4 +1,4 @@
-import logo from '../../images/logos/full.svg'
+import logo from '../../assets/images/logos/full.svg'
 import {Box} from "@mui/material";
 const LogoFull = ({...props}) => {
   return (

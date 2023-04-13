@@ -1,4 +1,4 @@
-import logo from '../../images/logos/name_slogan.svg'
+import logo from '../../assets/images/logos/name_slogan.svg'
 import {Box} from "@mui/material";
 const LogoTextSlogan = ({...props}) => {
   return (
