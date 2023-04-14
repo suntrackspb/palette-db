@@ -62,6 +62,7 @@ const ColorItem = ({itemColor, setSelectedColor}) => {
         <IconButton
           sx={styles.undoIconBtn}
           onClick={handleUndoColor}
+          aria-label='Вернуть изначальный цвет'
         >
           <UndoIcon
             sx={styles.undoIcon}

@@ -22,7 +22,6 @@ const MainPage = () => {
     <>
       <Box sx={{
         display: 'flex',
-        height: {xs: '100%', lg: 'calc(100vh - 100px)'},
         gap: 2,
         justifyContent: 'center',
         flexDirection: {xs: 'column', md: 'row'}
@@ -33,7 +32,7 @@ const MainPage = () => {
           gridTemplateRows: 'repeat(2, max-content)',
           width: {xs: '90%', md: '50%'},
           alignSelf: 'center',
-          columnGap: 1
+          columnGap: 1,
         }}>
           <Logo sx={{
             display: {xs: 'none', md: 'block'},
@@ -79,8 +78,8 @@ const MainPage = () => {
               color='secondary'
               text='Перейти к палитрам'
               linkTo='palettes'
+              padding='16px 24px'
               sx={{
-                padding: {xs: '10px 22px', md: '18px 32px'},
                 width: 'max-content',
                 m: {xs: '0 auto', md: '0'}
             }}
@@ -160,7 +159,7 @@ const MainPage = () => {
               height='100px'
               sx={{height: '200px'}}
               alt='Пример палитры'
-              image='https://pp.plutonium-dayz.ru/images/palette-4509.jpg'
+              image='https://palettify.sntrk.ru/images/host/palette-4509.webp'
             />
           </Card>
         </Block>

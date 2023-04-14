@@ -80,18 +80,16 @@ const Header = () => {
 
         <HeaderSearch sx={{ml: 'auto'}} tags={tags}/>
 
-        <Box component='ul' sx={styles.rightBlock}>
+        <Box sx={styles.rightBlock}>
           {links.map(({path, text, isPrivate}, i) =>
             !isPrivate && <ButtonLink
               key={i}
-              component='li'
               linkTo={path}
               text={text}
               padding='6px 8px'
             />)}
           {!store.isAuth &&
             <ButtonLink
-              component='li'
               linkTo='login'
               text='Войти'
               padding='6px 8px'

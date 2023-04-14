@@ -49,7 +49,6 @@ export default class Store {
       this.setErrorMessage('')
     }
     catch (e) {
-      console.log(e?.response?.data)
       this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
     }
   }
@@ -62,7 +61,6 @@ export default class Store {
       this.setErrorMessage('')
     }
     catch (e) {
-      console.log(e?.response?.data)
       this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
       this.setSuccessMessage('')
     }
@@ -75,7 +73,7 @@ export default class Store {
       this.setUser({})
     }
     catch (e) {
-      console.log(e?.response?.data)
+      // console.log(e?.response?.data)
     }
   }
 
@@ -90,7 +88,7 @@ export default class Store {
       this.setFavorite(res.data.favorite)
     }
     catch (e) {
-      console.log(e?.response?.data)
+      // console.log(e?.response?.data?.msg)
     }
   }
 
