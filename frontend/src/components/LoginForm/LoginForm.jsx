@@ -19,6 +19,7 @@ import {generatePassword, copyToClipboard} from "../../utils"
 
 import {vocabulary} from "../../vocabulary/vocabulary.js";
 import {styles} from "./styles.js";
+import {colorsArr} from "../../consts/index.js";
 
 
 const LoginForm = () => {
@@ -44,6 +45,7 @@ const LoginForm = () => {
       store.login(login.value.toLowerCase(), password.value)
         .then(() => {
           if (store.isAuth) {
+            store.setUserColor(colorsArr[Math.floor(Math.random() * colorsArr.length)])
             store.checkAuth()
               .then(() => navigate('/', {replace: true}))
           }

@@ -1,8 +1,6 @@
 import {useEffect, useState} from "react";
 import {observer} from "mobx-react-lite";
-import {Link} from "react-router-dom";
-import {AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
-import MenuIcon from '@mui/icons-material/Menu';
+import {AppBar, Box, Container} from "@mui/material";
 import {useAuth} from "../../hooks";
 import {getCookie} from "../../utils/cookie.js";
 import {ButtonLink} from "../UI";
