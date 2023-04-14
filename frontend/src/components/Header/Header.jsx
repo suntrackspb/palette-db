@@ -90,11 +90,6 @@ const Header = () => {
               text={text}
               padding='6px 8px'
             />)}
-          {store.isAuth &&
-            <UserMenu
-              menuOptions={links.filter(link => link.isPrivate)}
-              avatar={store.user.avatar}
-            />}
           {!store.isAuth &&
             <ButtonLink
               component='li'
@@ -103,6 +98,12 @@ const Header = () => {
               padding='6px 8px'
             />}
         </Box>
+
+        {store.isAuth &&
+          <UserMenu
+            menuOptions={links.filter(link => link.isPrivate)}
+            avatar={store.user.avatar}
+          />}
 
         <BurgerMenu menuOptions={links}/>
 

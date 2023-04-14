@@ -138,7 +138,7 @@ const MainPage = () => {
             выбирать и сохранять нужные цвета для вашего дизайна. Вы можете выбирать цвета из нашей базы цветовых палитр
             или выбирать свои собственные цвета.
           </Paragraph>
-          <Box className='flex-col' sx={{width: 'auto', m: '0 auto', gap: 2}}>
+          <Box component='ul' className='flex-col' sx={{width: 'auto', m: '0 auto', gap: 2}}>
             <ColorItem itemColor='#2fa2db' setSelectedColor={() => {
             }}/>
             <ColorItem itemColor='#4FE825' setSelectedColor={() => {

@@ -90,6 +90,7 @@ const HeaderSearch = ({sx, tags}) => {
                   onClick={() => setValue('')}
                   edge="end"
                   size='small'
+                  aria-label='Стереть'
                   sx={{mr: '5px'}}
                 >
                   <ClearIcon fontSize='12px'/>

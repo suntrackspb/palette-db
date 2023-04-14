@@ -5,6 +5,7 @@ const LogoFull = ({...props}) => {
     <Box
       {...props}
       component='img'
+      width='100%'
       src={logo}
       alt='Логотип'
     />
