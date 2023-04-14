@@ -7,6 +7,7 @@ const ButtonScrollTop = ({visible}) => {
     <>
       {visible && <IconButton
         size="large"
+        aria-label='Вверх страницы'
         sx={{
           bgcolor: 'rgba(255,255,255,.3)',
           position: 'fixed',

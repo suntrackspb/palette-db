@@ -13,6 +13,7 @@ import UserMenu from "./UserMenu.jsx";
 import BurgerMenu from "./BurgerMenu.jsx";
 import {colorsArr} from "../../consts/index.js";
 import LogoText from "../Logos/LogoText.jsx";
+import {Link} from "react-router-dom";
 
 
 const Header = () => {
@@ -72,10 +73,10 @@ const Header = () => {
     <AppBar position='static' sx={styles.appBar}>
       <Container maxWidth='xl' sx={styles.container}>
 
-        <a href='/'>
+        <Link to='/'>
           <LogoText sx={{width: '240px', display: {xs: 'none', sm: 'block'}}}/>
           <Logo sx={{width: '45px', display: {xs: 'block', sm: 'none'}}}/>
-        </a>
+        </Link>
 
         <HeaderSearch sx={{ml: 'auto'}} tags={tags}/>
 
