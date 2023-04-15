@@ -74,13 +74,11 @@ const Header = () => {
       <Container maxWidth='xl' sx={styles.container}>
 
         <Link to='/'>
-          <LogoText sx={{width: '240px', display: {xs: 'none', sm: 'block'}}}/>
-          <Logo sx={{width: '45px', display: {xs: 'block', sm: 'none'}}}/>
+          {/*<LogoText sx={{width: '240px', display: {xs: 'none', sm: 'block'}}}/>*/}
+          <Logo sx={{width: '45px'}}/>
         </Link>
 
-        <HeaderSearch sx={{ml: 'auto'}} tags={tags}/>
-
-        <Box sx={styles.rightBlock}>
+        <Box sx={styles.publicLinks}>
           {links.map(({path, text, isPrivate}, i) =>
             !isPrivate && <ButtonLink
               key={i}
@@ -88,13 +86,16 @@ const Header = () => {
               text={text}
               padding='6px 8px'
             />)}
-          {!store.isAuth &&
-            <ButtonLink
-              linkTo='login'
-              text='Войти'
-              padding='6px 8px'
-            />}
         </Box>
+
+        <HeaderSearch sx={{ml: 'auto'}} tags={tags}/>
+
+        {!store.isAuth &&
+          <ButtonLink
+            linkTo='login'
+            text='Войти'
+            padding='6px 8px'
+          />}
 
         {store.isAuth &&
           <UserMenu

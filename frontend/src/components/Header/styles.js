@@ -1,6 +1,7 @@
 export const styles = {
   appBar: {
-    padding: 2,
+    px: {xs: 1, sm: 2},
+    py: 2,
     bgcolor: 'header.main',
     backgroundImage: 'none',
     position: 'relative',
@@ -11,7 +12,7 @@ export const styles = {
     gap: '10px',
     alignItems: 'center'
   },
-  rightBlock: {
+  publicLinks: {
     display: {xs: 'none', md: 'flex'},
     alignItems: 'center',
     gap: '10px'
