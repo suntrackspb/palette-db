@@ -42,10 +42,10 @@ const BurgerMenu = ({menuOptions}) => {
         }}
       >
         {menuOptions.map(({path, text, isPrivate}, i) =>
-          !isPrivate && <MenuLink key={i} linkTo={path} text={text}/>)}
+          !isPrivate && <MenuLink key={i} linkTo={path} text={text} onClick={handleCloseNavMenu}/>)}
 
         {store.isAuth && menuOptions.map(({path, text, isPrivate}, i) =>
-          isPrivate && <MenuLink key={i} linkTo={path} text={text}/>)}
+          isPrivate && <MenuLink key={i} linkTo={path} text={text} onClick={handleCloseNavMenu}/>)}
 
         {!store.isAuth
           ? <MenuLink linkTo='login' text='Войти' onClick={handleCloseNavMenu}/>
