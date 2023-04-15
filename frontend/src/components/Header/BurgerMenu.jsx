@@ -60,9 +60,9 @@ const BurgerMenu = ({menuOptions}) => {
   );
 };
 const MenuLink = ({onClick, linkTo, text}) => {
-  return <MenuItem onClick={onClick}>
-    <Link to={linkTo}>
-      <Typography textAlign="center">{text}</Typography>
+  return <MenuItem onClick={onClick} sx={{p: 0}}>
+    <Link to={linkTo} style={{width: '100%', padding: '6px 16px'}}>
+      <Typography component='span'>{text}</Typography>
     </Link>
   </MenuItem>
 }

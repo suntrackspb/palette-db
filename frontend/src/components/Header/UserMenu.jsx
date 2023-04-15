@@ -13,7 +13,7 @@ const UserMenu = ({menuOptions, avatar}) => {
     setAnchorElUser(null);
   }
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box sx={{ flexGrow: 0, display: {xs: 'none', md: 'flex'} }}>
       <Tooltip title="Открыть меню">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar sx={{
@@ -42,14 +42,14 @@ const UserMenu = ({menuOptions, avatar}) => {
         onClose={handleCloseUserMenu}
       >
         {menuOptions.map(({path, text}, i) => (
-          <MenuItem key={i} onClick={handleCloseUserMenu}>
-            <Link to={path}>
-              <Typography textAlign="center">{text}</Typography>
+          <MenuItem key={i} onClick={handleCloseUserMenu} sx={{p: 0}}>
+            <Link to={path} style={{width: '100%', padding: '6px 16px'}}>
+              <Typography component='span'>{text}</Typography>
             </Link>
           </MenuItem>
         ))}
-        <MenuItem onClick={handleCloseUserMenu}>
-            <Typography variant='span' onClick={store.logout}>
+        <MenuItem onClick={handleCloseUserMenu} sx={{p: 0}}>
+            <Typography component='span' onClick={store.logout} sx={{p: '6px 16px', width: '100%'}}>
               Выйти
             </Typography>
         </MenuItem>

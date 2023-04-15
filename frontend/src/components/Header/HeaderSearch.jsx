@@ -2,7 +2,7 @@ import {styled, alpha} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {ClickAwayListener, IconButton, InputAdornment, Typography} from "@mui/material";
 import ClearIcon from '@mui/icons-material/Clear';
 import {Link} from "react-router-dom";
@@ -39,6 +39,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
+    transitionDelay: '.1s',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       width: '12ch',
@@ -53,6 +54,7 @@ const HeaderSearch = ({sx, tags}) => {
   const [value, setValue] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [filteredTags, setFilteredTags] = useState(tags);
+  const inputRef = useRef(null)
 
   useEffect(() => {
     if (value.length >= 2) {
@@ -71,6 +73,11 @@ const HeaderSearch = ({sx, tags}) => {
     value.length >= 2 && setIsVisible(true)
   }
 
+  const handleClickClear = () => {
+    setValue('')
+    inputRef.current.focus()
+  }
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box sx={sx}>
@@ -80,14 +87,17 @@ const HeaderSearch = ({sx, tags}) => {
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Поиск…"
-            inputProps={{'aria-label': 'Поиск'}}
-            value={value}
-            onChange={e => setValue(e.target.value)}
+            inputProps={{
+              'aria-label': 'Поиск',
+              ref: inputRef,
+              value,
+              onChange: e => setValue(e.target.value)
+          }}
             onFocus={handleFocus}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setValue('')}
+                  onClick={handleClickClear}
                   edge="end"
                   size='small'
                   aria-label='Стереть'
