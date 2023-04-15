@@ -9,7 +9,7 @@ import LogoTextSlogan from "../components/Logos/LogoTextSlogan.jsx";
 import Logo from "../components/Logos/Logo.jsx";
 import LogoFull from "../components/Logos/LogoFull.jsx";
 
-
+//TODO добавить скелетон
 const MainPage = () => {
   const tags = ['нежные пастельные тона', 'контрастные цвета', 'изумрудный', 'фиолетовый', 'черный и желтый', 'бледно-голубой']
   const [palettes, setPalettes] = useState([]);
@@ -137,7 +137,18 @@ const MainPage = () => {
             выбирать и сохранять нужные цвета для вашего дизайна. Вы можете выбирать цвета из нашей базы цветовых палитр
             или выбирать свои собственные цвета.
           </Paragraph>
-          <Box component='ul' className='flex-col' sx={{width: 'auto', m: '0 auto', gap: 2}}>
+          <Box
+            component='ul'
+            className='flex-col'
+            sx={{
+              width: 'auto',
+              m: '0 auto',
+              gap: 2,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              maxWidth: '100%'
+          }}>
             <ColorItem itemColor='#2fa2db' setSelectedColor={() => {
             }}/>
             <ColorItem itemColor='#4FE825' setSelectedColor={() => {

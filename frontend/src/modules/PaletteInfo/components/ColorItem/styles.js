@@ -1,4 +1,10 @@
 export const styles = {
+  colorCodesWrapper: {
+    width: '225px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
   code: {
     mx: '20px',
     cursor: 'pointer',

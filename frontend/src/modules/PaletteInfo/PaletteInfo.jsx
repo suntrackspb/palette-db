@@ -30,7 +30,7 @@ const PaletteEdit = ({data}) => {
         </ContentBlock>
       </Box>
 
-      <ContentBlock styleProps={{flexDirection: 'column'}}>
+      <ContentBlock styleProps={{flexDirection: 'column', display: {xs: 'none', md: 'flex'}}}>
         <Gradient selectedColor={selectedColor}/>
       </ContentBlock>
 

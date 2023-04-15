@@ -3,6 +3,7 @@ export const styles = {
     p: 0,
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px'
+    gap: '10px',
+    maxWidth: '100%'
   }
 }

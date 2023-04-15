@@ -38,7 +38,7 @@ const ColorItem = ({itemColor, setSelectedColor}) => {
         onClick={handlePickerClick}
       />
 
-      <Box sx={{width: '225px'}} >
+      <Box sx={styles.colorCodesWrapper} >
         <Typography
           sx={styles.code}
           onClick={copyColor}
