@@ -101,6 +101,9 @@ class UsersDB:
     def delete(self, uid):
         self.conn.delete({"_id": ObjectId(uid)})
 
+    def update_avatar(self, login, avatar):
+        return self.conn.update_one({"login": login}, {"$set": {"avatar": avatar}})
+
     def block(self, uid):
         self.conn.update_many({'_id': ObjectId(uid)}, [{'$set': {'block': {'$not': '$block'}}}])
 
@@ -124,10 +127,15 @@ class AdminUsers:
         return self.conn.find()
 
 
+class UniqueVisits:
+    def __init__(self):
+        self.conn = connect().visits
 
+    def check_unique(self, ip):
+        return self.conn.find({"ip": ip})
 
-
-
+    def add_unique(self, obj):
+        return self.conn.insert_one(obj).inserted_id
 
 
 

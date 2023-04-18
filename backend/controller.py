@@ -16,7 +16,7 @@ from bson.objectid import ObjectId
 from flask import jsonify, redirect
 from flask_jwt_extended import set_access_cookies, create_access_token, get_jwt_identity
 
-from database.db import UsersDB, PalettesDB, AdminUsers, AdminPalettes
+from database.db import UsersDB, PalettesDB, AdminUsers, AdminPalettes, UniqueVisits
 from database.MongoJson import JSE
 from converter.ImageFormater import crop_image, read_image
 from error_handler import ce
@@ -50,16 +50,20 @@ def add_new_user(data):
         return ce("Error", "0x0003", "Invalid hash password"), 400
 
     service_code = hashlib.sha1(f"{data['login']}{datetime.now()}".encode()).hexdigest()
-
-    data['uid'] = next_users_count()
-    data['avatar'] = None
-    data['create'] = datetime.now()
-    data['favorite'] = []
-    data['block'] = False
-    data['verify'] = False
-    data['service_code'] = service_code
+    obj = {
+        "uid": next_users_count(),
+        "username": data['username'],
+        "login": data['login'],
+        "password": data['password'],
+        "avatar": None,
+        "create": datetime.now(),
+        "favorite": [],
+        "block": False,
+        "verify": False,
+        "service_code": service_code
+    }
     # print(data)
-    db = JSE.encode(UsersDB().create(data))
+    db = JSE.encode(UsersDB().create(obj))
     # send_mail(data['login'], db, service_code)
     uid = db.replace('"', '')
     email = data['login']
@@ -132,6 +136,13 @@ def update_user_favorite(data):
 
     UsersDB().update_favorite(user, favorite)
     return JSE.encode(UsersDB().favorite(user))
+
+
+def update_user_avatar(data):
+    user = get_jwt_identity()
+    if not re.search(url_pattern, data['avatar']):
+        return ce("Error", "0x0020", "Invalid url format"), 400
+    UsersDB().update_avatar(user, data['avatar'])
 
 
 #
@@ -323,3 +334,14 @@ def admin_delete_palette(uid):
 def params():
     return ":'######::'##::::'##:'##::: ##:'########:'########:::::'###:::::'######::'##:::'##: \n'##... ##: ##:::: ##: ###:: ##:... ##..:: ##.... ##:::'## ##:::'##... ##: ##::'##:: \n ##:::..:: ##:::: ##: ####: ##:::: ##:::: ##:::: ##::'##:. ##:: ##:::..:: ##:'##::: \n. ######:: ##:::: ##: ## ## ##:::: ##:::: ########::'##:::. ##: ##::::::: #####:::: \n:..... ##: ##:::: ##: ##. ####:::: ##:::: ##.. ##::: #########: ##::::::: ##. ##::: \n'##::: ##: ##:::: ##: ##:. ###:::: ##:::: ##::. ##:: ##.... ##: ##::: ##: ##:. ##:: \n. ######::. #######:: ##::. ##:::: ##:::: ##:::. ##: ##:::: ##:. ######:: ##::. ##: \n:......::::.......:::..::::..:::::..:::::..:::::..::..:::::..:::......:::..::::..:: "
 
+
+def keep_unique(addr, ltime, path, head):
+    check = UniqueVisits().check_unique(addr)
+    if check is None:
+        obj = {
+            "ip": addr,
+            "date": ltime,
+            "path": path,
+            "header": head
+        }
+        UniqueVisits().add_unique(obj)

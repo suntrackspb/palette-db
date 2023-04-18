@@ -16,8 +16,8 @@ from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
-from controller import admin_get_users, admin_get_palettes, admin_delete_user, admin_switch_ban_user
-from controller import admin_delete_palette, recovery_password, telegram_sender, params
+from controller import admin_get_users, admin_get_palettes, admin_delete_user, admin_switch_ban_user, update_user_avatar
+from controller import admin_delete_palette, recovery_password, telegram_sender, params, keep_unique
 from error_handler import ce
 
 load_dotenv()
@@ -112,13 +112,25 @@ def protected():
 # Required:
 # CSRF Cookie
 # old_password = md5 hash
-# avatar = url
+# avatar = string url to image
 # new_password = md5 hash
 #
 @app.route("/api/user/update", methods=['POST'])
 @jwt_required()
 def user_update():
     return update_user(request.json)
+
+
+# Update or delete user avatar
+#
+# Required:
+# CSRF Cookie
+# avatar = string url to image
+#
+@app.route("/api/user/avatar", methods=['POST'])
+@jwt_required()
+def user_avatar():
+    return update_user_avatar(request.json)
 
 
 # Add palette to favorite
@@ -347,13 +359,14 @@ def after_request(response):
         ip = ip.split(",")[0]
     if ip is None:
         ip = request.remote_addr
-    # ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
+    ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
     data = request.headers.get('Show-Data')
     if data == "True":
         app.logger.warning(request.headers)
         app.logger.warning(request.get_data())
     app.logger.info(f'AR:IP:{ip}; {request.method} {response.status}; '
                     f'FullPath:{request.scheme}|{request.full_path}; ApiKey:{api}\n{"===" * 30}')
+    threading.Thread(keep_unique(ip, ts, request.full_path, request.headers)).start()
     return response
 
 
