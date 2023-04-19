@@ -12,7 +12,7 @@ const HeaderInfo = ({data}) => {
     <>
       <PageTitle title={name} m={0}/>
       <Typography>Дата создания: {new Date(date).toLocaleDateString()}</Typography>
-      <Typography>Добавил: {owner === 'host' ? 'Palette Picker' : owner}</Typography>
+      <Typography>Добавил: {owner === 'host' ? 'Palettify' : owner}</Typography>
       {store.isAuth &&
         <Box sx={{
           position: 'absolute',
