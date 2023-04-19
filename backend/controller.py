@@ -26,7 +26,7 @@ mail_pattern = r'^[a-z0-9]+[\._-]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 pass_pattern = r'^[a-z0-9]{32}$'
 url_pattern = r'^(http:\/\/|https:\/\/)[a-z0-9\/\.\-\_]+$'
 palette_pattern = r'^[a-z0-9]{24}$'
-username_pattern = r'^[А-ЯЁа-яёёA-Za-z0-9]{24}$'
+username_pattern = r'^[А-ЯЁа-яёA-Za-z0-9]{1,24}$'
 
 mail_srv = os.getenv("MAIL_SMTP")
 mail_user = os.getenv("MAIL_USERNAME")
