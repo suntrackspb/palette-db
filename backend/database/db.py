@@ -60,8 +60,6 @@ class PalettesDB:
     def tags(self):
         return self.conn.distinct("tags")
 
-
-
     def delete(self, uid):
         self.conn.delete({"_id": ObjectId(uid)})
 
@@ -132,7 +130,7 @@ class UniqueVisits:
         self.conn = connect().visits
 
     def check_unique(self, ip):
-        return self.conn.find({"ip": ip})
+        return self.conn.find_one({"ip": ip})
 
     def add_unique(self, obj):
         return self.conn.insert_one(obj).inserted_id

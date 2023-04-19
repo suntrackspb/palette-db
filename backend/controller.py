@@ -360,6 +360,6 @@ def keep_unique(addr, ltime, path, head):
             "ip": addr,
             "date": ltime,
             "path": path,
-            "header": head
+            "header": str(head['User-Agent'])
         }
         UniqueVisits().add_unique(obj)
