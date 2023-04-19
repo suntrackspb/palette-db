@@ -152,6 +152,7 @@ def update_user_avatar(data):
     if data['avatar'] == "None":
         avatar = None
         UsersDB().update_avatar(user, avatar)
+        return ce("Info", "0x0028", "Avatar has been deleted")
 
     if not re.search(url_pattern, data['avatar']):
         return ce("Error", "0x0020", "Invalid url format"), 400
