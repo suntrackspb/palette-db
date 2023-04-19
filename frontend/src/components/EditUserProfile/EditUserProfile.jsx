@@ -20,11 +20,6 @@ const EditUserProfile = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword(prev => !prev);
-
   const handleSubmit = e => {
     e.preventDefault()
     setLoading(true)
@@ -76,7 +71,6 @@ const EditUserProfile = () => {
         value={newPassword.value}
         onChange={newPassword.onChange}
         id="newPassword"
-        type={showPassword ? 'text' : 'password'}
         label="Новый пароль"
         error={!!newPassword.value && !newPassword.isValid}
         errorMessage={!!newPassword.value && newPassword.error}
@@ -88,7 +82,6 @@ const EditUserProfile = () => {
         value={confirmPassword.value}
         onChange={confirmPassword.onChange}
         id="confirmPassword"
-        type={showPassword ? 'text' : 'password'}
         label="Подтвердите пароль"
         error={!!confirmPassword.error}
         errorMessage={confirmPassword.error}
@@ -102,7 +95,6 @@ const EditUserProfile = () => {
         value={oldPassword}
         onChange={e => setOldPassword(e.target.value)}
         id="currentPassword"
-        type={showPassword ? 'text' : 'password'}
         label="Введите пароль"
       />
 
