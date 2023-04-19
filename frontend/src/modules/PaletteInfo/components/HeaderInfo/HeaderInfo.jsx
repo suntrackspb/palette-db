@@ -7,13 +7,12 @@ import {useAuth} from "../../../../hooks";
 const HeaderInfo = ({data}) => {
   const {date, owner, name, _id} = data
   const {store} = useAuth()
-  const shortOwner = owner.split('@').at(0)
 
   return (
     <>
       <PageTitle title={name} m={0}/>
       <Typography>Дата создания: {new Date(date).toLocaleDateString()}</Typography>
-      <Typography>Добавил: {owner === 'host' ? 'Palette Picker' : shortOwner}</Typography>
+      <Typography>Добавил: {owner === 'host' ? 'Palette Picker' : owner}</Typography>
       {store.isAuth &&
         <Box sx={{
           position: 'absolute',
