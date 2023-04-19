@@ -95,6 +95,7 @@ const Header = () => {
             linkTo='login'
             text='Войти'
             padding='6px 8px'
+            sx={{display: {xs: 'none', md: 'block'}}}
           />}
 
         {store.isAuth &&
