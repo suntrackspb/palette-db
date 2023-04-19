@@ -8,7 +8,7 @@ import PersonIcon from '@mui/icons-material/Person';
 
 const UserProfile = () => {
   const {store} = useAuth()
-  const {avatar, login, create, verify} = store.user
+  const {avatar, login, create, verify, username} = store.user
   return (
     <ContentBlock styleProps={{width: '30%'}}>
       {login
@@ -18,7 +18,8 @@ const UserProfile = () => {
             : <Box sx={{...styles.noImg, bgcolor: store.userColor}}>
               <PersonIcon sx={{fontSize: '90px', color: '#fff'}}/>
             </Box>}
-          <Typography variant='h5'>{login}</Typography>
+          <Typography variant='h5'>{username}</Typography>
+          <Typography>{login}</Typography>
           <Typography>Дата регистрации: {new Date(create).toLocaleDateString()}</Typography>
           <Typography>{verify && 'Аккаунт подтвержден'}</Typography>
         </Box>

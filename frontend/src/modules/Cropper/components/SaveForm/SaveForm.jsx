@@ -11,7 +11,7 @@ const SaveForm = ({croppedImage, tags, selectedTags, setSelectedTags, store}) =>
       image_b64: croppedImage.imageBase64,
       colors: croppedImage.colors,
       tags: selectedTags,
-      login: store.user.login
+      username: store.user.username
     }
 
     PaletteService.savePalette(data)

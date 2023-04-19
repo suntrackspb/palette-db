@@ -55,6 +55,8 @@ const LoginForm = () => {
         .then(() => {
           if (store.isAuth) {
             store.setUserColor(colorsArr[Math.floor(Math.random() * colorsArr.length)])
+            store.setErrorMessage('')
+            store.setSuccessMessage('')
             store.checkAuth()
               .then(() => navigate('/', {replace: true}))
           }
@@ -181,6 +183,7 @@ const SignUp = ({
   return (
     <>
       <Input
+        autoComplete='off'
         fullWidth
         value={email.value}
         onChange={email.onChange}
@@ -194,6 +197,7 @@ const SignUp = ({
       />
 
       <Input
+        autoComplete='off'
         fullWidth
         value={login.value}
         onChange={login.onChange}
