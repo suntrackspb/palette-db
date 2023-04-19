@@ -26,6 +26,7 @@ mail_pattern = r'^[a-z0-9]+[\._-]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 pass_pattern = r'^[a-z0-9]{32}$'
 url_pattern = r'^(http:\/\/|https:\/\/)[a-z0-9\/\.\-\_]+$'
 palette_pattern = r'^[a-z0-9]{24}$'
+username_pattern = r'^[А-ЯЁа-яёёA-Za-z0-9]{24}$'
 
 mail_srv = os.getenv("MAIL_SMTP")
 mail_user = os.getenv("MAIL_USERNAME")
@@ -48,6 +49,8 @@ def add_new_user(data):
         return ce("Error", "0x0002", "Check e-mail"), 400
     if not re.search(pass_pattern, data['password']):
         return ce("Error", "0x0003", "Invalid hash password"), 400
+    if not re.search(username_pattern, data['username']):
+        return ce("Error", "0x0023", "Invalid username"), 400
 
     service_code = hashlib.sha1(f"{data['login']}{datetime.now()}".encode()).hexdigest()
     obj = {
@@ -95,7 +98,7 @@ def authorization(data):
         return ce("Error", "0x0004", "Wrong username or password"), 400
     try:
         if db['block']:
-            return ce("Error", "0x00025", "User has banned"), 403
+            return ce("Error", "0x0025", "User has banned"), 403
         if not db["verify"]:
             return ce("Error", "0x0015", "Not verify e-mail"), 400
 
@@ -252,6 +255,7 @@ def save_palette_in_db(data):
 
 def get_random_palettes():
     pass
+
 
 ##############
 # SERVICE
