@@ -149,9 +149,14 @@ def update_user_favorite(data):
 
 def update_user_avatar(data):
     user = get_jwt_identity()
+    if data['avatar'] == "None":
+        avatar = None
+        UsersDB().update_avatar(user, avatar)
+
     if not re.search(url_pattern, data['avatar']):
         return ce("Error", "0x0020", "Invalid url format"), 400
-    UsersDB().update_avatar(user, data['avatar'])
+    else:
+        UsersDB().update_avatar(user, data['avatar'])
 
 
 #
