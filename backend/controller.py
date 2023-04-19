@@ -45,6 +45,8 @@ mail_port = int(os.getenv("MAIL_PORT"))
 def add_new_user(data):
     if check_exist_user(data['login']) is not None:
         return ce("Error", "0x0001", "User already register"), 400
+    if check_exist_username(data['username']) is not None:
+        return ce("Error", "0x0028", "User already register"), 400
     if not re.search(mail_pattern, data['login']):
         return ce("Error", "0x0002", "Check e-mail"), 400
     if not re.search(pass_pattern, data['password']):
@@ -81,6 +83,10 @@ def add_new_user(data):
 
 def check_exist_user(login):
     return UsersDB().check({"login": login})
+
+
+def check_exist_username(username):
+    return UsersDB().check({"username": username})
 
 
 def next_users_count():
@@ -241,13 +247,14 @@ def save_palette_in_db(data):
         f.write(image_bytes)
 
     user = get_jwt_identity()
+
     obj = {
         "pid": num,
         "name": f"Palette {num}",
         "src": f"palette-{num}.webp",
         "colors": data['colors'],
         "tags": data['tags'],
-        "owner": user,
+        "owner": data['username'],
         "date": datetime.now()
     }
     return JSE.encode(PalettesDB().create(obj)), 200
