@@ -1,7 +1,7 @@
 import {Button, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
-const LinkButton = ({component, variant, color, text, linkTo, padding, sx}) => {
+const ButtonLink = ({component, variant, color, text, linkTo, padding, sx}) => {
   return (
     <Button
       component={component}
@@ -18,4 +18,4 @@ const LinkButton = ({component, variant, color, text, linkTo, padding, sx}) => {
   );
 };
 
-export default LinkButton;
+export default ButtonLink;
