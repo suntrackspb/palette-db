@@ -14,7 +14,7 @@ const useValidation = (initialValue, type) => {
       case 'password':
         const passReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
         if (!passReg.test(value)) {
-          setError('Пароль должен содержать хотя бы одну прописную и одну строчную букву, а также цифру. Мин длина 8 символов, только латинские символы')
+          setError('Пароль должен содержать хотя бы одну прописную и одну строчную букву, а также цифру. Мин длина 8 символов, только английские символы')
           setIsValid(false)
         } else {
           setError('')
@@ -31,6 +31,15 @@ const useValidation = (initialValue, type) => {
           setIsValid(true)
         }
         break
+      case 'login':
+        const loginReg = /^[А-Яа-яA-Za-z0-9ёЁ]{3,24}$/
+        if (!loginReg.test(value)) {
+          setError('Логин должен содержать от 3 до 24 символов. Допустимы русские, английские символы и цифры')
+          setIsValid(false)
+        } else {
+          setError('')
+          setIsValid(true)
+        }
     }
   }, [value]);
 

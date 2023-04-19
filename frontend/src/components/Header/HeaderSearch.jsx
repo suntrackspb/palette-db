@@ -79,6 +79,7 @@ const HeaderSearch = ({sx, tags}) => {
   const handleClickClear = () => {
     setValue('')
     inputRef.current.focus()
+    setIsVisible(false)
   }
 
   return (

@@ -11,7 +11,7 @@ import HeaderInfo from "./components/HeaderInfo/HeaderInfo.jsx";
 
 
 
-const PaletteEdit = ({data}) => {
+const PaletteInfo = ({data}) => {
   const [selectedColor, setSelectedColor] = useState({});
 
   return (
@@ -43,4 +43,4 @@ const PaletteEdit = ({data}) => {
 
 
 
-export default PaletteEdit;
+export default PaletteInfo;

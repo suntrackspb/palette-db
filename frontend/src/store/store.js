@@ -52,9 +52,9 @@ export default class Store {
       this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
     }
   }
-  registration = async (login, password) => {
+  registration = async (login, username, password) => {
     try {
-      const res = await AuthService.registration(login, cryptoPass(password))
+      const res = await AuthService.registration(login, username, cryptoPass(password))
 
       this.setSuccess(true)
       this.setSuccessMessage(vocabulary.registrationSuccess)

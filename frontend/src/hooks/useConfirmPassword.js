@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 const useConfirmPassword = (initialValue, password) => {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState('');
+  const [isValid, setIsValid] = useState(false);
 
   const onChange = e => {
     const value = e.target.value
@@ -11,16 +12,20 @@ const useConfirmPassword = (initialValue, password) => {
   }
 
   const toggleError = value => {
-    value && value !== password
-      ? setError('Пароли не совпадают')
-      : setError('')
+    if (value && value !== password) {
+      setError('Пароли не совпадают')
+      setIsValid(false)
+    } else {
+      setError('')
+      setIsValid(true)
+    }
   }
 
   useEffect(() => {
     toggleError(value)
   }, [password]);
 
-  return {value, setValue, error, onChange}
+  return {value, setValue, error, isValid, onChange}
 }
 
 export default useConfirmPassword
