@@ -33,8 +33,48 @@ body {
     padding: 20px;
 }
 
+.admin-nav {
+    padding: 20px 20px;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    background: #dedede14;
+}
+
+.admin-nav > a {
+    padding: 10px 15px;
+    background: #212125;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.admin-nav > a:hover {
+    color: aqua;
+}
+
+.head-title {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 .block {
     width: 50%;
+    background-color: #dedede14;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.block100 {
+    width: 100%;
     background-color: #dedede14;
     border-radius: 8px;
     padding: 10px;

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}">
+
+</head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+        <div class="popup alert alert-success" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Success!</strong> {{ message }}
+        </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<body>
+<nav class="admin-nav">
+    <a href="/api/control">Admin</a>
+
+    <a href="/api/visitors">Visitors</a>
+
+    <a href="/api/logs">Logs</a>
+</nav>
+{% block content %}{% endblock %}
+
+<script>
+    function push_button(action, uid) {
+        window.location.assign(`/api/control?act=${action}&uid=${uid}`)
+    }
+
+    setTimeout(function() {
+      let alert = document.querySelector('.alert');
+      if (alert) {
+        alert.style.transition = 'opacity 0.5s';
+        alert.style.opacity = '0';
+        setTimeout(function() {
+          alert.style.display = 'none';
+        }, 500);
+      }
+    }, 2000);
+</script>
+</body>
+</html>
