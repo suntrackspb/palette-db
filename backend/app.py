@@ -13,8 +13,9 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, set_access_cookies
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
 
-from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags
-from controller import add_new_user, authorization, get_user_info, update_user, verification_mail
+from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags, admin_get_visitors, \
+    admin_delete_visitors
+from controller import add_new_user, authorization, get_user_info, update_user, verification_mail, check_ip
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
 from controller import admin_get_users, admin_get_palettes, admin_delete_user, admin_switch_ban_user, update_user_avatar
 from controller import admin_delete_palette, recovery_password, telegram_sender, params, keep_unique
@@ -286,15 +287,25 @@ def show_log():
     return render_template("logs.html", content=array)
 
 
+@app.route("/api/visitors/", methods=['GET'])
+def admin_visitors():
+    if check_ip(request):
+        ip = request.args.get('ip')
+        rem = request.args.get('rem')
+
+        if rem is not None:
+            admin_delete_visitors(rem)
+            flash(f'History for {rem} has been deleted.')
+
+        visitors = admin_get_visitors(ip)
+        return render_template("visitors.html", visitors=visitors)
+    else:
+        return render_template_string("Access denied")
+
+
 @app.route("/api/control", methods=['GET'])
 def admin_control():
-    ips = os.getenv("ALLOW_IPS").split(',')
-    ip = request.headers.get('X-Real-IP')
-    if ip is not None:
-        ip = ip.split(",")[0]
-    if ip is None:
-        ip = request.remote_addr
-    if ip in ips:
+    if check_ip(request):
         act = request.args.get('act', type=str)
         uid = request.args.get('uid', type=str)
         if act is not None and uid is not None:
@@ -359,7 +370,7 @@ def after_request(response):
         ip = ip.split(",")[0]
     if ip is None:
         ip = request.remote_addr
-    ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M]')
+    ts = datetime.now(ZoneInfo("Europe/Moscow")).strftime('[%Y-%b-%d %H:%M:%S]')
     data = request.headers.get('Show-Data')
     if data == "True":
         app.logger.warning(request.headers)

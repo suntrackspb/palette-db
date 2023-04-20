@@ -337,6 +337,17 @@ def admin_get_palettes():
     return AdminPalettes().palettes_list()
 
 
+def admin_get_visitors(ip):
+    if ip is not None:
+        return UniqueVisits().sort_unique(ip).__reversed__()
+    else:
+        return UniqueVisits().get_unique().__reversed__()
+
+
+def admin_delete_visitors(ip):
+    return UniqueVisits().delete_unique(ip)
+
+
 def admin_delete_user(uid):
     return UsersDB().delete(uid)
 
@@ -354,12 +365,24 @@ def params():
 
 
 def keep_unique(addr, ltime, path, head):
-    check = UniqueVisits().check_unique(addr)
-    if check is None:
-        obj = {
-            "ip": addr,
-            "date": ltime,
-            "path": path,
-            "header": str(head['User-Agent'])
-        }
-        UniqueVisits().add_unique(obj)
+    obj = {
+        "ip": addr,
+        "date": ltime,
+        "path": path,
+        "header": str(head['User-Agent'])
+    }
+    UniqueVisits().add_unique(obj)
+
+
+def check_ip(r):
+    ips = os.getenv("ALLOW_IPS").split(',')
+    ip = r.headers.get('X-Real-IP')
+    if ip is not None:
+        ip = ip.split(",")[0]
+    if ip is None:
+        ip = r.remote_addr
+
+    if ip in ips:
+        return True
+    else:
+        return False

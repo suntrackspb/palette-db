@@ -135,9 +135,14 @@ class UniqueVisits:
     def add_unique(self, obj):
         return self.conn.insert_one(obj).inserted_id
 
+    def get_unique(self):
+        return list(self.conn.find())
 
+    def sort_unique(self, ip):
+        return list(self.conn.find({"ip": ip}))
 
-
+    def delete_unique(self, ip):
+        return self.conn.delete_many({"ip": ip})
 
 
 
