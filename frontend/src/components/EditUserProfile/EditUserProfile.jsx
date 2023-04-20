@@ -19,6 +19,7 @@ const EditUserProfile = () => {
   const [avatar, setAvatar] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -30,7 +31,11 @@ const EditUserProfile = () => {
     }
     store.updateUser(userData)
       .then(() => {
+        setIsAlertVisible(true)
         store.successMessage && resetForm()
+      })
+      .catch(() => {
+        setIsAlertVisible(true)
       })
       .finally(() => setLoading(false))
   }
@@ -53,17 +58,17 @@ const EditUserProfile = () => {
     <ContentBlock styleProps={{width: '40%'}} className='flex-col' component='form' autoComplete='off' onSubmit={handleSubmit}>
       <Typography>Редактировать профиль</Typography>
 
-      <Input
-        fullWidth
-        value={avatar}
-        onChange={e => setAvatar(e.target.value)}
-        id='email'
-        label="Ссылка на аватарку"
-        type="url"
-        autoComplete='off'
-        readOnly
-        onFocus={e => e.target.removeAttribute('readonly')}
-      />
+      {/*<Input*/}
+      {/*  fullWidth*/}
+      {/*  value={avatar}*/}
+      {/*  onChange={e => setAvatar(e.target.value)}*/}
+      {/*  id='email'*/}
+      {/*  label="Ссылка на аватарку"*/}
+      {/*  type="url"*/}
+      {/*  autoComplete='off'*/}
+      {/*  readOnly*/}
+      {/*  onFocus={e => e.target.removeAttribute('readonly')}*/}
+      {/*/>*/}
 
       <InputPassword
         fullWidth
@@ -103,10 +108,10 @@ const EditUserProfile = () => {
         text='Сохранить'
       />
 
-      {store.successMessage &&
+      {isAlertVisible && store.successMessage &&
         <AlertBlock type='success' text={store.successMessage}/>}
 
-      {store.errorMessage &&
+      {isAlertVisible && store.errorMessage &&
         <AlertBlock type='error' text={store.errorMessage}/>}
 
       <Loader isLoading={loading}/>

@@ -15,6 +15,8 @@ import Loader from "./Loader/Loader.jsx";
 
 import PageTitle from "./Typography/PageTitle.jsx";
 
+import ModalDialog from "./Modals/ModalDialog.jsx";
+
 export {
   ButtonSubmit,
   ButtonLink,
@@ -36,4 +38,7 @@ export {
 }
 export {
   PageTitle
+}
+export {
+  ModalDialog
 }

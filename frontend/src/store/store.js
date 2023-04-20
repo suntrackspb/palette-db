@@ -38,6 +38,9 @@ export default class Store {
   setUserColor = color => {
     this.userColor = color
   }
+  setAvatar = (avatar = '') => {
+    this.user = {...this.user, avatar}
+}
 
   login = async (login, password) => {
     try {
@@ -97,6 +100,19 @@ export default class Store {
       const res = await UserService.setUserInfo(data)
       this.setUser(res.data)
       this.setSuccessMessage(vocabulary.editProfileSuccess)
+      this.setErrorMessage('')
+    }
+    catch (e) {
+      this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
+      this.setSuccessMessage('')
+    }
+  }
+
+  updateAvatar = async (avatar) => {
+    try {
+      const res = await UserService.changeAvatar({avatar})
+      this.setAvatar(avatar === 'None' ? '' : avatar)
+      this.setSuccessMessage(vocabulary[res?.data?.code])
       this.setErrorMessage('')
     }
     catch (e) {

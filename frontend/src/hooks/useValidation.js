@@ -40,6 +40,17 @@ const useValidation = (initialValue, type) => {
           setError('')
           setIsValid(true)
         }
+        break
+      case 'imgUrl':
+        const imgReg = /^https?:\/\/\S+(?:jpg|jpeg|png|webp)$/
+        if (!imgReg.test(value)) {
+          setError('Введите корректную ссылку на изображение, заканчивающуюся на jpg, jpeg, png или webp')
+          setIsValid(false)
+        } else {
+          setError('')
+          setIsValid(true)
+        }
+        break
     }
   }, [value]);
 

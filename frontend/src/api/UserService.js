@@ -21,6 +21,13 @@ class UserService {
   static sendFeedbackForm = async (data) => {
     return $api.post('/contact', data)
   }
+  static changeAvatar = async (data) => {
+    return $api.post('/user/avatar', data, {
+      headers: {
+        'X-CSRF-TOKEN': getCookie('csrf_access_token')
+      }
+    })
+  }
 }
 
 export default UserService
