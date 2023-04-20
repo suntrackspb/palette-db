@@ -9,7 +9,8 @@ const ModalDialog = ({
   fullWidth,
   maxWidth,
   children,
-  handleSubmit
+  handleSubmit,
+  submitDisabled
 }) => {
   return (
     <Dialog
@@ -33,8 +34,21 @@ const ModalDialog = ({
         {children}
       </DialogContent>
       <DialogActions>
-        <Button variant='outlined' color='error' onClick={handleClose}>Отмена</Button>
-        <Button variant='outlined' color='success' onClick={handleSubmit}>Подтвердить</Button>
+        <Button
+          variant='outlined'
+          color='error'
+          onClick={handleClose}
+        >
+          Отмена
+        </Button>
+        <Button
+          variant='outlined'
+          color='success'
+          onClick={handleSubmit}
+          disabled={submitDisabled}
+        >
+          Подтвердить
+        </Button>
       </DialogActions>
     </Dialog>
   );

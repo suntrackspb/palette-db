@@ -90,6 +90,7 @@ const UserProfile = () => {
         title='Обновить аватар'
         fullWidth
         maxWidth='xs'
+        submitDisabled={!ava.isValid}
       >
         <TextField
           autoFocus
