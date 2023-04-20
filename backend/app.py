@@ -294,8 +294,8 @@ def admin_visitors():
         rem = request.args.get('rem')
 
         if rem is not None:
-            admin_delete_visitors(rem)
-            flash(f'History for {rem} has been deleted.')
+            count = admin_delete_visitors(rem)
+            flash(f'History for {rem} has been deleted. {count} rows.')
 
         visitors = admin_get_visitors(ip)
         return render_template("visitors.html", visitors=visitors)

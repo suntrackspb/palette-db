@@ -142,7 +142,11 @@ class UniqueVisits:
         return list(self.conn.find({"ip": ip}))
 
     def delete_unique(self, ip):
-        return self.conn.delete_many({"ip": ip})
+        query = {"ip": ip}
+        d = self.conn.delete_many(query)
+        return d.deleted_count
+
+
 
 
 
