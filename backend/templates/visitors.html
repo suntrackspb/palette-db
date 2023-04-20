@@ -1,0 +1,52 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="block100">
+    <div class="head-title">
+        <h2>Visitors:</h2>
+        <div class="search-group">
+          <input type="search" id="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          <button type="button" class="btn btn-info" onclick="search()">Search</button>
+          <button type="button" class="btn btn-danger" onclick="delete_log()">Delete</button>
+        </div>
+    </div>
+
+        <ul class="list">
+            <li class="list_item"></li>
+            {% for item in visitors %}
+            <li class="list_item">
+                <div class="list_block">
+                    <p>
+                        {{ item['date'] }}
+                        <span class="text-accent">ip:</span> <a href="?ip={{ item['ip'] }}"> {{ item['ip'] }} </a>
+                        <span class="text-accent">path:</span> {{ item['path'] }}
+                        <span class="text-accent">user:</span> {{ item['header'] }}
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    <script>
+    function search()
+    {
+        let ip = document.getElementById('search').value
+        if(ip !== '')
+        {
+            let link = window.location
+            window.location.href = link.origin + link.pathname + "?ip=" + ip
+        }
+    }
+    function delete_log()
+    {
+        let ip = document.getElementById('search').value
+        if(ip !== '')
+        {
+            let link = window.location
+            window.location.href = link.origin + link.pathname + "?del=" + ip
+        }
+    }
+    </script>
+{% endblock %}
