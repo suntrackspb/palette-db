@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 const Footer = () => {
   return (
-    <Box component='footer' sx={{mt: 'auto', bgcolor: 'header.main', p: '10px'}}>
+    <Box component='footer' sx={{mt: 'auto', bgcolor: 'header.main', p: '15px'}}>
       <Container maxWidth='xl'>
         <Box sx={{
           display: 'grid',
@@ -55,24 +55,22 @@ const Footer = () => {
           <Box>
             <FooterTitle text='Команда разработки'/>
             <FooterSubtitle>
-              Faaalc
-              <a href="https://github.com/fil4tov" target='_blank'><GitHub fontSize='small'/></a>
-              <a href="https://t.me/fil4tov" target='_blank'><Telegram fontSize='small'/></a>
+              <Box component='a' href='https://github.com/fil4tov' target='_blank' sx={{display: 'flex', alignItems: 'center', gap: '5px', mb: '5px'}}>
+                <GitHub fontSize='small'/> Fil4tov
+              </Box>
             </FooterSubtitle>
             <FooterSubtitle>
-              SunTrack
-              <a href="https://github.com/suntrackspb" target='_blank'><GitHub fontSize='small'/></a>
-              <a href="https://t.me/denisuvarov" target='_blank'><Telegram fontSize='small'/></a>
+              <Box component='a' href='https://github.com/suntrackspb' target='_blank' sx={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+                <GitHub fontSize='small'/> SunTrack
+              </Box>
             </FooterSubtitle>
           </Box>
 
           <Box>
             <FooterTitle text='Прочее'/>
-            <Typography variant="body2">
-              <Typography variant="caption">
-                © {new Date().getFullYear()} Palettify. Все права защищены.
-              </Typography>
-            </Typography>
+            <FooterSubtitle>
+              © {new Date().getFullYear()} Palettify. Все права защищены.
+            </FooterSubtitle>
           </Box>
 
         </Box>
@@ -90,7 +88,7 @@ const FooterTitle = ({text}) => {
 }
 const FooterSubtitle = ({children}) => {
   return (
-    <Typography variant="body2" sx={{display: 'flex', alignItems: 'center', gap: '5px'}}>
+    <Typography variant="body2">
       {children}
     </Typography>
   )
