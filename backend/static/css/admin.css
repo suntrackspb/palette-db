@@ -26,8 +26,9 @@ body {
 }
 
 pre {
-    background: #212125;
-    color: #e1cc86;
+    background: #212125!important;
+    color: #e1cc86!important;
+    border: none!important;
 }
 
 .wrapper{
