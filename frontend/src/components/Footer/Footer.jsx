@@ -54,6 +54,9 @@ const Footer = () => {
               <Link href="https://github.com/fil4tov" color="inherit" sx={{ mr: 2 }}>
                 <GitHub />
               </Link>
+              <Link href="https://t.me/fil4tov" color="inherit" sx={{ mr: 2 }}>
+                <Telegram />
+              </Link>
             </Typography>
           </Box>
         </Grid>
