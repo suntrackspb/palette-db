@@ -168,7 +168,7 @@ const MainPage = () => {
               component='img'
               width='100px'
               height='100px'
-              sx={{height: '200px'}}
+              sx={{height: '200px', width: '200px'}}
               alt='Пример палитры'
               image='https://palettify.sntrk.ru/images/host/palette-4509.webp'
             />

@@ -201,7 +201,7 @@ const SignUp = ({
         fullWidth
         value={login.value}
         onChange={login.onChange}
-        label='Логин'
+        label='Имя пользователя'
         id='login'
         type='text'
         required

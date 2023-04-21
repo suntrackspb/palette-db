@@ -48,7 +48,7 @@ const Footer = () => {
           <Box>
             <FooterTitle text='Связаться с нами'/>
             <FooterSubtitle>
-              Email: webmaster@sntrk.ru
+              E-mail: webmaster@sntrk.ru
             </FooterSubtitle>
           </Box>
 

@@ -12,7 +12,6 @@ import Logo from "../Logos/Logo.jsx";
 import UserMenu from "./UserMenu.jsx";
 import BurgerMenu from "./BurgerMenu.jsx";
 import {colorsArr} from "../../consts/index.js";
-import LogoText from "../Logos/LogoText.jsx";
 import {Link} from "react-router-dom";
 
 
@@ -74,7 +73,6 @@ const Header = () => {
       <Container maxWidth='xl' sx={styles.container}>
 
         <Link to='/'>
-          {/*<LogoText sx={{width: '240px', display: {xs: 'none', sm: 'block'}}}/>*/}
           <Logo sx={{width: '45px'}}/>
         </Link>
 
@@ -95,7 +93,7 @@ const Header = () => {
             linkTo='login'
             text='Войти'
             padding='6px 8px'
-            sx={{display: {xs: 'none', md: 'block'}}}
+            sx={{display: {xs: 'none', md: 'inline-flex'}}}
           />}
 
         {store.isAuth &&
