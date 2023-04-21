@@ -25,6 +25,11 @@ body {
     color: #e3e3e3;
 }
 
+pre {
+    background: #212125;
+    color: #e1cc86;
+}
+
 .wrapper{
     display: flex;
     justify-content: space-between;
