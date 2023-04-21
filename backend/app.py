@@ -14,7 +14,7 @@ from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity
 from flask_jwt_extended import get_jwt, unset_jwt_cookies, jwt_required
 
 from controller import get_palettes_list, get_palette_by_id, get_palette_by_tags, get_tags, admin_get_visitors, \
-    admin_delete_visitors
+    admin_delete_visitors, get_ip
 from controller import add_new_user, authorization, get_user_info, update_user, verification_mail, check_ip
 from controller import get_favorite_user_palettes, update_user_favorite, save_palette_in_db, prepare_palette
 from controller import admin_get_users, admin_get_palettes, admin_delete_user, admin_switch_ban_user, update_user_avatar
@@ -280,16 +280,21 @@ def verify(userid, code):
 
 @app.route("/api/logs", methods=['GET'])
 def show_log():
-    array = []
-    with open(logfile, "r") as f:
-        for line in reversed(list(f)):
-            array.append(line.rstrip())
-    return render_template("logs.html", content=array)
+    ip = get_ip(request)
+    if check_ip(ip):
+        array = []
+        with open(logfile, "r") as f:
+            for line in reversed(list(f)):
+                array.append(line.rstrip())
+        return render_template("logs.html", content=array)
+    else:
+        return render_template_string(f"Access denied for {ip}")
 
 
 @app.route("/api/visitors/", methods=['GET'])
 def admin_visitors():
-    if check_ip(request):
+    ip = get_ip(request)
+    if check_ip(ip):
         ip = request.args.get('ip')
         rem = request.args.get('rem')
 
@@ -300,12 +305,13 @@ def admin_visitors():
         visitors = admin_get_visitors(ip)
         return render_template("visitors.html", visitors=visitors)
     else:
-        return render_template_string("Access denied")
+        return render_template_string(f"Access denied for {ip}")
 
 
 @app.route("/api/control", methods=['GET'])
 def admin_control():
-    if check_ip(request):
+    ip = get_ip(request)
+    if check_ip(ip):
         act = request.args.get('act', type=str)
         uid = request.args.get('uid', type=str)
         if act is not None and uid is not None:
@@ -327,7 +333,7 @@ def admin_control():
         palettes = admin_get_palettes()
         return render_template("admin.html", users=users, palettes=palettes)
     else:
-        return render_template_string("Access denied")
+        return render_template_string(f"Access denied for {ip}")
 
 
 ##############

@@ -374,14 +374,17 @@ def keep_unique(addr, ltime, path, head):
     UniqueVisits().add_unique(obj)
 
 
-def check_ip(r):
-    ips = os.getenv("ALLOW_IPS").split(',')
+def get_ip(r):
     ip = r.headers.get('X-Real-IP')
     if ip is not None:
         ip = ip.split(",")[0]
     if ip is None:
         ip = r.remote_addr
+    return ip
 
+
+def check_ip(ip):
+    ips = os.getenv("ALLOW_IPS").split(',')
     if ip in ips:
         return True
     else:
