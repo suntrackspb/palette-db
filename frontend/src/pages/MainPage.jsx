@@ -103,7 +103,7 @@ const MainPage = () => {
 
       <Title textAlign='center' text='Возможности' component='h2' variant='h4' mt={8}/>
 
-      <Grid container spacing={2} justifyContent='center' alignItems='stretch'>
+      <Grid container spacing={2} justifyContent='center' alignItems='stretch' mb={3}>
         <Block>
           <Title text='Поиск по тегам' component='h3' variant='h6'/>
           <Paragraph variant='body2'>
