@@ -97,7 +97,7 @@ class UsersDB:
         return self.conn.update_one({"_id": uid}, {"$set": {"verify": True}})
 
     def delete(self, uid):
-        self.conn.delete({"_id": ObjectId(uid)})
+        self.conn.delete_one({"_id": ObjectId(uid)})
 
     def update_avatar(self, login, avatar):
         return self.conn.update_one({"login": login}, {"$set": {"avatar": avatar}})
