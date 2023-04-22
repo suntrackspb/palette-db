@@ -1,6 +1,6 @@
 import LoginForm from "../components/LoginForm/LoginForm.jsx";
 import {getCookie} from "../utils/cookie.js";
-import {Navigate, useLocation, useParams, useResolvedPath} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 const LoginPage = () => {
 

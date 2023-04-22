@@ -40,18 +40,16 @@ export default class Store {
   }
   setAvatar = (avatar = '') => {
     this.user = {...this.user, avatar}
-}
+  }
 
   login = async (login, password) => {
     try {
       const res = await AuthService.login(login, cryptoPass(password))
 
-      localStorage.setItem('login', login)
       this.setAuth(true)
       this.setUser({login})
       this.setErrorMessage('')
-    }
-    catch (e) {
+    } catch (e) {
       this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
     }
   }
@@ -62,8 +60,7 @@ export default class Store {
       this.setSuccess(true)
       this.setSuccessMessage(vocabulary.registrationSuccess)
       this.setErrorMessage('')
-    }
-    catch (e) {
+    } catch (e) {
       this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
       this.setSuccessMessage('')
     }
@@ -71,11 +68,9 @@ export default class Store {
   logout = async () => {
     try {
       const res = await AuthService.logout()
-      localStorage.removeItem('login')
       this.setAuth(false)
       this.setUser({})
-    }
-    catch (e) {
+    } catch (e) {
       // console.log(e?.response?.data)
     }
   }
@@ -83,14 +78,15 @@ export default class Store {
 
   checkAuth = async () => {
     try {
-      const res = await UserService.getUserInfo()
-      localStorage.setItem('login', res.data.login)
-
-      this.setAuth(true)
-      this.setUser(res.data)
-      this.setFavorite(res.data.favorite)
-    }
-    catch (e) {
+      const res = await UserService.getUserInfo(this.user.login)
+      if (res) {
+        this.setAuth(true)
+        this.setUser(res.data)
+        this.setFavorite(res.data.favorite)
+      } else {
+        this.setAuth(false)
+      }
+    } catch (e) {
       // console.log(e?.response?.data?.msg)
     }
   }
@@ -101,8 +97,7 @@ export default class Store {
       this.setUser(res.data)
       this.setSuccessMessage(vocabulary.editProfileSuccess)
       this.setErrorMessage('')
-    }
-    catch (e) {
+    } catch (e) {
       this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
       this.setSuccessMessage('')
     }
@@ -114,8 +109,7 @@ export default class Store {
       this.setAvatar(avatar === 'None' ? '' : avatar)
       this.setSuccessMessage(vocabulary[res?.data?.code])
       this.setErrorMessage('')
-    }
-    catch (e) {
+    } catch (e) {
       this.setErrorMessage(vocabulary[e?.response?.data?.code] || e.response?.data?.text)
       this.setSuccessMessage('')
     }
